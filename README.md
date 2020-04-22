@@ -9,5 +9,6 @@ Spring, gradle, PostgreSQL
 3. user bisa lihat history beli customer
 `query tabel transactions where EQUAL cust id`
 
+https://dbdiagram.io/d/5e88a5724495b02c3b893fc2
 
 
