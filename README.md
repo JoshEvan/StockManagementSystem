@@ -12,4 +12,8 @@ Spring, gradle, PostgreSQL
 https://dbdiagram.io/d/5e88a5724495b02c3b893fc2
 <img src="https://github.com/JoshEvan/StockManagementSystem/blob/master/StockManagementSystem.png?raw=true"/>
 
+nice soruce:
+https://www.princeton.edu/~rcurtis/ultradev/ecommdatabase.html
+https://www.princeton.edu/~rcurtis/ultradev/images/storediagram.gif
+
 
