@@ -1,4 +1,4 @@
-package com.joshua.StockManagementSystem.datasource;
+package com.joshua.StockManagementSystem.joseph_impl.dao;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;

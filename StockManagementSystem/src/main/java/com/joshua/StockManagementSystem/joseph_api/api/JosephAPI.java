@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1/joseph")
 @RestController
 public interface JosephAPI {
-    @PostMapping
+    @PostMapping(path = "/addCustomer")
     void addCustomer(
 
     );
+
+
 }
