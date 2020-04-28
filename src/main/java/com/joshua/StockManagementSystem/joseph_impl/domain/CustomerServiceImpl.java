@@ -17,10 +17,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper.FAIL;
-import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper.SUCCESS;
+import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper.*;
 
-@Component("v1")
+@Component("custV1Service")
 @Service
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerDAO customerDAO;
@@ -34,9 +33,9 @@ public class CustomerServiceImpl implements CustomerService {
     public List<String> insertCustomer(UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
         List<String> stats = new LinkedList<>();
         if(customerDAO.insertCustomer(CustomerAdapter.convertUpsertPayloadToDataEntity(upsertCustomerRequestPayload)) == 1){
-            stats.add("Customer "+ upsertCustomerRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.UPDATED);
+            stats.add(ITEM+ upsertCustomerRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.INSERTED);
         }else{
-            stats.add("Customer "+ upsertCustomerRequestPayload.getName()+ FAIL+" "+ PostgresHelper.UPDATED);
+            stats.add(ITEM+ upsertCustomerRequestPayload.getName()+ FAIL+" "+ PostgresHelper.INSERTED);
         }
         return stats;
     }
@@ -57,9 +56,9 @@ public class CustomerServiceImpl implements CustomerService {
     public List<String> updateCustomer(UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
         List<String> stats = new LinkedList<>();
         if(customerDAO.updateCustomer(CustomerAdapter.convertUpsertPayloadToDataEntity(upsertCustomerRequestPayload)) == 1){
-            stats.add("Customer "+ upsertCustomerRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.UPDATED);
+            stats.add(ITEM+ upsertCustomerRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.UPDATED);
         }else{
-            stats.add("Customer "+ upsertCustomerRequestPayload.getName()+ FAIL+" "+ PostgresHelper.UPDATED);
+            stats.add(ITEM+ upsertCustomerRequestPayload.getName()+ FAIL+" "+ PostgresHelper.UPDATED);
         }
         return stats;
     }
@@ -68,9 +67,9 @@ public class CustomerServiceImpl implements CustomerService {
     public List<String> deleteCustomer(String id) {
         List<String> stats = new LinkedList<>();
         if(customerDAO.deleteCustomer(id) == 1){
-            stats.add("Customer "+ id + SUCCESS+" "+ PostgresHelper.REMOVED);
+            stats.add(ITEM+ id + SUCCESS+" "+ PostgresHelper.REMOVED);
         }else{
-            stats.add("Customer "+ id + FAIL+" "+ PostgresHelper.REMOVED);
+            stats.add(ITEM+ id + FAIL+" "+ PostgresHelper.REMOVED);
         }
         return stats;
     }
