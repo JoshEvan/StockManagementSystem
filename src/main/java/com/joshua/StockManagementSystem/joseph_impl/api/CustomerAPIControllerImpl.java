@@ -1,6 +1,6 @@
 package com.joshua.StockManagementSystem.joseph_impl.api;
 
-import com.joshua.StockManagementSystem.joseph_api.api.JosephAPIController;
+import com.joshua.StockManagementSystem.joseph_api.api.CustomerAPIController;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertCustomerRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.JosephService;
 import com.joshua.StockManagementSystem.joseph_api.model.Customer;
@@ -14,11 +14,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Component("apiV1")
-public class JosephAPIControllerImpl implements JosephAPIController {
+public class CustomerAPIControllerImpl implements CustomerAPIController {
   private  final JosephService josephService;
 
   @Autowired
-  public JosephAPIControllerImpl(@Qualifier("v1") JosephService josephService) {
+  public CustomerAPIControllerImpl(@Qualifier("v1") JosephService josephService) {
     this.josephService = josephService;
   }
 

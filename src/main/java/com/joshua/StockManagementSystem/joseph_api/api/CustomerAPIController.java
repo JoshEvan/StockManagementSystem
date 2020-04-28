@@ -10,20 +10,20 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@RequestMapping("api/v1/joseph")
+@RequestMapping("api/v1/joseph/customer")
 @RestController
 @EnableAutoConfiguration
 @Component("apiV1")
-public interface JosephAPIController {
-    @PostMapping("/insertCustomer")
+public interface CustomerAPIController {
+    @PostMapping("/insert")
     public List<String> insertCustomer(@NotNull @RequestBody UpsertCustomerRequestPayload upsertCustomerRequestPayload);
 
-    @GetMapping(value = "/indexCustomer", produces = "application/json")
+    @GetMapping(value = "/", produces = "application/json")
     public @ResponseBody List<Customer> indexCustomer();
 
-    @PutMapping("/updateCustomer")
+    @PutMapping("/update")
     public List<String> updateCustomer(@NotNull @RequestBody UpsertCustomerRequestPayload upsertCustomerRequestPayload);
 
-    @DeleteMapping("/deleteCustomer/{id}")
+    @DeleteMapping("/delete/{id}")
     public List<String> deleteCustomer(@NotNull @PathVariable("id") String idCust);
 }
