@@ -21,9 +21,12 @@ public interface CustomerAPIController {
     @GetMapping(value = "/", produces = "application/json")
     public @ResponseBody List<Customer> indexCustomer();
 
+    @GetMapping(value = "/show/{id}", produces = "application/json")
+    public @ResponseBody Customer showCustomer(@NotNull @PathVariable("id") String id);
+
     @PutMapping("/update")
     public List<String> updateCustomer(@NotNull @RequestBody UpsertCustomerRequestPayload upsertCustomerRequestPayload);
 
     @DeleteMapping("/delete/{id}")
-    public List<String> deleteCustomer(@NotNull @PathVariable("id") String idCust);
+    public List<String> deleteCustomer(@NotNull @PathVariable("id") String id);
 }

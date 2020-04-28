@@ -5,9 +5,10 @@ import com.joshua.StockManagementSystem.joseph_api.model.Customer;
 
 import java.util.List;
 
-public interface JosephService {
+public interface CustomerService {
   List<String> insertCustomer(UpsertCustomerRequestPayload upsertCustomerRequestPayload);
   List<Customer> indexCustomer();
+  Customer showCustomer(String id);
   List<String> updateCustomer(UpsertCustomerRequestPayload upsertCustomerRequestPayload);
-  List<String> deleteCustomer(String idCust);
+  List<String> deleteCustomer(String id);
 }
