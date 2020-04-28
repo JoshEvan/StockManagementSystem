@@ -1,7 +1,6 @@
 package com.joshua.StockManagementSystem.joseph_impl.infrastructure.dao;
 
 import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.CustomerDAO;
-import com.joshua.StockManagementSystem.joseph_api.model.Customer;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.CustomerAdapter;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.CustomerDataEntity;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository("postgresCust")
 public class CustomerDataAccessService implements CustomerDAO {

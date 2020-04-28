@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("api/v1/joseph/customer")
 @RestController
 @EnableAutoConfiguration
-@Component("apiV1")
+@Component("custAPIV1")
 public interface CustomerAPIController {
     @PostMapping("/insert")
     public List<String> insertCustomer(@NotNull @RequestBody UpsertCustomerRequestPayload upsertCustomerRequestPayload);

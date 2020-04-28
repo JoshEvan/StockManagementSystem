@@ -13,22 +13,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Component("apiV1")
+@Component("custAPIV1")
 public class CustomerAPIControllerImpl implements CustomerAPIController {
   private  final CustomerService customerService;
 
   @Autowired
-  public CustomerAPIControllerImpl(@Qualifier("v1") CustomerService customerService) {
+  public CustomerAPIControllerImpl(@Qualifier("custV1Service") CustomerService customerService) {
     this.customerService = customerService;
   }
 
   @Override
   public List<String> insertCustomer(@NotNull @RequestBody UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
-    System.out.println(upsertCustomerRequestPayload.getName());
-    System.out.println(upsertCustomerRequestPayload.getDescription());
     return customerService.insertCustomer(upsertCustomerRequestPayload);
   }
-  //    @GetMapping @RequestMapping(value="/index", method = RequestMethod.GET, produces="application/json")
 
   @Override
   public @ResponseBody
