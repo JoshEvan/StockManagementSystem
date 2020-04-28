@@ -11,8 +11,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-@Repository("postgres")
+@Repository("postgresCust")
 public class CustomerDataAccessService implements CustomerDAO {
     private final JdbcTemplate jdbcTemplate;
 
@@ -42,6 +44,17 @@ public class CustomerDataAccessService implements CustomerDAO {
                 return dataEntity;
             })
         );
+    }
+
+    @Override
+    public Optional<CustomerDataEntity> showCustomer(String id) {
+        final String sql = PostgresHelper.selectOperation(new CustomerDataEntity())
+                + " WHERE "+CustomerDataEntity.ID +" = ?";
+
+        CustomerDataEntity c =  jdbcTemplate.queryForObject(sql, new Object[]{id}, ((resultSet, i) -> {
+            return CustomerAdapter.convertResultSetToDataEntity(resultSet);
+        }));
+        return Optional.ofNullable(c);
     }
 
     @Override

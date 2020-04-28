@@ -2,15 +2,18 @@ package com.joshua.StockManagementSystem.joseph_impl.domain;
 
 import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertCustomerRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.CustomerDAO;
-import com.joshua.StockManagementSystem.joseph_api.domain.JosephService;
+import com.joshua.StockManagementSystem.joseph_api.domain.CustomerService;
 import com.joshua.StockManagementSystem.joseph_api.model.Customer;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.CustomerAdapter;
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.CustomerDataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,11 +22,11 @@ import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.Postgr
 
 @Component("v1")
 @Service
-public class JosephServiceImpl implements JosephService {
+public class CustomerServiceImpl implements CustomerService {
     private final CustomerDAO customerDAO;
 
     @Autowired
-    public JosephServiceImpl(@Qualifier("postgres") CustomerDAO customerDAO) {
+    public CustomerServiceImpl(@Qualifier("postgresCust") CustomerDAO customerDAO) {
         this.customerDAO = customerDAO;
     }
 
@@ -44,6 +47,13 @@ public class JosephServiceImpl implements JosephService {
     }
 
     @Override
+    public Customer showCustomer(String id) {
+        CustomerDataEntity dataEntity = customerDAO.showCustomer(id).orElse(null);
+        return (dataEntity == null) ? null :
+            CustomerAdapter.convertDataEntitiesToModels(Collections.singletonList(dataEntity)).get(0);
+    }
+
+    @Override
     public List<String> updateCustomer(UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
         List<String> stats = new LinkedList<>();
         if(customerDAO.updateCustomer(CustomerAdapter.convertUpsertPayloadToDataEntity(upsertCustomerRequestPayload)) == 1){
@@ -55,12 +65,12 @@ public class JosephServiceImpl implements JosephService {
     }
 
     @Override
-    public List<String> deleteCustomer(String idCust) {
+    public List<String> deleteCustomer(String id) {
         List<String> stats = new LinkedList<>();
-        if(customerDAO.deleteCustomer(idCust) == 1){
-            stats.add("Customer "+ idCust+ SUCCESS+" "+ PostgresHelper.REMOVED);
+        if(customerDAO.deleteCustomer(id) == 1){
+            stats.add("Customer "+ id + SUCCESS+" "+ PostgresHelper.REMOVED);
         }else{
-            stats.add("Customer "+ idCust+ FAIL+" "+ PostgresHelper.REMOVED);
+            stats.add("Customer "+ id + FAIL+" "+ PostgresHelper.REMOVED);
         }
         return stats;
     }
