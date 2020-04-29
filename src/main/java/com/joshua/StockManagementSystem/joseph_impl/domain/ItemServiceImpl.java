@@ -10,6 +10,7 @@ import com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.ItemA
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.CustomerDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ItemDataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class ItemServiceImpl implements ItemService {
   private final ItemDAO itemDAO;
 
   @Autowired
-  public ItemServiceImpl(ItemDAO itemDAO) {
+  public ItemServiceImpl(@Qualifier("postgresItem") ItemDAO itemDAO) {
     this.itemDAO = itemDAO;
   }
 
