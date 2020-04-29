@@ -2,21 +2,14 @@ package com.joshua.StockManagementSystem.joseph_impl.infrastructure.dao;
 
 import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.ItemDAO;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
-import com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.CustomerAdapter;
-import com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.ItemAdapter;
-import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.CustomerDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ItemDataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-
-import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper.FAIL;
-import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper.SUCCESS;
 import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.ItemAdapter.convertResultSetToDataEntity;
 
 @Repository("postgresItem")

@@ -29,7 +29,7 @@ public class ItemAPIControllerImpl implements ItemAPIController {
 
   @Override
   public List<Item> indexItem() {
-    return new LinkedList<>();
+    return itemService.index();
   }
 
   @Override

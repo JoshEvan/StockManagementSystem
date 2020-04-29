@@ -30,7 +30,7 @@ public class CustomerAPIControllerImpl implements CustomerAPIController {
   @Override
   public @ResponseBody
   List<Customer> indexCustomer() {
-    return customerService.indexCustomer();
+      return customerService.indexCustomer();
   }
 
   @Override
