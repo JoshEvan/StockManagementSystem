@@ -1,8 +1,19 @@
 package com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout;
 
+import java.util.Date;
+
 public class ProductionDataEntity extends JosephDataEntity{
-  private String id, item_code, production_date, producer;
+  private String id, itemCode;
+  private Date productionDate;
+  private String producer;
   private Integer quantity;
+
+  public static String ID = "id", ITEMCODE = "item_code", PRODDATE = "production_date", PRODUCER = "producer", QTY = "quantity";
+
+  public ProductionDataEntity() {
+    TABLE = "productions";
+    numColumns = 5;
+  }
 
   public String getId() {
     return id;
@@ -12,20 +23,20 @@ public class ProductionDataEntity extends JosephDataEntity{
     this.id = id;return this;
   }
 
-  public String getItem_code() {
-    return item_code;
+  public String getItemCode() {
+    return itemCode;
   }
 
-  public ProductionDataEntity setItem_code(String item_code) {
-    this.item_code = item_code;return this;
+  public ProductionDataEntity setItemCode(String itemCode) {
+    this.itemCode = itemCode;return this;
   }
 
-  public String getProduction_date() {
-    return production_date;
+  public Date getProductionDate() {
+    return productionDate;
   }
 
-  public ProductionDataEntity setProduction_date(String production_date) {
-    this.production_date = production_date;return this;
+  public ProductionDataEntity setProductionDate(Date productionDate) {
+    this.productionDate = productionDate;return this;
   }
 
   public String getProducer() {

@@ -1,8 +1,10 @@
 package com.joshua.StockManagementSystem.joseph_api.model;
 
+import java.util.Date;
+
 public class Production {
     private String id, itemCode, producer;
-    private String productionDate;
+    private Date productionDate;
     private int quantity;
 
     public Production() {
@@ -32,11 +34,11 @@ public class Production {
         this.producer = producer;return this;
     }
 
-    public String getProductionDate() {
+    public Date getProductionDate() {
         return productionDate;
     }
 
-    public Production setProductionDate(String productionDate) {
+    public Production setProductionDate(Date productionDate) {
         this.productionDate = productionDate;return this;
     }
 

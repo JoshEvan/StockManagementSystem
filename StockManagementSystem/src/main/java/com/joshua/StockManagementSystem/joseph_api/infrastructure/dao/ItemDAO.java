@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ItemDAO {
-  Integer insert(ItemDataEntity customer);
+  Integer insert(ItemDataEntity itemDataEntity);
   List<ItemDataEntity> index();
   Optional<ItemDataEntity> show(String id);
-  Integer update(ItemDataEntity customer);
+  Integer update(ItemDataEntity itemDataEntity);
   Integer delete(String idItem);
 }
