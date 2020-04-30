@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Component("paymentAPIV1")
+@Component("paymentV1API")
 public class PaymentAPIControllerImpl implements PaymentAPIController {
 
   private final PaymentService paymentService;
