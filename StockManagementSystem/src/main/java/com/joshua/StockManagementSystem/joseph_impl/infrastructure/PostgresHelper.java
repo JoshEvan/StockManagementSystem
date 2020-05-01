@@ -15,8 +15,9 @@ public class PostgresHelper {
   public static final String INSERTED = " INSERTED ";
   public static final String UPDATED = " UPDATED ";
   public static final String REMOVED = " REMOVED ";
-  public static final String ITEM = " ITEM ";
+  public static final String ITEM = "ITEM ";
   public static final String TRANHEAD = " TRANSACTION ";
+  public static final String NOTFOUND = " is not exist";
 
   public static String insertOperation(JosephDataEntity dataEntity){
     String sql = "INSERT INTO "

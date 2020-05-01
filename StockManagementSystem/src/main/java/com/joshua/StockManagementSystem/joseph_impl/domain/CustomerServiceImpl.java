@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<String> insertCustomer(UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
         List<String> stats = new LinkedList<>();
-        if(customerDAO.insertCustomer(CustomerAdapter.convertUpsertPayloadToDataEntity(upsertCustomerRequestPayload)) == 1){
+        if(customerDAO.insert(CustomerAdapter.convertUpsertPayloadToDataEntity(upsertCustomerRequestPayload)) == 1){
             stats.add(ITEM+ upsertCustomerRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.INSERTED);
         }else{
             stats.add(ITEM+ upsertCustomerRequestPayload.getName()+ FAIL+" "+ PostgresHelper.INSERTED);
@@ -42,12 +41,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> indexCustomer() {
-        return CustomerAdapter.convertDataEntitiesToModels(customerDAO.indexCustomer());
+        return CustomerAdapter.convertDataEntitiesToModels(customerDAO.index());
     }
 
     @Override
     public Customer showCustomer(String id) {
-        CustomerDataEntity dataEntity = customerDAO.showCustomer(id).orElse(null);
+        CustomerDataEntity dataEntity = customerDAO.show(id).orElse(null);
         return (dataEntity == null) ? null :
             CustomerAdapter.convertDataEntitiesToModels(Collections.singletonList(dataEntity)).get(0);
     }
@@ -55,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<String> updateCustomer(UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
         List<String> stats = new LinkedList<>();
-        if(customerDAO.updateCustomer(CustomerAdapter.convertUpsertPayloadToDataEntity(upsertCustomerRequestPayload)) == 1){
+        if(customerDAO.update(CustomerAdapter.convertUpsertPayloadToDataEntity(upsertCustomerRequestPayload)) == 1){
             stats.add(ITEM+ upsertCustomerRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.UPDATED);
         }else{
             stats.add(ITEM+ upsertCustomerRequestPayload.getName()+ FAIL+" "+ PostgresHelper.UPDATED);
@@ -66,7 +65,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<String> deleteCustomer(String id) {
         List<String> stats = new LinkedList<>();
-        if(customerDAO.deleteCustomer(id) == 1){
+        if(customerDAO.delete(id) == 1){
             stats.add(ITEM+ id + SUCCESS+" "+ PostgresHelper.REMOVED);
         }else{
             stats.add(ITEM+ id + FAIL+" "+ PostgresHelper.REMOVED);
