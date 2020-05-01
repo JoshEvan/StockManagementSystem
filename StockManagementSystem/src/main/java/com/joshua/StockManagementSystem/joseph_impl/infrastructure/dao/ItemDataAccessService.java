@@ -49,11 +49,15 @@ public class ItemDataAccessService implements ItemDAO {
   public Optional<ItemDataEntity> show(String id) {
     final String sql = PostgresHelper.selectOperation(new ItemDataEntity())
             + " WHERE "+ItemDataEntity.ITEMCODE +" = ?";
-
-    ItemDataEntity itemDataEntity =  jdbcTemplate.queryForObject(sql, new Object[]{id}, ((resultSet, i) -> {
-      return convertResultSetToDataEntity(resultSet);
-    }));
-    return Optional.ofNullable(itemDataEntity);
+    try {
+      ItemDataEntity itemDataEntity = jdbcTemplate.queryForObject(sql, new Object[]{id},
+              ((resultSet, i) -> {
+                return convertResultSetToDataEntity(resultSet);
+              }));
+      return Optional.ofNullable(itemDataEntity);
+    }catch(Exception e){
+      return null;
+    }
   }
 
   @Override
