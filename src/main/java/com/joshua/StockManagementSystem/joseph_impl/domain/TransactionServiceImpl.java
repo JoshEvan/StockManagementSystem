@@ -3,12 +3,14 @@ package com.joshua.StockManagementSystem.joseph_impl.domain;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertTransactionDetailRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertTransactionHeaderRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.TransactionService;
+import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.CustomerDAO;
 import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.ItemDAO;
 import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.TransactionDAO;
 import com.joshua.StockManagementSystem.joseph_api.model.TransactionHeader;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.TransactionAdapter;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.dao.spec.TransactionSpec;
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.CustomerDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ItemDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.TransactionDetailDataEntity;
 import org.slf4j.Logger;
@@ -21,7 +23,6 @@ import org.springframework.stereotype.Service;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.TransactionAdapter.convertUpsertPayloadToDataEntity;
 
@@ -31,13 +32,16 @@ public class TransactionServiceImpl implements TransactionService {
 
   private final TransactionDAO transactionDAO;
   private final ItemDAO itemDAO;
+  private final CustomerDAO customerDAO;
   private final Logger log = LoggerFactory.getLogger(TransactionServiceImpl.class);
 
   @Autowired
   public TransactionServiceImpl(@Qualifier("postgresTransaction") TransactionDAO transactionDAO,
-                                @Qualifier("postgresItem") ItemDAO itemDAO) {
+                                @Qualifier("postgresItem") ItemDAO itemDAO,
+                                @Qualifier("postgresCust") CustomerDAO customerDAO) {
     this.transactionDAO = transactionDAO;
     this.itemDAO = itemDAO;
+    this.customerDAO = customerDAO;
   }
 
   @Override
@@ -47,13 +51,21 @@ public class TransactionServiceImpl implements TransactionService {
 
     TransactionSpec transactionSpec = convertUpsertPayloadToDataEntity(upsertTransactionHeaderRequestPayload);
 
+    log.info("validating customer");
+    Optional<CustomerDataEntity> customer = customerDAO.show(upsertTransactionHeaderRequestPayload.getCustomerId());
+    if(customer == null) {
+      stats.add("Customer "+upsertTransactionHeaderRequestPayload.getCustomerId()+ PostgresHelper.NOTFOUND);
+    }
+
     // validate and get price each item
+    log.info("validating each item");
     int sz = upsertTransactionHeaderRequestPayload.getTransactionDetails().size();
     for(int i = 0;i<sz;i++){
       UpsertTransactionDetailRequestPayload detail = upsertTransactionHeaderRequestPayload.getTransactionDetails().get(i);
+      log.info("validating item "+detail.getItemCode());
       Optional<ItemDataEntity> currItem = itemDAO.show(detail.getItemCode());
       if(currItem == null){
-        stats.add(PostgresHelper.ITEM+detail.getItemCode()+" is not exist");continue;
+        stats.add(PostgresHelper.ITEM+detail.getItemCode()+ PostgresHelper.NOTFOUND);continue;
       }
       if(currItem.get().getStock() < detail.getQuantity()){
         stats.add(PostgresHelper.ITEM+currItem.get().getName()+" is much more than stock");continue;

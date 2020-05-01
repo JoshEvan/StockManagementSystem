@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CustomerDAO {
-  Integer insertCustomer(CustomerDataEntity customer);
-  List<CustomerDataEntity> indexCustomer();
-  Optional<CustomerDataEntity> showCustomer(String id);
-  Integer updateCustomer(CustomerDataEntity customer);
-  Integer deleteCustomer(String idCust);
+  Integer insert(CustomerDataEntity customer);
+  List<CustomerDataEntity> index();
+  Optional<CustomerDataEntity> show(String id);
+  Integer update(CustomerDataEntity customer);
+  Integer delete(String idCust);
 }
