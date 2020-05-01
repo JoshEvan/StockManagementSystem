@@ -1,9 +1,13 @@
 package com.joshua.StockManagementSystem.joseph_api.model;
 
+import java.util.Date;
+import java.util.List;
+
 public class TransactionHeader {
     private String id, customerId, paymentId;
-    private String transactionDate;
+    private Date transactionDate;
     private String paymentStatus;
+    private List<TransactionDetail> transactionDetails;
 
     public String getId() {
         return id;
@@ -29,11 +33,11 @@ public class TransactionHeader {
         this.paymentId = paymentId;return this;
     }
 
-    public String getTransactionDate() {
+    public Date getTransactionDate() {
         return transactionDate;
     }
 
-    public TransactionHeader setTransactionDate(String transactionDate) {
+    public TransactionHeader setTransactionDate(Date transactionDate) {
         this.transactionDate = transactionDate;return this;
     }
 
@@ -43,5 +47,13 @@ public class TransactionHeader {
 
     public TransactionHeader setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;return this;
+    }
+
+    public List<TransactionDetail> getTransactionDetails() {
+        return transactionDetails;
+    }
+
+    public TransactionHeader setTransactionDetails(List<TransactionDetail> transactionDetails) {
+        this.transactionDetails = transactionDetails;return this;
     }
 }

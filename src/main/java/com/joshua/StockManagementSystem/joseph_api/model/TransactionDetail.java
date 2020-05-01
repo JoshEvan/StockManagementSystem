@@ -2,8 +2,9 @@ package com.joshua.StockManagementSystem.joseph_api.model;
 
 public class TransactionDetail {
     private String transactionHeaderId, itemCode;
-    private Float numeric;
+    private Float price;
     private Integer quantity;
+    private String note;
 
     public String getTransactionHeaderId() {
         return transactionHeaderId;
@@ -21,12 +22,12 @@ public class TransactionDetail {
         this.itemCode = itemCode;return this;
     }
 
-    public Float getNumeric() {
-        return numeric;
+    public Float getPrice() {
+        return price;
     }
 
-    public TransactionDetail setNumeric(Float numeric) {
-        this.numeric = numeric;return this;
+    public TransactionDetail setPrice(Float price) {
+        this.price = price;return this;
     }
 
     public Integer getQuantity() {
@@ -35,5 +36,13 @@ public class TransactionDetail {
 
     public TransactionDetail setQuantity(Integer quantity) {
         this.quantity = quantity;return this;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public TransactionDetail setNote(String note) {
+        this.note = note;return this;
     }
 }

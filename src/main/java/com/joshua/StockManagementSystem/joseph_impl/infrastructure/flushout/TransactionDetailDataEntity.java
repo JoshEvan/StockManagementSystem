@@ -4,6 +4,17 @@ public class TransactionDetailDataEntity extends JosephDataEntity{
   private String transactionHeaderId, itemCode;
   private Float price;
   private Integer quantity;
+  private String note;
+
+  public static final String TRANSHID = "transaction_header_id",
+          ITEMCODE = "item_code", PRICE = "price",
+          QTY = "quantity",
+          NOTE = "note";
+
+  public TransactionDetailDataEntity() {
+    TABLE = "transaction_details";
+    numColumns = 5;
+  }
 
   public String getTransactionHeaderId() {
     return transactionHeaderId;
@@ -35,5 +46,13 @@ public class TransactionDetailDataEntity extends JosephDataEntity{
 
   public TransactionDetailDataEntity setQuantity(Integer quantity) {
     this.quantity = quantity;return this;
+  }
+
+  public String getNote() {
+    return note;
+  }
+
+  public TransactionDetailDataEntity setNote(String note) {
+    this.note = note;return this;
   }
 }

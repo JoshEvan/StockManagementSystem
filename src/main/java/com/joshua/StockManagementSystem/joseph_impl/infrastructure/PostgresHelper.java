@@ -16,7 +16,7 @@ public class PostgresHelper {
   public static final String UPDATED = " UPDATED ";
   public static final String REMOVED = " REMOVED ";
   public static final String ITEM = " ITEM ";
-  public static final String DATEFORMAT = " YYYY-MM-DD";
+  public static final String TRANHEAD = " TRANSACTION ";
 
   public static String insertOperation(JosephDataEntity dataEntity){
     String sql = "INSERT INTO "

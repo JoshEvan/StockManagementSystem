@@ -24,7 +24,7 @@ public class ItemAdapter {
               .setCapacity(resultSet.getInt(ItemDataEntity.CAPACITY))
               ;
     } catch (SQLException throwables) {
-      return new ItemDataEntity();
+      return null;
     }
   }
 
