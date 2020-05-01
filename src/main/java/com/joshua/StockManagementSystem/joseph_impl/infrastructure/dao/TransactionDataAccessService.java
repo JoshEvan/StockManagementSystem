@@ -16,8 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
+import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.TransactionAdapter.convertDetailResultSetToDataEntity;
 import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.TransactionAdapter.convertResultSetToDataEntity;
 
 @Repository("postgresTransaction")
@@ -101,8 +101,28 @@ public class TransactionDataAccessService implements TransactionDAO {
   }
 
   @Override
-  public Optional<ProductionDataEntity> show(String id) {
-    return Optional.empty();
+  public Optional<TransactionSpec> show(String id) {
+    final String sql = PostgresHelper.selectOperation(new TransactionHeaderDataEntity())
+            +" WHERE "+TransactionHeaderDataEntity.ID+" = \'"+id+"\'";
+
+    final String sqlDet = PostgresHelper.selectOperation(new TransactionDetailDataEntity())
+            +" WHERE "+TransactionDetailDataEntity.TRANSHID+" = \'"+id+"\'";
+
+    TransactionSpec transactionSpec = new TransactionSpec()
+      .setTransactionHeaderDataEntity(
+      jdbcTemplate.queryForObject(sql, (((resultSet, i) ->
+            convertResultSetToDataEntity(resultSet)
+        )))
+      )
+      .setTransactionDetailDataEntityList(
+        jdbcTemplate.query(
+          sqlDet,
+          (((resultSet, i) ->
+            convertDetailResultSetToDataEntity(resultSet)
+          ))
+        )
+      );
+    return Optional.ofNullable(transactionSpec);
   }
 
   @Override
