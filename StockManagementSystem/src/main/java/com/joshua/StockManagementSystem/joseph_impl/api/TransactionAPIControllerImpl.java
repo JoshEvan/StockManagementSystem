@@ -32,7 +32,7 @@ public class TransactionAPIControllerImpl implements TransactionAPIController {
 
   @Override
   public TransactionHeader show(@NotNull String id) {
-    return null;
+    return transactionService.show(id);
   }
 
   @Override

@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface TransactionDAO {
   Integer insert(TransactionHeaderDataEntity transactionHeaderDataEntity, List<TransactionDetailDataEntity> details);
   List<TransactionSpec> index();
-  Optional<ProductionDataEntity> show(String id);
+  Optional<TransactionSpec> show(String id);
   Integer update(ProductionDataEntity productionDataEntity);
   Integer delete(String idItem);
 }

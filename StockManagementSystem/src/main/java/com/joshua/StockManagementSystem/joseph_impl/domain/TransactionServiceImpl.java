@@ -24,7 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.TransactionAdapter.convertUpsertPayloadToDataEntity;
+import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.TransactionAdapter.*;
 
 @Component("transactionV1Service")
 @Service
@@ -104,12 +104,14 @@ public class TransactionServiceImpl implements TransactionService {
   @Override
   public List<TransactionHeader> index() {
     List<TransactionSpec> transactionSpecs = transactionDAO.index();
-    return TransactionAdapter.convertDataEntitiesToModels(transactionSpecs);
+    return TransactionAdapter.convertTransactionSpecsToModels(transactionSpecs);
   }
 
   @Override
   public TransactionHeader show(String id) {
-    return null;
+    TransactionSpec transactionSpec = transactionDAO.show(id).orElse(null);
+    if(transactionSpec == null) return new TransactionHeader();
+    return convertTransactionSpecToModel(transactionSpec);
   }
 
   @Override

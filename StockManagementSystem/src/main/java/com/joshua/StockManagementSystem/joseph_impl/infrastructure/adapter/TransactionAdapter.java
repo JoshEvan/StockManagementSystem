@@ -59,21 +59,37 @@ public class TransactionAdapter {
              ).collect(Collectors.toList());
   }
 
-  public static List<TransactionHeader> convertDataEntitiesToModels(List<TransactionSpec> dataEntities){
-    return dataEntities.stream()
-            .map(
-                    transactionSpec -> {
-                      return new TransactionHeader()
-                              .setId(transactionSpec.getTransactionHeaderDataEntity().getId())
-                              .setCustomerId(transactionSpec.getTransactionHeaderDataEntity().getCustomerId())
-                              .setPaymentId(transactionSpec.getTransactionHeaderDataEntity().getPaymentId())
-                              .setPaymentStatus(transactionSpec.getTransactionHeaderDataEntity().getPaymentStatus())
-                              .setTransactionDate(transactionSpec.getTransactionHeaderDataEntity().getTransactionDate())
-                              .setTransactionDetails(
-                                      convertDetailDataEntitiesToModels(transactionSpec)
-                              );
-                    }
-            ).collect(Collectors.toList());
+  public static TransactionDetailDataEntity convertDetailResultSetToDataEntity(ResultSet resultSet){
+    try {
+      return new TransactionDetailDataEntity()
+              .setTransactionHeaderId(resultSet.getString(TransactionDetailDataEntity.TRANSHID))
+              .setPrice(resultSet.getFloat(TransactionDetailDataEntity.PRICE))
+              .setNote(resultSet.getString(TransactionDetailDataEntity.NOTE))
+              .setQuantity(resultSet.getInt(TransactionDetailDataEntity.QTY))
+              .setItemCode(resultSet.getString(TransactionDetailDataEntity.ITEMCODE));
+    }catch (Exception e){
+      return new TransactionDetailDataEntity();
+    }
+  }
+
+
+  public static List<TransactionHeader> convertTransactionSpecsToModels(List<TransactionSpec> transactionSpecs){
+    return transactionSpecs.stream()
+      .map(
+        transactionSpec ->
+          convertTransactionSpecToModel(transactionSpec)
+      ).collect(Collectors.toList());
+  }
+
+  public static TransactionHeader convertTransactionSpecToModel(TransactionSpec transactionSpec){
+    return new TransactionHeader()
+            .setId(transactionSpec.getTransactionHeaderDataEntity().getId())
+            .setPaymentStatus(transactionSpec.getTransactionHeaderDataEntity().getId())
+            .setPaymentId(transactionSpec.getTransactionHeaderDataEntity().getPaymentId())
+            .setCustomerId(transactionSpec.getTransactionHeaderDataEntity().getCustomerId())
+            .setTransactionDate(transactionSpec.getTransactionHeaderDataEntity().getTransactionDate())
+            .setTransactionDetails(convertDetailDataEntitiesToModels(transactionSpec));
+
   }
 
   public static List<TransactionDetail> convertDetailDataEntitiesToModels(TransactionSpec dataEntity){
