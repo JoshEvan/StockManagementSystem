@@ -6,6 +6,7 @@ import com.joshua.StockManagementSystem.joseph_impl.infrastructure.dao.spec.Tran
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ProductionDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.TransactionDetailDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.TransactionHeaderDataEntity;
+import org.omg.PortableInterceptor.SUCCESSFUL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,7 +132,23 @@ public class TransactionDataAccessService implements TransactionDAO {
   }
 
   @Override
-  public Integer delete(String idItem) {
-    return null;
+  @Transactional
+  public Integer delete(String id){
+    TransactionSpec transactionSpec = show(id).orElse(null);
+    if(transactionSpec == null){
+      return 0;
+    }
+    for(TransactionDetailDataEntity detailDataEntity: transactionSpec.getTransactionDetailDataEntityList()){
+      log.info("applying delete detail transaction "+ detailDataEntity.getItemCode());
+      final  String sqlDet =
+      PostgresHelper.deleteOperation(new TransactionDetailDataEntity(),"WHERE "+TransactionDetailDataEntity.TRANSHID+" = \'"+id+'\'');
+      jdbcTemplate.update(sqlDet);
+      log.info(PostgresHelper.SUCCESS +"delete detail transaction "+ detailDataEntity.getItemCode());
+    }
+    log.info("applying delete header transaction "+id);
+    final  String sql = PostgresHelper.deleteOperation(new TransactionHeaderDataEntity(),"WHERE "+TransactionHeaderDataEntity.ID+" = \'"+id+'\'');
+    Integer stats = jdbcTemplate.update(sql);
+    log.info((stats == 1) ? "success apply delete header transaction "+id : "fail apply delete header transaction "+id); ;
+    return stats;
   }
 }

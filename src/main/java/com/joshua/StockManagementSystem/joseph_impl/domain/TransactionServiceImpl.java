@@ -20,9 +20,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.TransactionAdapter.*;
 
@@ -121,6 +119,30 @@ public class TransactionServiceImpl implements TransactionService {
 
   @Override
   public List<String> delete(String id) {
-    return null;
+    List<String> stats = new LinkedList<>();
+    // return item's stock as previous
+    TransactionSpec transactionSpec = transactionDAO.show(id).orElse(null);
+
+    log.info("deleting "+PostgresHelper.TRANHEAD+id);
+    Integer flag = transactionDAO.delete(id);
+    if(flag == 0){
+     return Collections.singletonList(PostgresHelper.TRANHEAD+id+PostgresHelper.FAIL+ PostgresHelper.REMOVED);
+    }
+    log.info(PostgresHelper.TRANHEAD+id+PostgresHelper.REMOVED+ PostgresHelper.SUCCESS);
+    stats.add(PostgresHelper.TRANHEAD+id+PostgresHelper.SUCCESS+ PostgresHelper.REMOVED);
+
+    if(transactionSpec == null) return Collections.singletonList(PostgresHelper.TRANHEAD + " " + id + PostgresHelper.NOTFOUND);
+
+    for(TransactionDetailDataEntity detailDataEntity : transactionSpec.getTransactionDetailDataEntityList()){
+      ItemDataEntity item = itemDAO.show(detailDataEntity.getItemCode()).orElse(null);
+
+      if(item == null) return Collections.singletonList(PostgresHelper.ITEM + id + PostgresHelper.NOTFOUND);
+
+      log.info("rolling back "+PostgresHelper.ITEM+item.getItemCode()+" stock");
+      item.setStock(item.getStock()+detailDataEntity.getQuantity());
+      itemDAO.update(item);
+      stats.add(PostgresHelper.ITEM+detailDataEntity.getItemCode()+PostgresHelper.SUCCESS+"rolled back");
+    }
+    return stats;
   }
 }
