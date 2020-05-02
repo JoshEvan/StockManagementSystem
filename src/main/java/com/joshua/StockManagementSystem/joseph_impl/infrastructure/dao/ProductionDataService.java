@@ -2,6 +2,7 @@ package com.joshua.StockManagementSystem.joseph_impl.infrastructure.dao;
 
 import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.ProductionDAO;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ItemDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ProductionDataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,6 +25,9 @@ public class ProductionDataService implements ProductionDAO {
 
   @Override
   public Integer insert(ProductionDataEntity productionDataEntity) {
+    if(show(productionDataEntity.getId()) != null){
+      return update(productionDataEntity);
+    }
     final String sql = PostgresHelper.insertOperation(productionDataEntity);
     return jdbcTemplate.update(sql
             ,productionDataEntity.getId()
@@ -36,7 +40,8 @@ public class ProductionDataService implements ProductionDAO {
 
   @Override
   public List<ProductionDataEntity> index() {
-    final String sql = PostgresHelper.selectOperation(new ProductionDataEntity());
+    final String sql = PostgresHelper.selectOperation(new ProductionDataEntity())
+            + " WHERE "+ItemDataEntity.ISACTIVE+" = true";
     return jdbcTemplate.query(
             sql, ((resultSet, i) -> {
               return convertResultSetToDataEntity(resultSet);
@@ -63,6 +68,7 @@ public class ProductionDataService implements ProductionDAO {
     setter.put(ProductionDataEntity.PRODDATE, productionDataEntity.getProductionDate());
     setter.put(ProductionDataEntity.PRODUCER, productionDataEntity.getProducer());
     setter.put(ProductionDataEntity.QTY, productionDataEntity.getQuantity());
+    setter.put(ItemDataEntity.ISACTIVE, true);
 
     final String sql = PostgresHelper.updateOperation(productionDataEntity,
             setter,ProductionDataEntity.ID+" = \'" +productionDataEntity.getId()+"\'");
@@ -71,7 +77,12 @@ public class ProductionDataService implements ProductionDAO {
 
   @Override
   public Integer delete(String id) {
-    final  String sql = PostgresHelper.deleteOperation(new ProductionDataEntity(),"WHERE "+ProductionDataEntity.ID+" = \'"+id+'\'');
+    ProductionDataEntity productionDataEntity = show(id).orElse(null);
+    if(productionDataEntity == null) return 0;
+    HashMap<String,Object> setter = new HashMap<>();
+    setter.put(ItemDataEntity.ISACTIVE, false);
+    final String sql = PostgresHelper.updateOperation(productionDataEntity,
+            setter,ItemDataEntity.ITEMCODE+" = \'" +productionDataEntity.getItemCode()+"\'");
     return jdbcTemplate.update(sql);
   }
 }

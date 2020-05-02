@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.sql.ClientInfoStatus;
 import java.util.*;
 
 import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.TransactionAdapter.*;
@@ -114,7 +115,61 @@ public class TransactionServiceImpl implements TransactionService {
 
   @Override
   public List<String> update(UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload) {
-    return null;
+    List<String> stats = new LinkedList<>();
+    List<ItemDataEntity> itemDataEntities = new LinkedList<>();
+
+    TransactionSpec transactionSpec = convertUpsertPayloadToDataEntity(upsertTransactionHeaderRequestPayload);
+
+    log.info("validating customer");
+    Optional<CustomerDataEntity> customer = customerDAO.show(upsertTransactionHeaderRequestPayload.getCustomerId());
+    if(customer == null) {
+      stats.add("Customer "+upsertTransactionHeaderRequestPayload.getCustomerId()+ PostgresHelper.NOTFOUND);
+    }
+
+    // validate and get price each item
+    log.info("validating each item");
+    int sz = upsertTransactionHeaderRequestPayload.getTransactionDetails().size();
+    for(int i = 0;i<sz;i++){
+      UpsertTransactionDetailRequestPayload detail = upsertTransactionHeaderRequestPayload.getTransactionDetails().get(i);
+      log.info("validating item "+detail.getItemCode());
+      Optional<ItemDataEntity> currItem = itemDAO.show(detail.getItemCode());
+      if(currItem == null){
+        stats.add(PostgresHelper.ITEM+detail.getItemCode()+ PostgresHelper.NOTFOUND);continue;
+      }
+      if(currItem.get().getStock() < detail.getQuantity()){
+        stats.add(PostgresHelper.ITEM+currItem.get().getName()+" is much more than stock");continue;
+      }
+
+      // update stock
+      currItem.get().setStock(currItem.get().getStock() - detail.getQuantity());
+      itemDataEntities.add(currItem.get());
+      transactionSpec.getTransactionDetailDataEntityList().get(i).setPrice(currItem.get().getPrice());
+
+    }
+
+    if(!stats.isEmpty()){
+      return stats;
+    }
+
+    if(transactionDAO.update(transactionSpec.getTransactionHeaderDataEntity(), transactionSpec.getTransactionDetailDataEntityList()) == 1){
+
+      stats.add(PostgresHelper.TRANHEAD+upsertTransactionHeaderRequestPayload.getId()+ PostgresHelper.SUCCESS + PostgresHelper.UPDATED);
+
+      int i = 0;
+      for (TransactionDetailDataEntity detail : transactionSpec.getTransactionDetailDataEntityList()){
+        stats.add(PostgresHelper.TRANHEAD+"of item "+detail.getItemCode() +PostgresHelper.SUCCESS + PostgresHelper.UPDATED);
+        // applying update stock item
+        log.info("applying update stock item "+itemDataEntities.get(i).getItemCode());
+        itemDAO.update(itemDataEntities.get(i++));
+      }
+
+
+    }else{
+      stats.add(PostgresHelper.TRANHEAD+upsertTransactionHeaderRequestPayload.getId()+ PostgresHelper.FAIL + PostgresHelper.UPDATED);
+    }
+    return stats;
+
+
   }
 
   @Override

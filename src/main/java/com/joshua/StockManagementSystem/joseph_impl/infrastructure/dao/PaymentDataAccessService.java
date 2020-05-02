@@ -2,6 +2,7 @@ package com.joshua.StockManagementSystem.joseph_impl.infrastructure.dao;
 
 import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.PaymentDAO;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ItemDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.PaymentDataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,6 +25,9 @@ public class PaymentDataAccessService implements PaymentDAO {
 
   @Override
   public Integer insert(PaymentDataEntity payment) {
+    if(show(payment.getId()) != null){
+      return update(payment);
+    }
     final String sql = PostgresHelper.insertOperation(payment);
     return jdbcTemplate.update(sql
             ,payment.getId()
@@ -33,7 +37,8 @@ public class PaymentDataAccessService implements PaymentDAO {
 
   @Override
   public List<PaymentDataEntity> index() {
-    final String sql = PostgresHelper.selectOperation(new PaymentDataEntity());
+    final String sql = PostgresHelper.selectOperation(new PaymentDataEntity())
+            + " WHERE "+ItemDataEntity.ISACTIVE+" = true";
     return jdbcTemplate.query(
             sql, ((resultSet, i) -> {
               PaymentDataEntity dataEntity = convertResultSetToDataEntity(resultSet);
@@ -58,6 +63,7 @@ public class PaymentDataAccessService implements PaymentDAO {
     HashMap<String,Object> setter = new HashMap<>();
     setter.put(PaymentDataEntity.ID, paymentDataEntity.getId());
     setter.put(PaymentDataEntity.TYPE, paymentDataEntity.getPayment_type());
+    setter.put(ItemDataEntity.ISACTIVE, true);
     final String sql = PostgresHelper.updateOperation(paymentDataEntity,
             setter,PaymentDataEntity.ID+" = \'" +paymentDataEntity.getId()+"\'");
     return jdbcTemplate.update(sql);
@@ -65,7 +71,12 @@ public class PaymentDataAccessService implements PaymentDAO {
 
   @Override
   public Integer delete(String id) {
-    final  String sql = PostgresHelper.deleteOperation(new PaymentDataEntity(),"WHERE "+PaymentDataEntity.ID+" = \'"+id+'\'');
+    PaymentDataEntity paymentDataEntity = show(id).orElse(null);
+    if(paymentDataEntity == null) return 0;
+    HashMap<String,Object> setter = new HashMap<>();
+    setter.put(ItemDataEntity.ISACTIVE, false);
+    final String sql = PostgresHelper.updateOperation(paymentDataEntity,
+            setter,ItemDataEntity.ITEMCODE+" = \'" +paymentDataEntity.getId()+"\'");
     return jdbcTemplate.update(sql);
   }
 }

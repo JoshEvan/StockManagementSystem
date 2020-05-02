@@ -12,6 +12,6 @@ public interface TransactionDAO {
   Integer insert(TransactionHeaderDataEntity transactionHeaderDataEntity, List<TransactionDetailDataEntity> details);
   List<TransactionSpec> index();
   Optional<TransactionSpec> show(String id);
-  Integer update(ProductionDataEntity productionDataEntity);
+  Integer update(TransactionHeaderDataEntity transactionHeaderDataEntity, List<TransactionDetailDataEntity> details);
   Integer delete(String idItem);
 }

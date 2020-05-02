@@ -23,6 +23,9 @@ public class ItemDataAccessService implements ItemDAO {
 
   @Override
   public Integer insert(ItemDataEntity itemDataEntity) {
+    if(show(itemDataEntity.getItemCode()) != null){
+      return update(itemDataEntity);
+    }
     final String sql = PostgresHelper.insertOperation(itemDataEntity);
     return jdbcTemplate.update(sql
             ,itemDataEntity.getItemCode()
@@ -36,7 +39,8 @@ public class ItemDataAccessService implements ItemDAO {
 
   @Override
   public List<ItemDataEntity> index() {
-    final String sql = PostgresHelper.selectOperation(new ItemDataEntity());
+    final String sql = PostgresHelper.selectOperation(new ItemDataEntity())
+            + " WHERE "+ItemDataEntity.ISACTIVE+" = true";
     return jdbcTemplate.query(
             sql, ((resultSet, i) -> {
               ItemDataEntity dataEntity = convertResultSetToDataEntity(resultSet);
@@ -68,6 +72,7 @@ public class ItemDataAccessService implements ItemDAO {
     setter.put(ItemDataEntity.PRICE, itemDataEntity.getPrice());
     setter.put(ItemDataEntity.STOCK, itemDataEntity.getStock());
     setter.put(ItemDataEntity.CAPACITY, itemDataEntity.getCapacity());
+    setter.put(ItemDataEntity.ISACTIVE, true);
     final String sql = PostgresHelper.updateOperation(itemDataEntity,
             setter,ItemDataEntity.ITEMCODE+" = \'" +itemDataEntity.getItemCode()+"\'");
     return jdbcTemplate.update(sql);
@@ -75,7 +80,12 @@ public class ItemDataAccessService implements ItemDAO {
 
   @Override
   public Integer delete(String idItem) {
-    final  String sql = PostgresHelper.deleteOperation(new ItemDataEntity(),"WHERE "+ItemDataEntity.ITEMCODE+" = \'"+idItem+'\'');
+    ItemDataEntity itemDataEntity = show(idItem).orElse(null);
+    if(itemDataEntity == null) return 0;
+    HashMap<String,Object> setter = new HashMap<>();
+    setter.put(ItemDataEntity.ISACTIVE, false);
+    final String sql = PostgresHelper.updateOperation(itemDataEntity,
+            setter,ItemDataEntity.ITEMCODE+" = \'" +itemDataEntity.getItemCode()+"\'");
     return jdbcTemplate.update(sql);
   }
 }

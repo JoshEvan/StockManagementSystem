@@ -4,6 +4,8 @@ import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.CustomerDA
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.CustomerAdapter;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.CustomerDataEntity;
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ItemDataEntity;
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.PaymentDataEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class CustomerDataAccessService implements CustomerDAO {
 
     @Override
     public Integer insert(CustomerDataEntity customer) {
+        if(show(customer.getId()) != null){
+            return update(customer);
+        }
         final String sql = PostgresHelper.insertOperation(customer);
         return jdbcTemplate.update(sql
                 ,customer.getId()
@@ -37,7 +42,8 @@ public class CustomerDataAccessService implements CustomerDAO {
 
     @Override
     public List<CustomerDataEntity> index(){
-        final String sql = PostgresHelper.selectOperation(new CustomerDataEntity());
+        final String sql = PostgresHelper.selectOperation(new CustomerDataEntity())
+                + " WHERE "+ ItemDataEntity.ISACTIVE+" = true";
 
         return jdbcTemplate.query(
             sql, ((resultSet, i) -> {
@@ -69,13 +75,19 @@ public class CustomerDataAccessService implements CustomerDAO {
         setter.put(CustomerDataEntity.NAME, customer.getName());
         setter.put(CustomerDataEntity.CONTACT, customer.getContact());
         setter.put(CustomerDataEntity.DESCRIPTION, customer.getDescription());
+        setter.put(ItemDataEntity.ISACTIVE, true);
         final String sql = PostgresHelper.updateOperation(customer,setter,"id = \'" +customer.getId()+"\'");
         return jdbcTemplate.update(sql);
     }
 
     @Override
     public Integer delete(String idCust) {
-        final  String sql = PostgresHelper.deleteOperation(new CustomerDataEntity(),"WHERE "+CustomerDataEntity.ID+" = \'"+idCust+'\'');
+        CustomerDataEntity customerDataEntity = show(idCust).orElse(null);
+        if(customerDataEntity == null) return 0;
+        HashMap<String,Object> setter = new HashMap<>();
+        setter.put(ItemDataEntity.ISACTIVE, false);
+        final String sql = PostgresHelper.updateOperation(customerDataEntity,
+                setter,ItemDataEntity.ITEMCODE+" = \'" +customerDataEntity.getId()+"\'");
         return jdbcTemplate.update(sql);
     }
 

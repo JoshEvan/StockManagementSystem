@@ -4,5 +4,7 @@ CREATE TABLE if not exists items(
     description varchar,
     price numeric,
     stock int,
-    capacity int
+    capacity int,
+    timestamp timestamp default current_timestamp,
+    is_active boolean DEFAULT TRUE
 );
