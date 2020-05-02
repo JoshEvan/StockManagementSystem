@@ -52,10 +52,14 @@ public class PaymentDataAccessService implements PaymentDAO {
     final String sql = PostgresHelper.selectOperation(new PaymentDataEntity())
             + " WHERE "+PaymentDataEntity.ID +" = ?";
 
-    PaymentDataEntity paymentDataEntity =  jdbcTemplate.queryForObject(sql, new Object[]{id}, ((resultSet, i) -> {
-      return convertResultSetToDataEntity(resultSet);
-    }));
-    return Optional.ofNullable(paymentDataEntity);
+    try{
+      PaymentDataEntity paymentDataEntity =  jdbcTemplate.queryForObject(sql, new Object[]{id}, ((resultSet, i) -> {
+        return convertResultSetToDataEntity(resultSet);
+      }));
+      return Optional.ofNullable(paymentDataEntity);
+    }catch (Exception e){
+      return null;
+    }
   }
 
   @Override

@@ -54,10 +54,14 @@ public class ProductionDataService implements ProductionDAO {
     final String sql = PostgresHelper.selectOperation(new ProductionDataEntity())
             + " WHERE "+ProductionDataEntity.ID +" = ?";
 
-    ProductionDataEntity productionDataEntity =  jdbcTemplate.queryForObject(sql, new Object[]{id}, ((resultSet, i) -> {
-      return convertResultSetToDataEntity(resultSet);
-    }));
-    return Optional.ofNullable(productionDataEntity);
+    try{
+      ProductionDataEntity productionDataEntity =  jdbcTemplate.queryForObject(sql, new Object[]{id}, ((resultSet, i) -> {
+        return convertResultSetToDataEntity(resultSet);
+      }));
+      return Optional.ofNullable(productionDataEntity);
+    }catch (Exception e){
+      return null;
+    }
   }
 
   @Override
