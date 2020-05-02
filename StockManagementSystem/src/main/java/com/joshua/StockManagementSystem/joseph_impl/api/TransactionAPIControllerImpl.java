@@ -37,11 +37,11 @@ public class TransactionAPIControllerImpl implements TransactionAPIController {
 
   @Override
   public List<String> update(@NotNull UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload) {
-    return null;
+    return transactionService.update(upsertTransactionHeaderRequestPayload);
   }
 
   @Override
   public List<String> delete(@NotNull String id) {
-    return null;
+    return transactionService.delete(id);
   }
 }
