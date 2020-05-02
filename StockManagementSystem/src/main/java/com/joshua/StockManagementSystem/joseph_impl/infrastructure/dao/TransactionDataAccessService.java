@@ -127,8 +127,12 @@ public class TransactionDataAccessService implements TransactionDAO {
   }
 
   @Override
-  public Integer update(ProductionDataEntity productionDataEntity) {
-    return null;
+  @Transactional
+  public Integer update(TransactionHeaderDataEntity transactionHeaderDataEntity, List<TransactionDetailDataEntity> details) {
+    Integer stats = delete(transactionHeaderDataEntity.getId());
+    if(stats == 0) return stats;
+    stats = insert(transactionHeaderDataEntity, details);
+    return stats;
   }
 
   @Override

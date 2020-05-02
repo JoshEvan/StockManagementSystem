@@ -4,5 +4,7 @@ CREATE TABLE if not exists transaction_headers(
     payment_id varchar REFERENCES payments(id),
     transaction_date DATE,
     payment_status varchar,
-    note varchar
+    note varchar,
+    timestamp timestamp default current_timestamp,
+    is_active boolean DEFAULT TRUE
 );
