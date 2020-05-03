@@ -38,6 +38,7 @@ public class TransactionDataAccessService implements TransactionDAO {
   @Transactional
   public Integer insert(TransactionHeaderDataEntity transactionHeaderDataEntity,
                         List<TransactionDetailDataEntity> details) {
+
     final String sql = PostgresHelper.insertOperation(transactionHeaderDataEntity);
     int stats = jdbcTemplate.update(sql
             ,transactionHeaderDataEntity.getId()
@@ -141,23 +142,25 @@ public class TransactionDataAccessService implements TransactionDAO {
   @Override
   @Transactional
   public Integer delete(String id){
+    // USING HARD DELETE FOR TRANSACTION ONLY
+
     TransactionSpec transactionSpec = show(id).orElse(null);
     if(transactionSpec == null){
       return 0;
     }
-//    for(TransactionDetailDataEntity detailDataEntity: transactionSpec.getTransactionDetailDataEntityList()){
-//      log.info("applying delete detail transaction "+ detailDataEntity.getItemCode());
-//      final  String sqlDet =
-//      PostgresHelper.deleteOperation(new TransactionDetailDataEntity(),"WHERE "+TransactionDetailDataEntity.TRANSHID+" = \'"+id+'\'');
-//      jdbcTemplate.update(sqlDet);
-//      log.info(PostgresHelper.SUCCESS +"delete detail transaction "+ detailDataEntity.getItemCode());
-//    }
+    for(TransactionDetailDataEntity detailDataEntity: transactionSpec.getTransactionDetailDataEntityList()){
+      log.info("applying delete detail transaction "+ detailDataEntity.getItemCode());
+      final  String sqlDet =
+      PostgresHelper.deleteOperation(new TransactionDetailDataEntity(),"WHERE "+TransactionDetailDataEntity.TRANSHID+" = \'"+id+'\'');
+      jdbcTemplate.update(sqlDet);
+      log.info(PostgresHelper.SUCCESS +"delete detail transaction "+ detailDataEntity.getItemCode());
+    }
     log.info("applying delete header transaction "+id);
-    HashMap<String,Object> setter = new HashMap<>();
-    setter.put(TransactionHeaderDataEntity.ISACTIVE,false);
-    final String sql = PostgresHelper.updateOperation(transactionSpec.getTransactionHeaderDataEntity(),
-            setter,TransactionHeaderDataEntity.ID+" = \'" +transactionSpec.getTransactionHeaderDataEntity().getId()+"\'");
+
+    final String sql = PostgresHelper.deleteOperation(new TransactionHeaderDataEntity(),
+            "WHERE "+TransactionHeaderDataEntity.ID+" = \'"+id+"\'");
     Integer stats =  jdbcTemplate.update(sql);
+
     log.info((stats == 1) ? "success apply delete header transaction "+id : "fail apply delete header transaction "+id); ;
     return stats;
   }
