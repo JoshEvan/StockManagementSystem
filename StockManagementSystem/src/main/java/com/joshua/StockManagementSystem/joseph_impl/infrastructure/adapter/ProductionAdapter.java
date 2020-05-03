@@ -2,12 +2,11 @@ package com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter;
 
 
 
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertProductionRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertProductionRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.model.Production;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ProductionDataEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.security.krb5.internal.PAData;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

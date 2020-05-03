@@ -1,7 +1,7 @@
 package com.joshua.StockManagementSystem.joseph_api.domain;
 
 
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertItemRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertItemRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.model.Item;
 
 import java.util.List;

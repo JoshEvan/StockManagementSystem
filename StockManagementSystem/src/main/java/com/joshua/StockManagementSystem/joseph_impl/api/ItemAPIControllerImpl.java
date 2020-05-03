@@ -1,16 +1,14 @@
 package com.joshua.StockManagementSystem.joseph_impl.api;
 
 import com.joshua.StockManagementSystem.joseph_api.api.ItemAPIController;
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertItemRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertItemRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.ItemService;
-import com.joshua.StockManagementSystem.joseph_api.model.Customer;
 import com.joshua.StockManagementSystem.joseph_api.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
-import java.util.LinkedList;
 import java.util.List;
 
 @Component("itemAPIV1")

@@ -1,10 +1,9 @@
 package com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter;
 
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertTransactionHeaderRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertTransactionHeaderRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.model.TransactionDetail;
 import com.joshua.StockManagementSystem.joseph_api.model.TransactionHeader;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.dao.spec.TransactionSpec;
-import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ProductionDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.TransactionDetailDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.TransactionHeaderDataEntity;
 

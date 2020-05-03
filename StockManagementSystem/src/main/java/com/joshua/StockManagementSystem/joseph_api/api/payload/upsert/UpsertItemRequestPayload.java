@@ -1,6 +1,4 @@
-package com.joshua.StockManagementSystem.joseph_api.api.payload;
-
-import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ItemDataEntity;
+package com.joshua.StockManagementSystem.joseph_api.api.payload.upsert;
 
 public class UpsertItemRequestPayload {
   private String itemCode, name, description;

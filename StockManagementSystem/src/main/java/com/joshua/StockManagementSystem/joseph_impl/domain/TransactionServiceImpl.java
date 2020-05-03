@@ -1,7 +1,8 @@
 package com.joshua.StockManagementSystem.joseph_impl.domain;
 
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertTransactionDetailRequestPayload;
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertTransactionHeaderRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexTransactionRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertTransactionDetailRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertTransactionHeaderRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.TransactionService;
 import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.CustomerDAO;
 import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.ItemDAO;
@@ -20,7 +21,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.sql.ClientInfoStatus;
 import java.util.*;
 
 import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.TransactionAdapter.*;
@@ -101,8 +101,8 @@ public class TransactionServiceImpl implements TransactionService {
   }
 
   @Override
-  public List<TransactionHeader> index() {
-    List<TransactionSpec> transactionSpecs = transactionDAO.index();
+  public List<TransactionHeader> index(IndexTransactionRequestPayload indexTransactionRequestPayload) {
+    List<TransactionSpec> transactionSpecs = transactionDAO.index(indexTransactionRequestPayload);
     return TransactionAdapter.convertTransactionSpecsToModels(transactionSpecs);
   }
 

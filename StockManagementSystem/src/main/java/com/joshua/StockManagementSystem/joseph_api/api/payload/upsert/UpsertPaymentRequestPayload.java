@@ -1,6 +1,4 @@
-package com.joshua.StockManagementSystem.joseph_api.api.payload;
-
-import com.joshua.StockManagementSystem.joseph_api.model.Payment;
+package com.joshua.StockManagementSystem.joseph_api.api.payload.upsert;
 
 public class UpsertPaymentRequestPayload {
   private String id, paymentType;

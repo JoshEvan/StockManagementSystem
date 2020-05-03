@@ -1,4 +1,4 @@
-package com.joshua.StockManagementSystem.joseph_api.api.payload;
+package com.joshua.StockManagementSystem.joseph_api.api.payload.upsert;
 
 import java.util.Date;
 import java.util.List;
@@ -7,6 +7,7 @@ public class UpsertTransactionHeaderRequestPayload {
   private String id, customerId, paymentId;
   private Date transactionDate;
   private String paymentStatus, note;
+
   List<UpsertTransactionDetailRequestPayload> transactionDetails;
 
   public String getId() {
