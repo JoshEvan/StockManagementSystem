@@ -1,7 +1,7 @@
 package com.joshua.StockManagementSystem.joseph_impl.api;
 
 import com.joshua.StockManagementSystem.joseph_api.api.ProductionAPIController;
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertProductionRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertProductionRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.ProductionService;
 import com.joshua.StockManagementSystem.joseph_api.model.Production;
 import org.springframework.beans.factory.annotation.Autowired;

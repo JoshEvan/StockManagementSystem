@@ -1,7 +1,6 @@
 package com.joshua.StockManagementSystem.joseph_api.api;
 
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertItemRequestPayload;
-import com.joshua.StockManagementSystem.joseph_api.model.Customer;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertItemRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.model.Item;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Component;

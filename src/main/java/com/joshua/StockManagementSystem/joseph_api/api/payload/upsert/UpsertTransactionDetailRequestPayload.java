@@ -1,4 +1,4 @@
-package com.joshua.StockManagementSystem.joseph_api.api.payload;
+package com.joshua.StockManagementSystem.joseph_api.api.payload.upsert;
 
 public class UpsertTransactionDetailRequestPayload {
   private String itemCode;

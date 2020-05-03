@@ -1,6 +1,6 @@
 package com.joshua.StockManagementSystem.joseph_impl.domain;
 
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertProductionRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertProductionRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.ProductionService;
 import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.ProductionDAO;
 import com.joshua.StockManagementSystem.joseph_api.model.Production;

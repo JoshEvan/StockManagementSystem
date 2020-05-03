@@ -1,7 +1,8 @@
 package com.joshua.StockManagementSystem.joseph_impl.api;
 
 import com.joshua.StockManagementSystem.joseph_api.api.TransactionAPIController;
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertTransactionHeaderRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexTransactionRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertTransactionHeaderRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.TransactionService;
 import com.joshua.StockManagementSystem.joseph_api.model.TransactionHeader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class TransactionAPIControllerImpl implements TransactionAPIController {
   }
 
   @Override
-  public List<TransactionHeader> index() {
-    return transactionService.index();
+  public List<TransactionHeader> index(IndexTransactionRequestPayload indexTransactionRequestPayload) {
+    return transactionService.index(indexTransactionRequestPayload);
   }
 
   @Override

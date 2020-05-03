@@ -1,12 +1,11 @@
 package com.joshua.StockManagementSystem.joseph_api.api;
 
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertCustomerRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertCustomerRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.model.Customer;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 

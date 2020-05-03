@@ -1,7 +1,7 @@
 package com.joshua.StockManagementSystem.joseph_impl.api;
 
 import com.joshua.StockManagementSystem.joseph_api.api.PaymentAPIController;
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertPaymentRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertPaymentRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.PaymentService;
 import com.joshua.StockManagementSystem.joseph_api.model.Payment;
 import org.springframework.beans.factory.annotation.Autowired;

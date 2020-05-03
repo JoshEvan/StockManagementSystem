@@ -1,13 +1,10 @@
 package com.joshua.StockManagementSystem.joseph_impl.domain;
 
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertItemRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertItemRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.ItemService;
 import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.ItemDAO;
 import com.joshua.StockManagementSystem.joseph_api.model.Item;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
-import com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.CustomerAdapter;
-import com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.ItemAdapter;
-import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.CustomerDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ItemDataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

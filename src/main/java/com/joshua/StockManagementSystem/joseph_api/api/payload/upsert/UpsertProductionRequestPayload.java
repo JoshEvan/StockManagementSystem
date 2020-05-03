@@ -1,6 +1,4 @@
-package com.joshua.StockManagementSystem.joseph_api.api.payload;
-
-import com.joshua.StockManagementSystem.joseph_api.model.Production;
+package com.joshua.StockManagementSystem.joseph_api.api.payload.upsert;
 
 import java.util.Date;
 

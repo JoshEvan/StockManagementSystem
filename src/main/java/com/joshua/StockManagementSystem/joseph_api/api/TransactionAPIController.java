@@ -1,6 +1,7 @@
 package com.joshua.StockManagementSystem.joseph_api.api;
 
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertTransactionHeaderRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexTransactionRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertTransactionHeaderRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.model.TransactionHeader;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Component;
@@ -17,8 +18,8 @@ public interface TransactionAPIController {
   @PostMapping("/insert")
   public List<String> insert(@NotNull @RequestBody UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload);
 
-  @GetMapping(value = "/", produces = "application/json")
-  public @ResponseBody List<TransactionHeader> index();
+  @PostMapping(value = "/", produces = "application/json")
+  public @ResponseBody List<TransactionHeader> index(@NotNull @RequestBody IndexTransactionRequestPayload indexTransactionRequestPayload);
 
   @GetMapping(value = "/show/{id}", produces = "application/json")
   public @ResponseBody TransactionHeader show(@NotNull @PathVariable("id") String id);

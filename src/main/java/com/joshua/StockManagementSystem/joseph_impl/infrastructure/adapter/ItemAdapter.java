@@ -1,10 +1,7 @@
 package com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter;
 
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertCustomerRequestPayload;
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertItemRequestPayload;
-import com.joshua.StockManagementSystem.joseph_api.model.Customer;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertItemRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.model.Item;
-import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.CustomerDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ItemDataEntity;
 
 import java.sql.ResultSet;

@@ -1,6 +1,6 @@
 package com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter;
 
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertPaymentRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertPaymentRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.model.Payment;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.PaymentDataEntity;
 

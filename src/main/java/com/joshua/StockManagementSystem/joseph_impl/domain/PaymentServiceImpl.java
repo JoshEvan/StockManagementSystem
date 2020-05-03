@@ -1,11 +1,10 @@
 package com.joshua.StockManagementSystem.joseph_impl.domain;
 
-import com.joshua.StockManagementSystem.joseph_api.api.payload.UpsertPaymentRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertPaymentRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.PaymentService;
 import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.PaymentDAO;
 import com.joshua.StockManagementSystem.joseph_api.model.Payment;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
-import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ItemDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.PaymentDataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
