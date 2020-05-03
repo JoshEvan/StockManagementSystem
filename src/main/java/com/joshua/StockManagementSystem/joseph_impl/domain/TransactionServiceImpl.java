@@ -117,8 +117,12 @@ public class TransactionServiceImpl implements TransactionService {
   public List<String> update(UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload) {
     List<String> stats = new LinkedList<>();
     List<ItemDataEntity> itemDataEntities = new LinkedList<>();
+    TransactionSpec previousTransactionSpec = transactionDAO.show(upsertTransactionHeaderRequestPayload.getId()).orElse(null);
+    if(previousTransactionSpec == null){
+      return Collections.singletonList("Transaction "+upsertTransactionHeaderRequestPayload.getId()+ PostgresHelper.NOTFOUND);
+    }
 
-    TransactionSpec transactionSpec = convertUpsertPayloadToDataEntity(upsertTransactionHeaderRequestPayload);
+    TransactionSpec updatedTransactionSpec = convertUpsertPayloadToDataEntity(upsertTransactionHeaderRequestPayload);
 
     log.info("validating customer");
     Optional<CustomerDataEntity> customer = customerDAO.show(upsertTransactionHeaderRequestPayload.getCustomerId());
@@ -130,20 +134,25 @@ public class TransactionServiceImpl implements TransactionService {
     log.info("validating each item");
     int sz = upsertTransactionHeaderRequestPayload.getTransactionDetails().size();
     for(int i = 0;i<sz;i++){
-      UpsertTransactionDetailRequestPayload detail = upsertTransactionHeaderRequestPayload.getTransactionDetails().get(i);
-      log.info("validating item "+detail.getItemCode());
-      Optional<ItemDataEntity> currItem = itemDAO.show(detail.getItemCode());
+      UpsertTransactionDetailRequestPayload updatedDetail = upsertTransactionHeaderRequestPayload.getTransactionDetails().get(i);
+      TransactionDetailDataEntity previousDetail = previousTransactionSpec.getTransactionDetailDataEntityList().get(i);
+
+      log.info("validating item "+updatedDetail.getItemCode());
+      Optional<ItemDataEntity> currItem = itemDAO.show(updatedDetail.getItemCode());
       if(currItem == null){
-        stats.add(PostgresHelper.ITEM+detail.getItemCode()+ PostgresHelper.NOTFOUND);continue;
+        stats.add(PostgresHelper.ITEM+updatedDetail.getItemCode()+ PostgresHelper.NOTFOUND);continue;
       }
-      if(currItem.get().getStock() < detail.getQuantity()){
+      if(currItem.get().getStock() < updatedDetail.getQuantity()){
         stats.add(PostgresHelper.ITEM+currItem.get().getName()+" is much more than stock");continue;
       }
 
       // update stock
-      currItem.get().setStock(currItem.get().getStock() - detail.getQuantity());
+      currItem.get().setStock(currItem.get().getStock() + previousDetail.getQuantity() - updatedDetail.getQuantity());
       itemDataEntities.add(currItem.get());
-      transactionSpec.getTransactionDetailDataEntityList().get(i).setPrice(currItem.get().getPrice());
+      updatedTransactionSpec.getTransactionDetailDataEntityList().get(i).setPrice(previousDetail.getPrice());
+
+      // PRICE OF EACH ITEM WILL BE SET AS SAME AS ITEM'S PRICE BEFORE
+      // IF ITEM'S PRICE CHANGED, THEN USER SHOULD DELETE AND INSERT NEW TRANSACTIONS
 
     }
 
@@ -151,12 +160,12 @@ public class TransactionServiceImpl implements TransactionService {
       return stats;
     }
 
-    if(transactionDAO.update(transactionSpec.getTransactionHeaderDataEntity(), transactionSpec.getTransactionDetailDataEntityList()) == 1){
+    if(transactionDAO.update(updatedTransactionSpec.getTransactionHeaderDataEntity(), updatedTransactionSpec.getTransactionDetailDataEntityList()) == 1){
 
       stats.add(PostgresHelper.TRANHEAD+upsertTransactionHeaderRequestPayload.getId()+ PostgresHelper.SUCCESS + PostgresHelper.UPDATED);
 
       int i = 0;
-      for (TransactionDetailDataEntity detail : transactionSpec.getTransactionDetailDataEntityList()){
+      for (TransactionDetailDataEntity detail : updatedTransactionSpec.getTransactionDetailDataEntityList()){
         stats.add(PostgresHelper.TRANHEAD+"of item "+detail.getItemCode() +PostgresHelper.SUCCESS + PostgresHelper.UPDATED);
         // applying update stock item
         log.info("applying update stock item "+itemDataEntities.get(i).getItemCode());
@@ -180,6 +189,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     log.info("deleting "+PostgresHelper.TRANHEAD+id);
     Integer flag = transactionDAO.delete(id);
+    log.info("success delete "+PostgresHelper.TRANHEAD+id);
+
     if(flag == 0){
      return Collections.singletonList(PostgresHelper.TRANHEAD+id+PostgresHelper.FAIL+ PostgresHelper.REMOVED);
     }

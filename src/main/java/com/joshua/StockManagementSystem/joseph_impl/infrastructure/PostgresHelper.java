@@ -63,7 +63,6 @@ public class PostgresHelper {
     return sql;
   }
 
-
   public static String deleteOperation(JosephDataEntity dataEntity, String condition){
     return "DELETE FROM "+dataEntity.TABLE+ " "+condition;
   }
