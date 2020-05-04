@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Document</title>
+    <style>
+    table, td, th {
+        border-collapse: collapse;
+      border: 1px solid black;
+    }
+</style>
+</head>
+<body>
+<h1>STOCK MANAGEMENT SYSTEM</h1>
+<h2>TRANSACTIONS LIST</h2>
+<h3>TRANSACTIONS FROM [[${startDate}]] TO [[${endDate}]]</h3>
+<table>
+    <tr>
+        <th>Num.</th>
+        <th>ID</th>
+        <th>CUSTOMER ID</th>
+        <th>PAYMENT ID</th>
+        <th>TRANSACTION DATE</th>
+        <th>PAYMENT STATUS</th>
+        <th>DETAILS</th>
+        <th>NOTE</th>
+        <th>DATA LAST UPDATED</th>
+    </tr>
+    <tr th:each="trans : ${transactions}">
+        <td th:text="${trans.count}"/>
+        <td th:text="${trans.id}"/>
+        <td th:text="${trans.customerId}"/>
+        <td th:text="${trans.paymentId}"/>
+        <td th:text="${trans.transactionDate}"/>
+        <td th:text="${trans.paymentStatus}"/>
+        <td>
+            <table>
+                <tr th:each="details : ${trans.transactionDetails}">
+                    <th>ITEM CODE</th>
+                    <th>PRICE</th>
+                    <th>QUANTITY</th>
+                    <th>NOTE</th>
+                </tr>
+                <tr th:each="details : ${trans.transactionDetails}">
+                    <td th:text="${details.itemCode}"/>
+                    <td th:text="${details.price}"/>
+                    <td th:text="${details.quantity}"/>
+                    <td th:text="${details.note}"/>
+                </tr>
+            </table>
+        </td>
+        <td th:text="${trans.note}"></td>
+        <td th:text="${trans.timestamp}"></td>
+    </tr>
+</table>
+
+</body>
+</html>

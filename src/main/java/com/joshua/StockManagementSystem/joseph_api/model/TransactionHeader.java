@@ -8,6 +8,8 @@ public class TransactionHeader {
     private Date transactionDate;
     private String paymentStatus;
     private List<TransactionDetail> transactionDetails;
+    private Date timestamp;
+    private String note;
 
     public String getId() {
         return id;
@@ -55,5 +57,21 @@ public class TransactionHeader {
 
     public TransactionHeader setTransactionDetails(List<TransactionDetail> transactionDetails) {
         this.transactionDetails = transactionDetails;return this;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

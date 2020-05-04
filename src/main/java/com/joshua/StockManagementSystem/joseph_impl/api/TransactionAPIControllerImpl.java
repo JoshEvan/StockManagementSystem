@@ -45,4 +45,9 @@ public class TransactionAPIControllerImpl implements TransactionAPIController {
   public List<String> delete(@NotNull String id) {
     return transactionService.delete(id);
   }
+
+  @Override
+  public void generateReport(@NotNull IndexTransactionRequestPayload indexTransactionRequestPayload) {
+    transactionService.generateReport(indexTransactionRequestPayload);
+  }
 }

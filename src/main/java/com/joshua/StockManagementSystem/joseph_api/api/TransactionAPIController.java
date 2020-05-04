@@ -29,4 +29,8 @@ public interface TransactionAPIController {
 
   @DeleteMapping("/delete/{id}")
   public List<String> delete(@NotNull @PathVariable("id") String id);
+
+  @PostMapping("/report")
+  public void generateReport(@NotNull @RequestBody IndexTransactionRequestPayload indexTransactionRequestPayload);
+
 }
