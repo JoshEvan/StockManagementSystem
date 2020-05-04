@@ -12,4 +12,5 @@ public interface TransactionService {
   TransactionHeader show(String id);
   List<String> update(UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload);
   List<String> delete(String id);
+  void generateReport(IndexTransactionRequestPayload indexTransactionRequestPayload);
 }

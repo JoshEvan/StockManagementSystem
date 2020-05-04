@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
 
 import java.util.*;
 
@@ -210,5 +211,17 @@ public class TransactionServiceImpl implements TransactionService {
       stats.add(PostgresHelper.ITEM+detailDataEntity.getItemCode()+PostgresHelper.SUCCESS+"rolled back");
     }
     return stats;
+  }
+
+  @Override
+  public void generateReport(IndexTransactionRequestPayload indexTransactionRequestPayload) {
+    List<TransactionHeader> trans = index(indexTransactionRequestPayload);
+    Map<String, Object> data = new HashMap<>();
+    data.put("transactions",trans);
+    // TODO: CHANGE THIS
+    data.put("startDate",trans.get(0).getTransactionDate());
+    data.put("endDate",trans.get(0).getTransactionDate());
+
+    new ReportEngine().generate("TransactionPDF","report.pdf",data);
   }
 }

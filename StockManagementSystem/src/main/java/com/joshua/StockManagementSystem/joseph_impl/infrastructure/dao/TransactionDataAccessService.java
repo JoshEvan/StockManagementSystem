@@ -209,7 +209,8 @@ public class TransactionDataAccessService implements TransactionDAO {
 
     return  results;
   }
-
+//  filter: by product(multiple) , by customer (multiple), payment type (multiple) , by date range
+//  sort: by total income, date
   @Override
   public Optional<TransactionSpec> show(String id) {
     final String sql = PostgresHelper.selectOperation(new TransactionHeaderDataEntity())
