@@ -16,6 +16,7 @@ import java.util.Map;
 
 public class ReportEngine {
   private Handlebars handlebars;
+  // nice source: https://andreldm.com/2017/04/15/flying-saucer-handlebars.html
 
   public ReportEngine(){
     handlebars = new Handlebars();
