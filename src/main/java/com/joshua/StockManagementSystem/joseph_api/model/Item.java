@@ -8,6 +8,8 @@ public class Item {
     private String itemCode, name,description;
     private BigDecimal price;
     private Integer stock, capacity;
+    private Integer totalSold;
+    private BigDecimal incomeAmount;
 
     public String getItemCode() {
         return itemCode;
@@ -59,5 +61,21 @@ public class Item {
 
     public Item setCapacity(Integer capacity) {
         this.capacity = capacity;return this;
+    }
+
+    public Integer getTotalSold() {
+        return totalSold;
+    }
+
+    public Item setTotalSold(Integer totalSold) {
+        this.totalSold = totalSold;return this;
+    }
+
+    public BigDecimal getIncomeAmount() {
+        return incomeAmount;
+    }
+
+    public Item setIncomeAmount(BigDecimal incomeAmount) {
+        this.incomeAmount = incomeAmount;return this;
     }
 }

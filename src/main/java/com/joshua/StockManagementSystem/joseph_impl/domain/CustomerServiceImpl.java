@@ -81,9 +81,20 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer showCustomer(String id) {
+
         CustomerDataEntity dataEntity = customerDAO.show(id).orElse(null);
-        return (dataEntity == null) ? null :
-            CustomerAdapter.convertDataEntitiesToModels(Collections.singletonList(dataEntity)).get(0);
+        if(dataEntity == null) return null;
+
+        List<TransactionHeader> transactionHeaders =
+                TransactionAdapter.convertTransactionSpecsToModels(
+                        transactionDAO.index(new IndexTransactionRequestPayload().setCustomerFilter(Collections.singletonList(id)))
+                );
+        BigDecimal amountSpend = BigDecimal.valueOf(0);
+        for(TransactionHeader transactionHeader : transactionHeaders){
+            amountSpend = amountSpend.add(transactionHeader.getTotalDec());
+        }
+        return CustomerAdapter.convertDataEntitiesToModels(Collections.singletonList(dataEntity))
+                .get(0).setTotalAmountSpend(formatCurrency(amountSpend));
     }
 
     @Override
