@@ -3,6 +3,9 @@ package com.joshua.StockManagementSystem.joseph_impl.infrastructure;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.JosephDataEntity;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -67,4 +70,13 @@ public class PostgresHelper {
     return "DELETE FROM "+dataEntity.TABLE+ " "+condition;
   }
 
+  public static String formatCurrency(BigDecimal amount){
+    DecimalFormat kursIndo = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+    DecimalFormatSymbols rp = new DecimalFormatSymbols();
+    rp.setCurrencySymbol("IDR ");
+    rp.setMonetaryDecimalSeparator(',');
+    rp.setGroupingSeparator('.');
+    kursIndo.setDecimalFormatSymbols(rp);
+    return kursIndo.format(amount);
+  }
 }

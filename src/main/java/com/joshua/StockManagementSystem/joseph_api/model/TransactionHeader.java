@@ -1,7 +1,14 @@
 package com.joshua.StockManagementSystem.joseph_api.model;
 
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
+import org.joda.money.BigMoney;
+import org.joda.money.CurrencyUnit;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -78,12 +85,12 @@ public class TransactionHeader {
         this.note = note;return this;
     }
 
-    public BigDecimal getTotal() {
+    public String getTotal() {
         total =BigDecimal.valueOf(0);
         for(TransactionDetail detail: transactionDetails){
-            total = total.add(detail.getSubTotal());
+            total = total.add(detail.getSubTotalDec());
         }
-        return total;
+       return PostgresHelper.formatCurrency(total);
     }
 
     public TransactionHeader setTotal(BigDecimal total) {
