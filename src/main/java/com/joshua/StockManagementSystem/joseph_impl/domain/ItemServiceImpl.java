@@ -95,8 +95,26 @@ public class ItemServiceImpl implements ItemService {
   @Override
   public Item show(String id) {
     ItemDataEntity dataEntity = itemDAO.show(id).orElse(null);
-    return (dataEntity == null) ? null :
-            convertDataEntitiesToModels(Collections.singletonList(dataEntity)).get(0);
+    if(dataEntity == null) return null;
+    List<TransactionDetail> details = TransactionAdapter.convertDetailDataEntitiesToModels(
+            new TransactionSpec()
+            .setTransactionDetailDataEntityList(transactionDAO.indexDetails(
+                    new IndexTransactionRequestPayload().setItemFilter(Collections.singletonList(id)),
+                    new HashMap<>()))
+            .setTransactionHeaderDataEntity(new TransactionHeaderDataEntity().setId("not used"))
+    );
+    Integer amountSold = 0;BigDecimal amountIncome = BigDecimal.valueOf(0);
+    for(TransactionDetail detail: details){
+      if(detail.getItemCode().equals(id)){
+        amountIncome = amountIncome.add(detail.getSubTotalDec());
+        amountSold += detail.getQuantity();
+      }
+    }
+    return convertDataEntitiesToModels(Collections.singletonList(dataEntity)).get(0)
+      .setTotalSold(amountSold)
+      .setIncomeAmountDec(amountIncome)
+      .setIncomeAmount(formatCurrency(amountIncome));
+
   }
 
   @Override
