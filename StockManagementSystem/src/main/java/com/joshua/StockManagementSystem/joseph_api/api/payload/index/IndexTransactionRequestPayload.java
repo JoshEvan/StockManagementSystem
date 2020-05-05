@@ -8,7 +8,7 @@ public class IndexTransactionRequestPayload {
   private List<String> itemFilter = new LinkedList<>();
   private List<String> paymentFilter = new LinkedList<>();
   private List<String> transactionIdFilter = new LinkedList<>();
-  private Integer sortByDate, sortByTotal;
+  private Integer sortByDate = 0, sortByTotal = 0;
 
 
   private String dateFilter = "";

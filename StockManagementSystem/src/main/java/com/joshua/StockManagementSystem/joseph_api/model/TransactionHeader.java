@@ -93,6 +93,14 @@ public class TransactionHeader {
        return PostgresHelper.formatCurrency(total);
     }
 
+    public BigDecimal getTotalDec() {
+        total =BigDecimal.valueOf(0);
+        for(TransactionDetail detail: transactionDetails){
+            total = total.add(detail.getSubTotalDec());
+        }
+        return total;
+    }
+
     public TransactionHeader setTotal(BigDecimal total) {
         this.total = total;return this;
     }
