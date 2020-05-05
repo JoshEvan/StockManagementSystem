@@ -106,6 +106,8 @@ public class TransactionServiceImpl implements TransactionService {
     List<TransactionSpec> transactionSpecs = transactionDAO.index(indexTransactionRequestPayload);
     List<TransactionHeader> results = TransactionAdapter.convertTransactionSpecsToModels(transactionSpecs);
 
+    // TODO: ini masih salah kalo sort by date sama total!!
+
     if(indexTransactionRequestPayload.getSortByTotal() != 0 ){
       // ASC
       results.sort((Comparator.comparing(TransactionHeader::getTotal)));
@@ -231,12 +233,12 @@ public class TransactionServiceImpl implements TransactionService {
 
   @Override
   public void generateReport(IndexTransactionRequestPayload indexTransactionRequestPayload) {
-    List<TransactionHeader> trans = index(indexTransactionRequestPayload);
+    List<TransactionHeader> trans = index(indexTransactionRequestPayload.setSortByDate(1)); // sort date asc
     Map<String, Object> data = new HashMap<>();
     data.put("transactions",trans);
     // TODO: CHANGE THIS
     data.put("startDate",trans.get(0).getTransactionDate());
-    data.put("endDate",trans.get(0).getTransactionDate());
+    data.put("endDate",trans.get(trans.size()-1).getTransactionDate());
 
     new ReportEngine().generate("TransactionPDF","report.pdf",data);
   }
