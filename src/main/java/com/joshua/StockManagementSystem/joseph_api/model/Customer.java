@@ -1,7 +1,7 @@
 package com.joshua.StockManagementSystem.joseph_api.model;
 
 public class Customer {
-    private String id, name, description,contact;
+    private String id, name, description,contact, totalAmountSpend;
 
     public String getId() {
         return id;
@@ -33,5 +33,13 @@ public class Customer {
 
     public Customer setContact(String contact) {
         this.contact = contact;return this;
+    }
+
+    public String getTotalAmountSpend() {
+        return totalAmountSpend;
+    }
+
+    public Customer setTotalAmountSpend(String totalAmountSpend) {
+        this.totalAmountSpend = totalAmountSpend;return this;
     }
 }

@@ -92,7 +92,8 @@ public class TransactionAdapter {
             .setTransactionDate(transactionSpec.getTransactionHeaderDataEntity().getTransactionDate())
             .setTransactionDetails(convertDetailDataEntitiesToModels(transactionSpec))
             .setTimestamp(new Date(transactionSpec.getTransactionHeaderDataEntity().getTimestamp().getTime()))
-            .setNote(transactionSpec.getTransactionHeaderDataEntity().getNote());
+            .setNote(transactionSpec.getTransactionHeaderDataEntity().getNote())
+            ;
   }
 
   public static List<TransactionDetail> convertDetailDataEntitiesToModels(TransactionSpec dataEntity){
