@@ -175,9 +175,9 @@ public class TransactionDataAccessService implements TransactionDAO {
             +applySort(indexTransactionRequestPayload);
 
     List<TransactionHeaderDataEntity> transactionHeaderDataEntities = jdbcTemplate.query(
-            sql, ((resultSet, i) -> {
-              return convertResultSetToDataEntity(resultSet);
-            })
+        sql, ((resultSet, i) -> {
+          return convertResultSetToDataEntity(resultSet);
+        })
     );
 
     int sz = transactionHeaderDataEntities.size();
@@ -188,24 +188,7 @@ public class TransactionDataAccessService implements TransactionDAO {
               .setTransactionDetailDataEntityList(new LinkedList<>())
       );
     }
-
-  final String sqlDet =
-          PostgresHelper.selectOperation(new TransactionDetailDataEntity())
-          +applyDetailFilter(indexTransactionRequestPayload, indexOfId);
-
-  List<TransactionDetailDataEntity> transactionDetailDataEntities =
-    jdbcTemplate.query(
-            sqlDet, ((resultSet, i) ->
-        new  TransactionDetailDataEntity()
-          .setItemCode(resultSet.getString(TransactionDetailDataEntity.ITEMCODE))
-          .setQuantity(resultSet.getInt(TransactionDetailDataEntity.QTY))
-          .setTransactionHeaderId(resultSet.getString(TransactionDetailDataEntity.TRANSHID))
-          .setPrice(resultSet.getBigDecimal(TransactionDetailDataEntity.PRICE))
-          .setNote(resultSet.getString(TransactionDetailDataEntity.NOTE))
-          .setTimestamp(resultSet.getTimestamp(TransactionDetailDataEntity.TIMESTAMP))
-      )
-    );
-
+    List<TransactionDetailDataEntity> transactionDetailDataEntities = indexDetails(indexTransactionRequestPayload,indexOfId);
     // mapping
     sz = transactionDetailDataEntities.size();
 
@@ -227,6 +210,27 @@ public class TransactionDataAccessService implements TransactionDAO {
 //  filter: by product(multiple) , by customer (multiple), payment type (multiple) , by date range
 //  sort: by total income, date
 
+
+  @Override
+  public List<TransactionDetailDataEntity> indexDetails(IndexTransactionRequestPayload indexTransactionRequestPayload, HashMap<String,Integer> indexOfId){
+    final String sqlDet =
+      PostgresHelper.selectOperation(new TransactionDetailDataEntity())
+        +applyDetailFilter(indexTransactionRequestPayload, indexOfId);
+
+    List<TransactionDetailDataEntity> transactionDetailDataEntities =
+      jdbcTemplate.query(
+        sqlDet, ((resultSet, i) ->
+          new  TransactionDetailDataEntity()
+            .setItemCode(resultSet.getString(TransactionDetailDataEntity.ITEMCODE))
+            .setQuantity(resultSet.getInt(TransactionDetailDataEntity.QTY))
+            .setTransactionHeaderId(resultSet.getString(TransactionDetailDataEntity.TRANSHID))
+            .setPrice(resultSet.getBigDecimal(TransactionDetailDataEntity.PRICE))
+            .setNote(resultSet.getString(TransactionDetailDataEntity.NOTE))
+            .setTimestamp(resultSet.getTimestamp(TransactionDetailDataEntity.TIMESTAMP))
+        )
+      );
+    return transactionDetailDataEntities;
+  }
   @Override
   public Optional<TransactionSpec> show(String id) {
     final String sql = PostgresHelper.selectOperation(new TransactionHeaderDataEntity())

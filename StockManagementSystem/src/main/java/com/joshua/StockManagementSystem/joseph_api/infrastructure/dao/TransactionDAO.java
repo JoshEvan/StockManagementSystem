@@ -6,12 +6,14 @@ import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.Prod
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.TransactionDetailDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.TransactionHeaderDataEntity;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
 public interface TransactionDAO {
   Integer insert(TransactionHeaderDataEntity transactionHeaderDataEntity, List<TransactionDetailDataEntity> details);
   List<TransactionSpec> index(IndexTransactionRequestPayload indexTransactionRequestPayload);
+  List<TransactionDetailDataEntity> indexDetails(IndexTransactionRequestPayload indexTransactionRequestPayload, HashMap<String,Integer> indexOfId);
   Optional<TransactionSpec> show(String id);
   Integer update(TransactionHeaderDataEntity transactionHeaderDataEntity, List<TransactionDetailDataEntity> details);
   Integer delete(String idItem);

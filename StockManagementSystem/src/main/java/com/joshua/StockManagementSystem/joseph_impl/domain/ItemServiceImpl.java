@@ -1,17 +1,26 @@
 package com.joshua.StockManagementSystem.joseph_impl.domain;
 
+import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexTransactionRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertItemRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.ItemService;
 import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.ItemDAO;
+import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.TransactionDAO;
 import com.joshua.StockManagementSystem.joseph_api.model.Item;
+import com.joshua.StockManagementSystem.joseph_api.model.TransactionDetail;
+import com.joshua.StockManagementSystem.joseph_api.model.TransactionHeader;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.TransactionAdapter;
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.dao.spec.TransactionSpec;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ItemDataEntity;
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.TransactionHeaderDataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,10 +32,13 @@ import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapte
 @Service
 public class ItemServiceImpl implements ItemService {
   private final ItemDAO itemDAO;
+  private final TransactionDAO transactionDAO;
 
   @Autowired
-  public ItemServiceImpl(@Qualifier("postgresItem") ItemDAO itemDAO) {
+  public ItemServiceImpl(@Qualifier("postgresItem") ItemDAO itemDAO,
+                         @Qualifier("postgresTransaction") TransactionDAO transactionDAO) {
     this.itemDAO = itemDAO;
+    this.transactionDAO = transactionDAO;
   }
 
   @Override
@@ -42,7 +54,42 @@ public class ItemServiceImpl implements ItemService {
 
   @Override
   public List<Item> index() {
-    return convertDataEntitiesToModels(itemDAO.index());
+    List<ItemDataEntity> itemDataEntities = itemDAO.index();
+    List<TransactionDetail> transactionDetails =
+      TransactionAdapter.convertDetailDataEntitiesToModels(
+        new TransactionSpec().setTransactionHeaderDataEntity(new TransactionHeaderDataEntity().setId("not used")).setTransactionDetailDataEntityList(
+          transactionDAO.indexDetails(new IndexTransactionRequestPayload(), new HashMap<>())));
+
+    HashMap<String, BigDecimal> amountIncome = new HashMap<>();
+    HashMap<String, Integer> amountSold = new HashMap<>();
+
+    for(TransactionDetail detail: transactionDetails){
+      if(!amountIncome.containsKey(detail.getItemCode())){
+        amountIncome.put(detail.getItemCode(),detail.getSubTotalDec());
+      }else{
+        amountIncome.replace(detail.getItemCode(),detail.getSubTotalDec().add(amountIncome.get(detail.getItemCode())));
+      }
+
+      if(!amountSold.containsKey(detail.getItemCode())){
+        amountSold.put(detail.getItemCode(),detail.getQuantity());
+      }else{
+        amountSold.replace(detail.getItemCode(),detail.getQuantity()+amountSold.get(detail.getItemCode()));
+      }
+    }
+
+    List<Item> items = convertDataEntitiesToModels(itemDataEntities);
+    for(Item item: items){
+      if(amountIncome.containsKey(item.getItemCode()))
+        item.setIncomeAmountDec(amountIncome.get(item.getItemCode()))
+        .setIncomeAmount(formatCurrency(amountIncome.get(item.getItemCode())));
+      else item.setIncomeAmount(formatCurrency(BigDecimal.valueOf(0))).setIncomeAmountDec(BigDecimal.valueOf(0));
+
+      if(amountSold.containsKey(item.getItemCode()))
+        item.setTotalSold(amountSold.get(item.getItemCode()));
+      else item.setTotalSold(0);
+    }
+
+    return items;
   }
 
   @Override
