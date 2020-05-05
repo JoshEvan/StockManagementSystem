@@ -17,3 +17,7 @@ https://www.princeton.edu/~rcurtis/ultradev/ecommdatabase.html
 https://www.princeton.edu/~rcurtis/ultradev/images/storediagram.gif
 
 
+TODO:
+
+change money
+customer dan item income
