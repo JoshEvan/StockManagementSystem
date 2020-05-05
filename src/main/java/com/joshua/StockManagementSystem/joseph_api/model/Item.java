@@ -8,8 +8,9 @@ public class Item {
     private String itemCode, name,description;
     private BigDecimal price;
     private Integer stock, capacity;
-    private Integer totalSold;
-    private BigDecimal incomeAmount;
+    private Integer totalSold = 0;
+    private BigDecimal incomeAmountDec = BigDecimal.valueOf(0);
+    private String incomeAmount = PostgresHelper.formatCurrency(BigDecimal.valueOf(0));
 
     public String getItemCode() {
         return itemCode;
@@ -71,11 +72,19 @@ public class Item {
         this.totalSold = totalSold;return this;
     }
 
-    public BigDecimal getIncomeAmount() {
-        return incomeAmount;
+    public String getIncomeAmount() {
+        return PostgresHelper.formatCurrency(incomeAmountDec);
     }
 
-    public Item setIncomeAmount(BigDecimal incomeAmount) {
+    public Item setIncomeAmount(String incomeAmount) {
         this.incomeAmount = incomeAmount;return this;
+    }
+
+    public BigDecimal getIncomeAmountDec() {
+        return incomeAmountDec;
+    }
+
+    public Item setIncomeAmountDec(BigDecimal incomeAmountDec) {
+        this.incomeAmountDec = incomeAmountDec;return this;
     }
 }
