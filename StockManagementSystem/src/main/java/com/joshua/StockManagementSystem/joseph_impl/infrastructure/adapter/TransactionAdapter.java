@@ -9,6 +9,7 @@ import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.Tran
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,8 @@ public class TransactionAdapter {
               .setCustomerId(resultSet.getString(TransactionHeaderDataEntity.CUSTID))
               .setPaymentStatus(resultSet.getString(TransactionHeaderDataEntity.PAYSTAT))
               .setTransactionDate(resultSet.getDate(TransactionHeaderDataEntity.TRANDATE))
-              .setNote(resultSet.getString(TransactionHeaderDataEntity.NOTE));
+              .setNote(resultSet.getString(TransactionHeaderDataEntity.NOTE))
+              .setTimestamp(resultSet.getTimestamp(TransactionHeaderDataEntity.TIMESTAMP));
     } catch (SQLException throwables) {
       return new TransactionHeaderDataEntity();
     }
@@ -65,7 +67,8 @@ public class TransactionAdapter {
               .setPrice(resultSet.getFloat(TransactionDetailDataEntity.PRICE))
               .setNote(resultSet.getString(TransactionDetailDataEntity.NOTE))
               .setQuantity(resultSet.getInt(TransactionDetailDataEntity.QTY))
-              .setItemCode(resultSet.getString(TransactionDetailDataEntity.ITEMCODE));
+              .setItemCode(resultSet.getString(TransactionDetailDataEntity.ITEMCODE))
+              .setTimestamp(resultSet.getTimestamp(TransactionDetailDataEntity.TIMESTAMP));
     }catch (Exception e){
       return new TransactionDetailDataEntity();
     }
@@ -83,12 +86,13 @@ public class TransactionAdapter {
   public static TransactionHeader convertTransactionSpecToModel(TransactionSpec transactionSpec){
     return new TransactionHeader()
             .setId(transactionSpec.getTransactionHeaderDataEntity().getId())
-            .setPaymentStatus(transactionSpec.getTransactionHeaderDataEntity().getId())
+            .setPaymentStatus(transactionSpec.getTransactionHeaderDataEntity().getPaymentStatus())
             .setPaymentId(transactionSpec.getTransactionHeaderDataEntity().getPaymentId())
             .setCustomerId(transactionSpec.getTransactionHeaderDataEntity().getCustomerId())
             .setTransactionDate(transactionSpec.getTransactionHeaderDataEntity().getTransactionDate())
-            .setTransactionDetails(convertDetailDataEntitiesToModels(transactionSpec));
-
+            .setTransactionDetails(convertDetailDataEntitiesToModels(transactionSpec))
+            .setTimestamp(new Date(transactionSpec.getTransactionHeaderDataEntity().getTimestamp().getTime()))
+            .setNote(transactionSpec.getTransactionHeaderDataEntity().getNote());
   }
 
   public static List<TransactionDetail> convertDetailDataEntitiesToModels(TransactionSpec dataEntity){
@@ -100,6 +104,8 @@ public class TransactionAdapter {
                     .setQuantity(transactionDetailDataEntity.getQuantity())
                     .setPrice(transactionDetailDataEntity.getPrice())
                     .setTransactionHeaderId(dataEntity.getTransactionHeaderDataEntity().getId())
+                    .setTimestamp(new Date(transactionDetailDataEntity.getTimestamp().getTime()))
+                    .setNote(transactionDetailDataEntity.getNote())
             ).collect(Collectors.toList());
   }
 }

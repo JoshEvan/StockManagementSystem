@@ -1,5 +1,6 @@
 package com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class TransactionHeaderDataEntity extends JosephDataEntity{
@@ -7,12 +8,14 @@ public class TransactionHeaderDataEntity extends JosephDataEntity{
           paymentId;
   private Date transactionDate;
   private String paymentStatus, note;
+  private Timestamp timestamp;
 
   public static final String ID = "id",
           CUSTID = "customer_id", PAYID = "payment_id",
           TRANDATE = "transaction_date",
           PAYSTAT = "payment_status",
-          NOTE = "note";
+          NOTE = "note",
+          TIMESTAMP = "timestamp";
 
   public TransactionHeaderDataEntity() {
     TABLE = "transaction_headers";
@@ -65,5 +68,13 @@ public class TransactionHeaderDataEntity extends JosephDataEntity{
 
   public TransactionHeaderDataEntity setNote(String note) {
     this.note = note;return this;
+  }
+
+  public Date getTimestamp() {
+    return timestamp;
+  }
+
+  public TransactionHeaderDataEntity setTimestamp(Timestamp timestamp) {
+    this.timestamp = timestamp;return this;
   }
 }
