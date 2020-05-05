@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.TransactionAdapter.*;
@@ -149,7 +150,7 @@ public class TransactionServiceImpl implements TransactionService {
     for(int i = 0;i<sz;i++){
       UpsertTransactionDetailRequestPayload updatedDetail = upsertTransactionHeaderRequestPayload.getTransactionDetails().get(i);
       int previousQty = 0;
-      Float previousPrice = (float) 0;
+      BigDecimal previousPrice = BigDecimal.valueOf(0);
       if(i < previousTransactionSpec.getTransactionDetailDataEntityList().size()){
         TransactionDetailDataEntity previousDetail = previousTransactionSpec.getTransactionDetailDataEntityList().get(i);
         previousPrice = previousDetail.getPrice();

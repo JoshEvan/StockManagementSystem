@@ -1,10 +1,11 @@
 package com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class TransactionDetailDataEntity extends JosephDataEntity{
   private String transactionHeaderId, itemCode;
-  private Float price;
+  private BigDecimal price;
   private Integer quantity;
   private String note;
   private Timestamp timestamp;
@@ -36,11 +37,11 @@ public class TransactionDetailDataEntity extends JosephDataEntity{
     this.itemCode = itemCode;return this;
   }
 
-  public Float getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
-  public TransactionDetailDataEntity setPrice(Float price) {
+  public TransactionDetailDataEntity setPrice(BigDecimal price) {
     this.price = price;return this;
   }
 

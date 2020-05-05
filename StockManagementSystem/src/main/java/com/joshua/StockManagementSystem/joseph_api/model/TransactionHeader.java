@@ -1,5 +1,6 @@
 package com.joshua.StockManagementSystem.joseph_api.model;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +12,7 @@ public class TransactionHeader {
     private List<TransactionDetail> transactionDetails;
     private Date timestamp;
     private String note;
-    private Float total;
+    private BigDecimal total;
 
     public String getId() {
         return id;
@@ -77,15 +78,15 @@ public class TransactionHeader {
         this.note = note;return this;
     }
 
-    public Float getTotal() {
-        total = (float) 0 ;
+    public BigDecimal getTotal() {
+        total =BigDecimal.valueOf(0);
         for(TransactionDetail detail: transactionDetails){
-            total+=detail.getSubTotal();
+            total = total.add(detail.getSubTotal());
         }
         return total;
     }
 
-    public TransactionHeader setTotal(Float total) {
+    public TransactionHeader setTotal(BigDecimal total) {
         this.total = total;return this;
     }
 }

@@ -64,7 +64,7 @@ public class TransactionAdapter {
     try {
       return new TransactionDetailDataEntity()
               .setTransactionHeaderId(resultSet.getString(TransactionDetailDataEntity.TRANSHID))
-              .setPrice(resultSet.getFloat(TransactionDetailDataEntity.PRICE))
+              .setPrice(resultSet.getBigDecimal(TransactionDetailDataEntity.PRICE))
               .setNote(resultSet.getString(TransactionDetailDataEntity.NOTE))
               .setQuantity(resultSet.getInt(TransactionDetailDataEntity.QTY))
               .setItemCode(resultSet.getString(TransactionDetailDataEntity.ITEMCODE))

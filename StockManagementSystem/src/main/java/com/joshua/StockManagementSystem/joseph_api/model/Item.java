@@ -1,8 +1,10 @@
 package com.joshua.StockManagementSystem.joseph_api.model;
 
+import java.math.BigDecimal;
+
 public class Item {
     private String itemCode, name,description;
-    private Float price;
+    private BigDecimal price;
     private Integer stock, capacity;
 
     public String getItemCode() {
@@ -29,11 +31,11 @@ public class Item {
         this.description = description;return this;
     }
 
-    public Float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public Item setPrice(Float price) {
+    public Item setPrice(BigDecimal price) {
         this.price = price;return this;
     }
 

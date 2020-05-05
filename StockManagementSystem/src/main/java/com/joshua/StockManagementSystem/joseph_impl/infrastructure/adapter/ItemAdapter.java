@@ -16,7 +16,7 @@ public class ItemAdapter {
               .setItemCode(resultSet.getString(ItemDataEntity.ITEMCODE))
               .setName(resultSet.getString(ItemDataEntity.NAME))
               .setDescription(resultSet.getString(ItemDataEntity.DESCRIPTION))
-              .setPrice(resultSet.getFloat(ItemDataEntity.PRICE))
+              .setPrice(resultSet.getBigDecimal(ItemDataEntity.PRICE))
               .setStock(resultSet.getInt(ItemDataEntity.STOCK))
               .setCapacity(resultSet.getInt(ItemDataEntity.CAPACITY))
               ;
