@@ -116,6 +116,19 @@ public class TransactionDataAccessService implements TransactionDAO {
     return condition;
   }
 
+  private String applySort(IndexTransactionRequestPayload indexTransactionRequestPayload ){
+    String condition = "";
+    if(indexTransactionRequestPayload.getSortByDate() > 0){
+      // ASC
+      condition+=" ORDER BY "+TransactionHeaderDataEntity.TRANDATE+" ASC";
+    }else if(indexTransactionRequestPayload.getSortByDate() < 0){
+      // DESC
+      condition+=" ORDER BY "+TransactionHeaderDataEntity.TRANDATE+" DESC";
+    }
+    return condition;
+  }
+
+
   private String applyDetailFilter(
           IndexTransactionRequestPayload indexTransactionRequestPayload,
           HashMap<String,Integer> indexOfId){
@@ -158,7 +171,8 @@ public class TransactionDataAccessService implements TransactionDAO {
 
     final String sql = PostgresHelper.selectOperation(new TransactionHeaderDataEntity())
             + " WHERE "+ ItemDataEntity.ISACTIVE+" = true"
-            +applyFilter(indexTransactionRequestPayload);
+            +applyFilter(indexTransactionRequestPayload)
+            +applySort(indexTransactionRequestPayload);
 
     List<TransactionHeaderDataEntity> transactionHeaderDataEntities = jdbcTemplate.query(
             sql, ((resultSet, i) -> {
@@ -212,6 +226,7 @@ public class TransactionDataAccessService implements TransactionDAO {
   }
 //  filter: by product(multiple) , by customer (multiple), payment type (multiple) , by date range
 //  sort: by total income, date
+
   @Override
   public Optional<TransactionSpec> show(String id) {
     final String sql = PostgresHelper.selectOperation(new TransactionHeaderDataEntity())
