@@ -8,6 +8,8 @@ public class IndexTransactionRequestPayload {
   private List<String> itemFilter = new LinkedList<>();
   private List<String> paymentFilter = new LinkedList<>();
   private List<String> transactionIdFilter = new LinkedList<>();
+  private Integer sortByDate, sortByTotal;
+
 
   private String dateFilter = "";
   private String endDateFilter = "";
@@ -58,5 +60,21 @@ public class IndexTransactionRequestPayload {
 
   public IndexTransactionRequestPayload setTransactionIdFilter(List<String> transactionIdFilter) {
     this.transactionIdFilter = transactionIdFilter;return this;
+  }
+
+  public Integer getSortByDate() {
+    return sortByDate;
+  }
+
+  public IndexTransactionRequestPayload setSortByDate(Integer sortByDate) {
+    this.sortByDate = sortByDate;return this;
+  }
+
+  public Integer getSortByTotal() {
+    return sortByTotal;
+  }
+
+  public IndexTransactionRequestPayload setSortByTotal(Integer sortByTotal) {
+    this.sortByTotal = sortByTotal;return this;
   }
 }

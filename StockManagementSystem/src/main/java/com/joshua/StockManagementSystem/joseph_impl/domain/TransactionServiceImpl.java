@@ -104,7 +104,17 @@ public class TransactionServiceImpl implements TransactionService {
   @Override
   public List<TransactionHeader> index(IndexTransactionRequestPayload indexTransactionRequestPayload) {
     List<TransactionSpec> transactionSpecs = transactionDAO.index(indexTransactionRequestPayload);
-    return TransactionAdapter.convertTransactionSpecsToModels(transactionSpecs);
+    List<TransactionHeader> results = TransactionAdapter.convertTransactionSpecsToModels(transactionSpecs);
+
+    if(indexTransactionRequestPayload.getSortByTotal() != 0 ){
+      // ASC
+      results.sort((Comparator.comparing(TransactionHeader::getTotal)));
+    }
+    if(indexTransactionRequestPayload.getSortByTotal() < 0){
+      // DESC
+      Collections.reverse(results);
+    }
+    return results;
   }
 
   @Override
