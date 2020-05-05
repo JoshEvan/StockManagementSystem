@@ -136,7 +136,13 @@ public class TransactionServiceImpl implements TransactionService {
     int sz = upsertTransactionHeaderRequestPayload.getTransactionDetails().size();
     for(int i = 0;i<sz;i++){
       UpsertTransactionDetailRequestPayload updatedDetail = upsertTransactionHeaderRequestPayload.getTransactionDetails().get(i);
-      TransactionDetailDataEntity previousDetail = previousTransactionSpec.getTransactionDetailDataEntityList().get(i);
+      int previousQty = 0;
+      Float previousPrice = (float) 0;
+      if(i < previousTransactionSpec.getTransactionDetailDataEntityList().size()){
+        TransactionDetailDataEntity previousDetail = previousTransactionSpec.getTransactionDetailDataEntityList().get(i);
+        previousPrice = previousDetail.getPrice();
+        previousQty = previousDetail.getQuantity();
+      }
 
       log.info("validating item "+updatedDetail.getItemCode());
       Optional<ItemDataEntity> currItem = itemDAO.show(updatedDetail.getItemCode());
@@ -148,9 +154,9 @@ public class TransactionServiceImpl implements TransactionService {
       }
 
       // update stock
-      currItem.get().setStock(currItem.get().getStock() + previousDetail.getQuantity() - updatedDetail.getQuantity());
+      currItem.get().setStock(currItem.get().getStock() + previousQty - updatedDetail.getQuantity());
       itemDataEntities.add(currItem.get());
-      updatedTransactionSpec.getTransactionDetailDataEntityList().get(i).setPrice(previousDetail.getPrice());
+      updatedTransactionSpec.getTransactionDetailDataEntityList().get(i).setPrice(previousPrice);
 
       // PRICE OF EACH ITEM WILL BE SET AS SAME AS ITEM'S PRICE BEFORE
       // IF ITEM'S PRICE CHANGED, THEN USER SHOULD DELETE AND INSERT NEW TRANSACTIONS

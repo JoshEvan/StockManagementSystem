@@ -6,9 +6,10 @@
         table, td, th {
           border-collapse: collapse;
           border: 1px solid black;
+          text-align:center;
         }
         @page {
-            size: A4;
+            size: A4 landscape;
             margin: 10px;
             padding-top: 32px;
 
@@ -16,7 +17,14 @@
             @bottom-right { content: element(footer); }
         }
 
-        .footer { position: running(footer); text-align: right; }
+        .footer {
+            position: running(footer);
+            padding-top: 10px;
+            padding-bottom: 0px;
+            position:fixed;
+            bottom:0;
+         }
+
         .pagenumber:before { content: counter(page); }
         .pagecount:before { content: counter(pages); }
 
@@ -37,17 +45,20 @@
 <h3>TRANSACTIONS FROM {{startDate}} TO {{endDate}}</h3>
 <table>
     <tr>
+        <th>NUM</th>
         <th>ID</th>
         <th>CUSTOMER ID</th>
         <th>PAYMENT ID</th>
         <th>DATE</th>
         <th>PAYMENT STATUS</th>
         <th>DETAILS</th>
+        <th>TOTAL</th>
         <th>NOTE</th>
         <th>DATA LAST UPDATED</th>
     </tr>
     {{#transactions}}
     <tr>
+        <td>{{@index}}</td>
         <td>{{id}}</td>
         <td>{{customerId}}</td>
         <td>{{paymentId}}</td>
@@ -59,6 +70,7 @@
                     <th>ITEM CODE</th>
                     <th>PRICE</th>
                     <th>QUANTITY</th>
+                    <th>SUBTOTAL</th>
                     <th>NOTE</th>
                 </tr>
                 {{#transactionDetails}}
@@ -66,11 +78,13 @@
                     <td>{{itemCode}}</td>
                     <td>{{price}}</td>
                     <td>{{quantity}}</td>
+                    <td>{{subTotal}}</td>
                     <td>{{note}}</td>
                 </tr>
                 {{/transactionDetails}}
             </table>
         </td>
+        <td>{{total}}</td>
         <td>{{note}}</td>
         <td>{{timestamp}}</td>
     </tr>

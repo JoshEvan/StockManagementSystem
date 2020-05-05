@@ -1,15 +1,19 @@
 package com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout;
 
+import java.sql.Timestamp;
+
 public class TransactionDetailDataEntity extends JosephDataEntity{
   private String transactionHeaderId, itemCode;
   private Float price;
   private Integer quantity;
   private String note;
+  private Timestamp timestamp;
 
   public static final String TRANSHID = "transaction_header_id",
           ITEMCODE = "item_code", PRICE = "price",
           QTY = "quantity",
-          NOTE = "note";
+          NOTE = "note",
+          TIMESTAMP = "timestamp";
 
   public TransactionDetailDataEntity() {
     TABLE = "transaction_details";
@@ -54,5 +58,13 @@ public class TransactionDetailDataEntity extends JosephDataEntity{
 
   public TransactionDetailDataEntity setNote(String note) {
     this.note = note;return this;
+  }
+
+  public Timestamp getTimestamp() {
+    return timestamp;
+  }
+
+  public TransactionDetailDataEntity setTimestamp(Timestamp timestamp) {
+    this.timestamp = timestamp;return this;
   }
 }
