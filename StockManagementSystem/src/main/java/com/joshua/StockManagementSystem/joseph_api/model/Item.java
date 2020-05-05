@@ -1,5 +1,7 @@
 package com.joshua.StockManagementSystem.joseph_api.model;
 
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
+
 import java.math.BigDecimal;
 
 public class Item {
@@ -31,8 +33,12 @@ public class Item {
         this.description = description;return this;
     }
 
-    public BigDecimal getPrice() {
+    public BigDecimal getPriceDec() {
         return price;
+    }
+
+    public String getPrice() {
+        return PostgresHelper.formatCurrency(price);
     }
 
     public Item setPrice(BigDecimal price) {

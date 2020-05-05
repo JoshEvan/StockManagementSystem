@@ -1,6 +1,10 @@
 package com.joshua.StockManagementSystem.joseph_api.model;
 
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.TransactionDetailDataEntity;
+import org.joda.money.BigMoney;
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -29,8 +33,8 @@ public class TransactionDetail {
         this.itemCode = itemCode;return this;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public String getPrice() {
+        return PostgresHelper.formatCurrency(price);
     }
 
     public TransactionDetail setPrice(BigDecimal price) {
@@ -61,7 +65,11 @@ public class TransactionDetail {
         this.timestamp = timestamp;return this;
     }
 
-    public BigDecimal getSubTotal() {
+    public String getSubTotal() {
+        return PostgresHelper.formatCurrency(getSubTotalDec());
+    }
+
+    public BigDecimal getSubTotalDec() {
         return BigDecimal.valueOf(quantity).multiply(price);
     }
 
