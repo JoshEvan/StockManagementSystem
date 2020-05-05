@@ -1,8 +1,10 @@
 package com.joshua.StockManagementSystem.joseph_api.api.payload.upsert;
 
+import java.math.BigDecimal;
+
 public class UpsertItemRequestPayload {
   private String itemCode, name, description;
-  private Float price;
+  private BigDecimal price;
   private Integer stock, capacity;
 
   public String getItemCode() {
@@ -29,11 +31,11 @@ public class UpsertItemRequestPayload {
     this.description = description;return this;
   }
 
-  public Float getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
-  public UpsertItemRequestPayload setPrice(Float price) {
+  public UpsertItemRequestPayload setPrice(BigDecimal price) {
     this.price = price;return this;
   }
 

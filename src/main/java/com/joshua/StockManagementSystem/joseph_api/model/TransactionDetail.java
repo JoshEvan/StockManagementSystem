@@ -2,15 +2,16 @@ package com.joshua.StockManagementSystem.joseph_api.model;
 
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.TransactionDetailDataEntity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class TransactionDetail {
     private String transactionHeaderId, itemCode;
-    private Float price;
+    private BigDecimal price;
     private Integer quantity;
     private String note;
     private Date timestamp;
-    private Float subTotal;
+    private BigDecimal subTotal;
 
     public String getTransactionHeaderId() {
         return transactionHeaderId;
@@ -28,11 +29,11 @@ public class TransactionDetail {
         this.itemCode = itemCode;return this;
     }
 
-    public Float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public TransactionDetail setPrice(Float price) {
+    public TransactionDetail setPrice(BigDecimal price) {
         this.price = price;return this;
     }
 
@@ -60,11 +61,11 @@ public class TransactionDetail {
         this.timestamp = timestamp;return this;
     }
 
-    public Float getSubTotal() {
-        return quantity * price;
+    public BigDecimal getSubTotal() {
+        return BigDecimal.valueOf(quantity).multiply(price);
     }
 
-    public TransactionDetail setSubTotal(Float subTotal) {
+    public TransactionDetail setSubTotal(BigDecimal subTotal) {
         this.subTotal = subTotal;return this;
     }
 }

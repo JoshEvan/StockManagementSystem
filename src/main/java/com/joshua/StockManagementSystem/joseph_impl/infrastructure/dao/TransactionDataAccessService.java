@@ -200,7 +200,7 @@ public class TransactionDataAccessService implements TransactionDAO {
           .setItemCode(resultSet.getString(TransactionDetailDataEntity.ITEMCODE))
           .setQuantity(resultSet.getInt(TransactionDetailDataEntity.QTY))
           .setTransactionHeaderId(resultSet.getString(TransactionDetailDataEntity.TRANSHID))
-          .setPrice(resultSet.getFloat(TransactionDetailDataEntity.PRICE))
+          .setPrice(resultSet.getBigDecimal(TransactionDetailDataEntity.PRICE))
           .setNote(resultSet.getString(TransactionDetailDataEntity.NOTE))
           .setTimestamp(resultSet.getTimestamp(TransactionDetailDataEntity.TIMESTAMP))
       )
