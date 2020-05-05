@@ -19,5 +19,5 @@ https://www.princeton.edu/~rcurtis/ultradev/images/storediagram.gif
 
 TODO:
 
-change money
-customer dan item income
+* perbaiki campuran sort dan filter
+* generate pdf item stock
