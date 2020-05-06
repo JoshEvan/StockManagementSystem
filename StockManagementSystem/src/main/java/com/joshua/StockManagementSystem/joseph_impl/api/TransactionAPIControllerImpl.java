@@ -5,6 +5,7 @@ import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexTransa
 import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertTransactionHeaderRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.TransactionService;
 import com.joshua.StockManagementSystem.joseph_api.model.TransactionHeader;
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
 import org.flywaydb.core.internal.util.FileCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -58,10 +59,10 @@ public class TransactionAPIControllerImpl implements TransactionAPIController {
           HttpServletResponse response,
           @NotNull IndexTransactionRequestPayload indexTransactionRequestPayload) throws IOException {
     transactionService.generateReport(indexTransactionRequestPayload);
-    URL res = getClass().getClassLoader().getResource("web/generatedpdf/TransactionReport.pdf");
+    URL res = getClass().getClassLoader().getResource(PostgresHelper.PDF_PATH+ PostgresHelper.TRANS_PDF_FILENAME);
 
 //    File file = new File(res.getFile());
-    File file = new File(System.getProperty("user.dir")+"/web/generatedpdf/TransactionReport.pdf");
+    File file = new File(System.getProperty("user.dir")+PostgresHelper.PDF_PATH+ PostgresHelper.TRANS_PDF_FILENAME);
     InputStream in = new FileInputStream(file);
 
     response.setContentType("application/pdf");

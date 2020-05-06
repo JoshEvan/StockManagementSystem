@@ -163,6 +163,6 @@ public class ItemServiceImpl implements ItemService {
     Map<String, Object> data = new HashMap<>();
     data.put("items",items);
     data.put(("currDate"), new Date());
-    new ReportEngine().generate("ItemPDF","ItemReport.pdf",data);
+    new ReportEngine().generate("ItemPDF", ITEM_PDF_FILENAME,data);
   }
 }

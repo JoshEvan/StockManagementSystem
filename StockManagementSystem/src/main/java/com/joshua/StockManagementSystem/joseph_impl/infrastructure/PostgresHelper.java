@@ -21,6 +21,9 @@ public class PostgresHelper {
   public static final String ITEM = "ITEM ";
   public static final String TRANHEAD = " TRANSACTION ";
   public static final String NOTFOUND = " is not exist";
+  public static final String PDF_PATH = "/web/generatedpdf/";
+  public static final String TRANS_PDF_FILENAME = "TransactionReport.pdf";
+  public static final String ITEM_PDF_FILENAME = "ItemReport.pdf";
 
   public static String insertOperation(JosephDataEntity dataEntity){
     String sql = "INSERT INTO "
@@ -79,4 +82,5 @@ public class PostgresHelper {
     kursIndo.setDecimalFormatSymbols(rp);
     return kursIndo.format(amount);
   }
+
 }
