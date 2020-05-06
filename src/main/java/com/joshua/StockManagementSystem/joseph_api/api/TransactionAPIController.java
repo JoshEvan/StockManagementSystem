@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("api/v1/joseph/transaction")
@@ -31,6 +33,8 @@ public interface TransactionAPIController {
   public List<String> delete(@NotNull @PathVariable("id") String id);
 
   @PostMapping("/report")
-  public void generateReport(@NotNull @RequestBody IndexTransactionRequestPayload indexTransactionRequestPayload);
+  public @ResponseBody  void generateReport(
+          HttpServletResponse response,
+          @NotNull @RequestBody IndexTransactionRequestPayload indexTransactionRequestPayload) throws IOException;
 
 }

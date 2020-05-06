@@ -24,7 +24,7 @@ public class ReportEngine {
   }
 
   public void generate(String templateFile, String outputFile, Map<String,Object> data){
-    try(OutputStream outputStream = new FileOutputStream(new File(outputFile))){
+    try(OutputStream outputStream = new FileOutputStream(new File("web/generatedpdf/"+outputFile))){
       Template template = handlebars.compile(templateFile);
 
       String mergedTemplate = template.apply(data);
