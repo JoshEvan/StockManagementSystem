@@ -5,11 +5,18 @@ import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexTransa
 import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertTransactionHeaderRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.TransactionService;
 import com.joshua.StockManagementSystem.joseph_api.model.TransactionHeader;
+import org.flywaydb.core.internal.util.FileCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 @Component("transactionV1API")
@@ -47,7 +54,20 @@ public class TransactionAPIControllerImpl implements TransactionAPIController {
   }
 
   @Override
-  public void generateReport(@NotNull IndexTransactionRequestPayload indexTransactionRequestPayload) {
+  public void generateReport(
+          HttpServletResponse response,
+          @NotNull IndexTransactionRequestPayload indexTransactionRequestPayload) throws IOException {
     transactionService.generateReport(indexTransactionRequestPayload);
+    URL res = getClass().getClassLoader().getResource("web/generatedpdf/TransactionReport.pdf");
+
+//    File file = new File(res.getFile());
+    File file = new File(System.getProperty("user.dir")+"/web/generatedpdf/TransactionReport.pdf");
+    InputStream in = new FileInputStream(file);
+
+    response.setContentType("application/pdf");
+    response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+    response.setHeader("Content-Length", String.valueOf(file.length()));
+    FileCopyUtils.copy(in, response.getOutputStream());
+
   }
 }
