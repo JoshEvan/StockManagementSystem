@@ -10,19 +10,20 @@
         }
         @page {
             size: A4 landscape;
-            margin: 10px;
+            margin: 50px;
             padding-top: 32px;
 
-            @top-center { content: element(title); }
-            @bottom-right { content: element(footer); }
+            @top-center { content: element(title); };
+            @bottom-right { content: element(footer); };
         }
-
         .footer {
+
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 100px;
             position: running(footer);
-            padding-top: 10px;
-            padding-bottom: 0px;
-            position:fixed;
-            bottom:0;
+            width: 100%;
+            text-align: center;
          }
 
         .pagenumber:before { content: counter(page); }
@@ -31,6 +32,7 @@
         .title {
             display: block;
             margin-top: 10px;
+            margin-bottom: 100px;
             position: running(title);
             width: 100%;
             text-align: center;
