@@ -241,6 +241,6 @@ public class TransactionServiceImpl implements TransactionService {
     data.put("startDate",trans.get(0).getTransactionDate());
     data.put("endDate",trans.get(trans.size()-1).getTransactionDate());
     data.put(("currDate"), new Date());
-    new ReportEngine().generate("TransactionPDF","TransactionReport.pdf",data);
+    new ReportEngine().generate("TransactionPDF", PostgresHelper.TRANS_PDF_FILENAME,data);
   }
 }

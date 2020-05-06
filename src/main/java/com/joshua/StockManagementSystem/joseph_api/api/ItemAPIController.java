@@ -8,7 +8,10 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("api/v1/joseph/item")
@@ -33,6 +36,8 @@ public interface ItemAPIController {
   public List<String> deleteItem(@NotNull @PathVariable("id") String id);
 
   @PostMapping("/report")
-  public void generateReport(@NotNull @RequestBody IndexItemRequestPayload indexItemRequestPayload);
+  public void generateReport(
+          HttpServletResponse response,
+          @NotNull @RequestBody IndexItemRequestPayload indexItemRequestPayload) throws IOException;
 }
 
