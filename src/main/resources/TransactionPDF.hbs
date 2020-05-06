@@ -10,17 +10,15 @@
         }
         @page {
             size: A4 landscape;
-            margin: 50px;
+            margin: 20px 10px 50px 10px;
             padding-top: 32px;
 
             @top-center { content: element(title); };
             @bottom-right { content: element(footer); };
         }
         .footer {
-
             display: block;
             margin-top: 10px;
-            margin-bottom: 100px;
             position: running(footer);
             width: 100%;
             text-align: center;
@@ -32,7 +30,6 @@
         .title {
             display: block;
             margin-top: 10px;
-            margin-bottom: 100px;
             position: running(title);
             width: 100%;
             text-align: center;
@@ -46,7 +43,6 @@
     <span>| Generated on {{currDate}}</span>
 </div>
 
-<h2>TRANSACTION LIST</h2>
 <h3>TRANSACTIONS FROM {{startDate}} TO {{endDate}}</h3>
 <table>
     <tr>
