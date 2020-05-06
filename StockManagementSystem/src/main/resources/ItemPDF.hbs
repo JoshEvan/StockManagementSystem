@@ -4,39 +4,37 @@
     <meta charset="utf-8"/>
     <style>
         table, td, th {
-          border-collapse: collapse;
-          border: 1px solid black;
-          text-align:center;
-        }
-        @page {
-            size: A4 landscape;
-            margin: 10px;
-            padding-top: 32px;
-            justify-content:center;
+                  border-collapse: collapse;
+                  border: 1px solid black;
+                  text-align:center;
+                }
+                @page {
+                    size: A4 landscape;
+                    margin: 20px 10px 50px 10px;
+                    padding-top: 32px;
 
-            @top-center { content: element(title); }
-            @bottom-right { content: element(footer); }
-        }
+                    @top-center { content: element(title); };
+                    @bottom-right { content: element(footer); };
+                }
+                .footer {
+                    display: block;
+                    margin-top: 10px;
+                    position: running(footer);
+                    width: 100%;
+                    text-align: center;
+                 }
 
-        .footer {
-            position: running(footer);
-            padding-top: 10px;
-            padding-bottom: 0px;
-            position:fixed;
-            bottom:0;
-         }
+                .pagenumber:before { content: counter(page); }
+                .pagecount:before { content: counter(pages); }
 
-        .pagenumber:before { content: counter(page); }
-        .pagecount:before { content: counter(pages); }
-
-        .title {
-            display: block;
-            margin-top: 10px;
-            position: running(title);
-            width: 100%;
-            text-align: center;
-        }
-</style>
+                .title {
+                    display: block;
+                    margin-top: 10px;
+                    position: running(title);
+                    width: 100%;
+                    text-align: center;
+                }
+    </style>
 </head>
 <body>
 <h1 class="title">STOCK MANAGEMENT SYSTEM</h1>
