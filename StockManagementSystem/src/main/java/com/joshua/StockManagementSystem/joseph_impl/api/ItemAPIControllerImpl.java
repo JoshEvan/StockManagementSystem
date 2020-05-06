@@ -1,6 +1,7 @@
 package com.joshua.StockManagementSystem.joseph_impl.api;
 
 import com.joshua.StockManagementSystem.joseph_api.api.ItemAPIController;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexItemRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertItemRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.ItemService;
 import com.joshua.StockManagementSystem.joseph_api.model.Item;
@@ -26,8 +27,8 @@ public class ItemAPIControllerImpl implements ItemAPIController {
   }
 
   @Override
-  public List<Item> indexItem() {
-    return itemService.index();
+  public List<Item> indexItem(IndexItemRequestPayload indexItemRequestPayload) {
+    return itemService.index(indexItemRequestPayload);
   }
 
   @Override
