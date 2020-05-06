@@ -1,5 +1,6 @@
 package com.joshua.StockManagementSystem.joseph_impl.domain;
 
+import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexItemRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexTransactionRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertItemRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.ItemService;
@@ -19,10 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper.*;
 import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.ItemAdapter.convertDataEntitiesToModels;
@@ -53,7 +51,7 @@ public class ItemServiceImpl implements ItemService {
   }
 
   @Override
-  public List<Item> index() {
+  public List<Item> index(IndexItemRequestPayload indexItemRequestPayload) {
     List<ItemDataEntity> itemDataEntities = itemDAO.index();
     List<TransactionDetail> transactionDetails =
       TransactionAdapter.convertDetailDataEntitiesToModels(
@@ -87,6 +85,26 @@ public class ItemServiceImpl implements ItemService {
       if(amountSold.containsKey(item.getItemCode()))
         item.setTotalSold(amountSold.get(item.getItemCode()));
       else item.setTotalSold(0);
+    }
+
+    // applySort
+    // sort type must be unique (not more than 1)
+
+    if(indexItemRequestPayload.getSortByAmountIncome() != 0){
+      items.sort((Comparator.comparing(Item::getIncomeAmountDec)));
+      if(indexItemRequestPayload.getSortByAmountIncome() < 0){
+        Collections.reverse(items);
+      }
+    }else if(indexItemRequestPayload.getSortByAmountSold() != 0){
+      items.sort((Comparator.comparing(Item::getTotalSold)));
+      if(indexItemRequestPayload.getSortByAmountSold() < 0){
+        Collections.reverse(items);
+      }
+    }else if(indexItemRequestPayload.getSortByItemCode() != 0){
+      items.sort((Comparator.comparing(Item::getItemCode)));
+      if(indexItemRequestPayload.getSortByItemCode() < 0){
+        Collections.reverse(items);
+      }
     }
 
     return items;

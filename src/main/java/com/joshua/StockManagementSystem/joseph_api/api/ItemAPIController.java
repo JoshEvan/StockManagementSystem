@@ -1,5 +1,7 @@
 package com.joshua.StockManagementSystem.joseph_api.api;
 
+import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexItemRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexTransactionRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertItemRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.model.Item;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -17,8 +19,8 @@ public interface ItemAPIController {
   @PostMapping("/insert")
   public List<String> insertItem(@NotNull @RequestBody UpsertItemRequestPayload upsertItemRequestPayload);
 
-  @GetMapping(value = "/", produces = "application/json")
-  public @ResponseBody List<Item> indexItem();
+  @PostMapping(value = "/", produces = "application/json")
+  public @ResponseBody List<Item> indexItem(@NotNull @RequestBody IndexItemRequestPayload indexItemRequestPayload);
 
   @GetMapping(value = "/show/{id}", produces = "application/json")
   public @ResponseBody
