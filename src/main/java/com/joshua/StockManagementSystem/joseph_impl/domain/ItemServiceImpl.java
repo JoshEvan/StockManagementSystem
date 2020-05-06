@@ -156,4 +156,13 @@ public class ItemServiceImpl implements ItemService {
     }
     return stats;
   }
+
+  @Override
+  public void generateReport(IndexItemRequestPayload indexItemRequestPayload) {
+    List<Item> items = index(indexItemRequestPayload.setSortByItemCode(1)); // sort itemCode asc
+    Map<String, Object> data = new HashMap<>();
+    data.put("items",items);
+    data.put(("currDate"), new Date());
+    new ReportEngine().generate("ItemPDF","ItemReport.pdf",data);
+  }
 }

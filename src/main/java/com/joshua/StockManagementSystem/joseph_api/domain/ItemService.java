@@ -13,4 +13,5 @@ public interface ItemService {
   Item show(String id);
   List<String> update(UpsertItemRequestPayload upsertCustomerRequestPayload);
   List<String> delete(String itemCode);
+  void generateReport(IndexItemRequestPayload indexItemRequestPayload);
 }
