@@ -107,16 +107,18 @@ public class TransactionServiceImpl implements TransactionService {
     List<TransactionSpec> transactionSpecs = transactionDAO.index(indexTransactionRequestPayload);
     List<TransactionHeader> results = TransactionAdapter.convertTransactionSpecsToModels(transactionSpecs);
 
-    // TODO: ini masih salah kalo sort by date sama total!!
+    // TODO: user can only choose 1 sort comparator
+    if(indexTransactionRequestPayload.getSortByDate() == 0){
+      if(indexTransactionRequestPayload.getSortByTotal() != 0 ){
+        // ASC
+        results.sort((Comparator.comparing(TransactionHeader::getTotal)));
+      }
+      if(indexTransactionRequestPayload.getSortByTotal() < 0){
+        // DESC
+        Collections.reverse(results);
+      }
+    }
 
-    if(indexTransactionRequestPayload.getSortByTotal() != 0 ){
-      // ASC
-      results.sort((Comparator.comparing(TransactionHeader::getTotal)));
-    }
-    if(indexTransactionRequestPayload.getSortByTotal() < 0){
-      // DESC
-      Collections.reverse(results);
-    }
     return results;
   }
 
