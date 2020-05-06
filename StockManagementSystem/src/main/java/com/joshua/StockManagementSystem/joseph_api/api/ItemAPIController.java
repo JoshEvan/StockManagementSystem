@@ -31,5 +31,8 @@ public interface ItemAPIController {
 
   @DeleteMapping("/delete/{id}")
   public List<String> deleteItem(@NotNull @PathVariable("id") String id);
+
+  @PostMapping("/report")
+  public void generateReport(@NotNull @RequestBody IndexItemRequestPayload indexItemRequestPayload);
 }
 
