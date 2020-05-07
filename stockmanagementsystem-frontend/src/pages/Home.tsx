@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { SpecialButton } from '../components/molecules/SpecialButton';
+import { Dashboard } from '../components/template/Dashboard';
 
 interface Props extends RouteComponentProps{};
 
@@ -14,7 +15,7 @@ export const Home: React.FC<Props> = ({ history,location,match }) => {
 	console.log(match);
 		return (
 			<div>
-					home
+					<Dashboard/>
 					<Link to ="/about">
 						go to about
 					</Link>
