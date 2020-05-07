@@ -1,0 +1,4 @@
+{
+	"presets": ["@babel/env","@babel/react","@babel/typescript"]
+}
+// plugin yg dibutuhkan, khusus ini harus " ga bisa '
