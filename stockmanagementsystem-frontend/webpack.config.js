@@ -21,12 +21,14 @@ module.exports = {
         // untuk kasih tau tempat exported, compiled code nya kemana, ke folder build di root dir
         path: path.resolve(__dirname,'build'),
         filename:"bundle.js", // nama file di index.html
+        publicPath: '/'
     },
     module: {rules}, // {rules} sama kaya {rules:rules}
     // resolve extension file wktu import
-    resolve:{extensions: ['.ts','.tsz','.js']},
+    resolve:{extensions: ['.ts','.tsx','.js']},
     devServer:{
         contentBase: './', // ambil content dari root, export ke port 5000
-        port: 5000
+        port: 5000,
+        historyApiFallback: true
     }
 }
