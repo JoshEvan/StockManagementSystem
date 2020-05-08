@@ -4,6 +4,7 @@ import { BrowserRouter,Route, Switch } from "react-router-dom";
 import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Post } from './pages/Post';
+import { ItemPage } from './pages/ItemPage';
 
 export default function App(): JSX.Element {
     
@@ -26,7 +27,7 @@ export default function App(): JSX.Element {
                     path = "/" exact component={Home}
                 />
                 <Route
-                    path = "/about" exact component={About}
+                    path = "/items" exact component={ItemPage}
                 />
                 <Route
                     path = "/posts/:id" exact component={Post}

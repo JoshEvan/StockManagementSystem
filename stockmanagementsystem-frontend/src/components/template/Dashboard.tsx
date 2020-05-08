@@ -114,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
+export default function Dashboard({titlePage, content}){
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -142,14 +142,10 @@ export default function Dashboard() {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Joseph 
           </Typography>
-          <Typography variant="overline" gutterBottom>
+          {/* <Typography variant="overline" gutterBottom>
             Stock Management System
-          </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          </Typography> */}
+          
         </Toolbar>
       </AppBar>
       <Drawer
@@ -171,34 +167,33 @@ export default function Dashboard() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                {/* <Chart /> */}
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                {/* <Deposits /> */}
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                {/* <Orders /> */}
-              </Paper>
-            </Grid>
+        
+        <Container maxWidth="lg"style={{paddingTop:'2%'}}>
+          <Grid>
+            <Paper elevation={3} style={{padding:'2%'}}>
+              <Typography variant="h4" component="h2">
+                {titlePage}
+              </Typography>
+              
+              {content}
+            </Paper>
           </Grid>
+          
+        </Container>
+        
+      <footer style={{position:"absolute", bottom: '0', justifyContent:"center",width: "auto"}}>
+        <div>
+        <Container maxWidth="lg" className={classes.container}>
           <Box pt={4}>
             <Copyright />
           </Box>
         </Container>
+        </div>
+      </footer>
       </main>
     </div>
   );
 }
 
 export { Dashboard };
+

@@ -28,7 +28,7 @@ module.exports = {
     resolve:{extensions: ['.ts','.tsx','.js']},
     devServer:{
         contentBase: './', // ambil content dari root, export ke port 5000
-        port: 5000,
+        port: 5001,
         historyApiFallback: true
     }
 }

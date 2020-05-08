@@ -11,6 +11,7 @@ import LayersIcon from '@material-ui/icons/Layers';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import { Link } from 'react-router-dom';
 
 export const mainListItems = (
   <div>
@@ -26,18 +27,22 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Transactions" />
     </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Items" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItem>
+    <Link to="/items"  style={{ textDecoration: 'none', color:'#000' }}>
+        <ListItem button>
+        <ListItemIcon>
+            <ShoppingCartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Items" />
+        </ListItem>
+    </Link>
+    <Link to="/customers" style={{ textDecoration: 'none', color:'#000' }}>
+        <ListItem button>
+        <ListItemIcon>
+            <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Customers" />
+        </ListItem>
+    </Link>
     <ListItem button>
       <ListItemIcon>
         <LayersIcon />
