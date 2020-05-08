@@ -12,12 +12,6 @@ Spring, gradle, PostgreSQL
 https://dbdiagram.io/d/5e88a5724495b02c3b893fc2
 <img src="https://github.com/JoshEvan/StockManagementSystem/blob/master/StockManagementSystem_v2.png?raw=true"/>
 
-nice soruce:
+nice source:
 https://www.princeton.edu/~rcurtis/ultradev/ecommdatabase.html
 https://www.princeton.edu/~rcurtis/ultradev/images/storediagram.gif
-
-
-TODO:
-
-* perbaiki campuran sort dan filter
-* generate pdf item stock
