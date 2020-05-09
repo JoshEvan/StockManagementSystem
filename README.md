@@ -1,13 +1,15 @@
 # StockManagementSystem
-Spring, gradle, PostgreSQL
+`Backend: Java Spring-Boot, Spring Dependency Injection, maven, PostgreSQL, Domain-Driven-Design, flying-saucer, handlebars`
+
+`Frontend: Reactjs, webpack, babel, Typescript, Atomic-Design`
 
 ## use case
-1. user bisa lihat most recent transactions
-`query tabel transactions`
-2. user bisa lihat untuk tiap barang history kluar masuk barang
-`barang kluar: query tabel transactions where EQUAL item_id, brang masuk: query tabel productions where EQUAL prod_id`
-3. user bisa lihat history beli customer
-`query tabel transactions where EQUAL cust id`
+1. user can Create, Read, Update, Delete most recent transactions, 
+and sort based on the transaction date, total amount transaction, filter by product(multiple), the customer (multiple), payment type (multiple), date range (from until)
+2. user can Create, Read, Update, Delete every in and out the history of items
+3. user can Create, Read, Update, Delete transaction history of customers
+4. user can download automatically generated pdf report of transactions and item's stocks
+
 
 https://dbdiagram.io/d/5e88a5724495b02c3b893fc2
 <img src="https://github.com/JoshEvan/StockManagementSystem/blob/master/StockManagementSystem_v2.png?raw=true"/>
