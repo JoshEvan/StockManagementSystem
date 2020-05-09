@@ -1,6 +1,8 @@
 # StockManagementSystem
 project status: **ongoing**, haven't done yet
 
+*Fullstack Web to manage stock, transaction history, generate pdf report, tailored and design based on specific local business*
+
 `Backend: Java Spring-Boot, Spring Dependency Injection, maven, PostgreSQL, Domain-Driven-Design, flying-saucer, handlebars`
 
 `Frontend: Reactjs, webpack, babel, Typescript, Atomic-Design`
