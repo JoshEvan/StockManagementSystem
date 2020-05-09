@@ -1,4 +1,6 @@
 # StockManagementSystem
+project status: **ongoing**, haven't done yet
+
 `Backend: Java Spring-Boot, Spring Dependency Injection, maven, PostgreSQL, Domain-Driven-Design, flying-saucer, handlebars`
 
 `Frontend: Reactjs, webpack, babel, Typescript, Atomic-Design`
