@@ -15,12 +15,15 @@ import { Link } from 'react-router-dom';
 
 export const mainListItems = (
   <div>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItem>
+    
+    <Link to="/" style={{ textDecoration: 'none', color:'#000' }}>
+      <ListItem button>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Dashboard" />
+      </ListItem>
+    </Link>
     <ListItem button>
       <ListItemIcon>
         <LocalAtmIcon />

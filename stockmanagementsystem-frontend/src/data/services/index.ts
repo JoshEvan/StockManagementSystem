@@ -1,0 +1,1 @@
+export { serviceIndexItem } from './ItemService';

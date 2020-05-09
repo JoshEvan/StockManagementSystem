@@ -16,7 +16,7 @@ export const Home: React.FC<Props> = ({ history,location,match }) => {
 		return (
 			<div>
 					<Dashboard 
-						
+						titlePage="Dashboard"
 						content={<div>"yay"</div>}
 						
 					/>

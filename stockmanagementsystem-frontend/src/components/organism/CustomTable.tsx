@@ -5,9 +5,12 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import Button from '@material-ui/core/Button';
 // import { Table } from '../components/organisms';
 import { Table } from 'reactstrap';
+import { IItem } from '../../data/interfaces';
 
 type Props = {
-  test:string
+  test:string,
+  header:string[],
+  body:any
 };
 
 // interface IFeatures{
@@ -27,11 +30,7 @@ type Props = {
 //   }
 // };
 
-interface IProp{
-  test:string
-}
-
-export default class CustomTable extends React.Component<Props,any> {
+export class CustomTable extends React.Component<Props,any> {
   // constructor(props:IProp) {
   //   super(props);
   // }
@@ -40,21 +39,25 @@ export default class CustomTable extends React.Component<Props,any> {
         <Table hover responsive bordered>
             <thead>
               <tr>
-                <th>Key {this.props.test}</th>
-                <th>owners</th>
-                <th>Description</th>
-                <th>Num of Flags</th>
-                <th>isGranted</th>
-                <th>action</th>
+                {this.props.header.map(
+                  (h) => {
+                    {console.log(h)}
+                    return(<th>{h}</th>);
+                  }
+                )}
               </tr>
             </thead>
             <tbody>
-              <td>Key</td>
-              <td>owners</td>
-              <td>Description</td>
-              <td>Num of Flags</td>
-              <td>isGranted</td>
-              <td>action</td>
+                {this.props.body.map(
+                  (h: any) => {
+                    console.log("INTABLE:"+h);
+                    return(
+                      <React.Fragment>
+                        {h}
+                      </React.Fragment>
+                    );
+                  }
+                )}
             </tbody>
           </Table>
     );

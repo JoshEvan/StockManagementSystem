@@ -176,6 +176,7 @@ export default function Dashboard({titlePage, content}){
               </Typography>
               
               {content}
+              
             </Paper>
           </Grid>
           
