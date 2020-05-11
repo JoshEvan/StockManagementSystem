@@ -6,11 +6,20 @@ import Button from '@material-ui/core/Button';
 // import { Table } from '../components/organisms';
 import { Table } from 'reactstrap';
 import { IItem } from '../../data/interfaces';
+import { ResponsiveDialog } from './Dialog';
 
 type Props = {
-  test:string,
   header:string[],
-  body:any
+  body:any,
+  addDialog:{
+    isShown:boolean,
+    title:string,
+    content:any,
+    usingAction:boolean,
+    parentCallback:any,
+    dialogNo:string,
+    dialogYes:string
+  }
 };
 
 // interface IFeatures{
@@ -30,36 +39,78 @@ type Props = {
 //   }
 // };
 
-export class CustomTable extends React.Component<Props,any> {
-  // constructor(props:IProp) {
-  //   super(props);
-  // }
+interface IState{
+  addDialog:{
+    isShown:boolean
+  }
+}
+export class CustomTable extends React.Component<Props,IState> {
+
+  state:IState = {
+    addDialog:{
+      isShown:false
+    }
+  }
+
+  openAddDialog = () => {
+    console.log("OPENNNN")
+    this.setState({
+      addDialog:{
+        isShown:true
+      }
+    })
+  }
+
   render() {
     return (
-        <Table hover responsive bordered>
-            <thead>
-              <tr>
-                {this.props.header.map(
-                  (h) => {
-                    {console.log(h)}
-                    return(<th>{h}</th>);
-                  }
-                )}
-              </tr>
-            </thead>
-            <tbody>
-                {this.props.body.map(
-                  (h: any) => {
-                    console.log("INTABLE:"+h);
-                    return(
-                      <React.Fragment>
-                        {h}
-                      </React.Fragment>
-                    );
-                  }
-                )}
-            </tbody>
-          </Table>
+        <React.Fragment>
+          <div>
+            {
+              (this.state.addDialog.isShown) &&
+              (
+                <ResponsiveDialog
+                  dialogTitle={this.props.addDialog.title}
+                  dialogContent={this.props.addDialog.content}
+                  usingAction={this.props.addDialog.usingAction}
+                  parentCallback={this.props.addDialog.parentCallback}
+                  dialogNo={this.props.addDialog.dialogNo}
+                  dialogYes={this.props.addDialog.dialogYes}
+                  
+                />
+              )
+            }
+          </div>
+          <IconButton color="primary" 
+          style={{float:'right'}}
+          onClick={
+            () => {this.openAddDialog()}
+          }>
+            <AddBoxIcon/>
+          </IconButton>
+          <Table hover responsive bordered>
+              <thead>
+                <tr>
+                  {this.props.header.map(
+                    (h) => {
+                      return(<th>{h}</th>);
+                    }
+                  )}
+                </tr>
+              </thead>
+              <tbody>
+                  {this.props.body.map(
+                    (h: any) => {
+                      console.log("INTABLE:"+h);
+                      return(
+                        <React.Fragment>
+                          {h}
+                        </React.Fragment>
+                      );
+                    }
+                  )}
+              </tbody>
+            </Table>
+          </React.Fragment>
     );
   }
 }

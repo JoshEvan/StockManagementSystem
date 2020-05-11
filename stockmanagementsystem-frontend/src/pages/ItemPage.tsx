@@ -22,7 +22,16 @@ interface IItemPage{
 		isShown:boolean,
 		severity:string,
 		msg:[]
-	}
+	},
+	addDialog:{
+    isShown:boolean,
+    title:string,
+    content:any,
+    usingAction:boolean,
+		parentCallback:any,
+		dialogYes:string,
+		dialogNo:string,
+  }
 }
 
 const colName: string[] = ["NUM","ITEM CODE", "NAME", 
@@ -44,12 +53,26 @@ export class ItemPage extends React.Component<Props,any> {
 				isShown:false,
 				severity:"info",
 				msg:[]
+			},
+			addDialog:{
+				isShown:false,
+				usingAction:true,
+				title:"Add new item",
+				content:(<form><input type="text" placeholder="test"/></form>), // TODO: FORM
+				parentCallback:
+					this.closeAddDialog,
+				dialogNo:"cancel",
+				dialogYes:"yes"
 			}
 		}
 	}
 
-	deleteConfirm = (isYes:boolean, key:string) => {
-		if(isYes) this.deleteItem(key);
+	closeAddDialog = (isYes:Boolean) => {
+		this.setState({
+			addDialog:{
+				isShown:false
+			}
+		});
 	}
 	
 	closeSnackbar = () => {
@@ -60,6 +83,10 @@ export class ItemPage extends React.Component<Props,any> {
 				msg:[]
 			}
 		});
+	}
+	
+	deleteConfirm = (isYes:boolean, key:string) => {
+		if(isYes) this.deleteItem(key);
 	}
 
 	deleteItem = async (key:string) => {
@@ -132,7 +159,9 @@ export class ItemPage extends React.Component<Props,any> {
 
 					{/* {console.log("ATTABLE:"+this.state.rawContent[0].itemCode)} */}
 					<CustomTable 
-						test={"test"} 
+						addDialog={
+							this.state.addDialog
+						}
 						header={colName}
 						body={
 							this.state.rawContent.map(
