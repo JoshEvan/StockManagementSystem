@@ -1,12 +1,17 @@
 package com.joshua.StockManagementSystem.joseph_impl.api;
 
 import com.joshua.StockManagementSystem.joseph_api.api.ItemAPIController;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.delete.DeleteItemResponsePayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexItemRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexItemResponsePayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexTransactionRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertItemRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.ItemService;
 import com.joshua.StockManagementSystem.joseph_api.model.Item;
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.HttpStatus;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.util.Pair;
 import org.flywaydb.core.internal.util.FileCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,8 +38,8 @@ public class ItemAPIControllerImpl implements ItemAPIController {
   }
 
   @Override
-  public List<Item> indexItem(IndexItemRequestPayload indexItemRequestPayload) {
-    return itemService.index(indexItemRequestPayload);
+  public IndexItemResponsePayload indexItem(IndexItemRequestPayload indexItemRequestPayload) {
+    return new IndexItemResponsePayload().setItems(itemService.index(indexItemRequestPayload));
   }
 
   @Override
@@ -48,8 +53,11 @@ public class ItemAPIControllerImpl implements ItemAPIController {
   }
 
   @Override
-  public List<String> deleteItem(@NotNull String id) {
-    return itemService.delete(id);
+  public DeleteItemResponsePayload deleteItem(@NotNull String id) {
+    Pair<Boolean, List<String>> resp = itemService.delete(id);
+    return new DeleteItemResponsePayload()
+            .setMsg(resp.getValue())
+            .setStatus(resp.getKey() ? HttpStatus.SUCCESS.toString() : HttpStatus.FAIL.toString());
   }
 
   @Override
