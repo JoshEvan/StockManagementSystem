@@ -6,7 +6,8 @@ const API_URL = {
 }
 
 export const JOSEPH_URL={
-    INDEX_ITEM: '/item/'
+    INDEX_ITEM: '/item/',
+    DELETE_ITEM:'/item/delete/'
 }
 
 export const getBaseUrl = () =>{

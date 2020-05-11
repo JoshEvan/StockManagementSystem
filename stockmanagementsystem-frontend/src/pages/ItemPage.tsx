@@ -1,10 +1,13 @@
 import React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Dashboard } from '../components/template/Dashboard';
-import { CustomTable } from '../components/organism';
-import { IItem, IIndexItemRequest } from '../data/interfaces';
+import { CustomTable, AlertDialog, CustomizedSnackbars } from '../components/organism';
+import { IItem, IIndexItemRequest, IDeleteItemResponse, HTTPCallStatus } from '../data/interfaces';
 import { serviceIndexItem } from '../data/services';
 import "regenerator-runtime/runtime.js";
+import { Button } from '@material-ui/core';
+import { async } from 'rxjs/internal/scheduler/async';
+import { serviceDeleteItem } from '../data/services/ItemService';
 
 interface Props extends RouteComponentProps{};
 
@@ -14,12 +17,18 @@ interface Props extends RouteComponentProps{};
 
 interface IItemPage{
 	rawContent:IItem[],
-	dataPayload:IIndexItemRequest
+	dataPayload:IIndexItemRequest,
+	snackbar:{
+		isShown:boolean,
+		severity:string,
+		msg:[]
+	}
 }
 
-const colName: string[] = ["NUM","ITEM CODE", "NAME", "DESCRIPTION", "PRICE", "STOCK", "CAPACITY","TOTAL SOLD", "GENERATED INCOME"]
+const colName: string[] = ["NUM","ITEM CODE", "NAME", 
+"DESCRIPTION", "PRICE", "STOCK", "CAPACITY","TOTAL SOLD", "GENERATED INCOME","ACTION"]
 
-export class ItemPage extends React.Component<Props,IItemPage> {
+export class ItemPage extends React.Component<Props,any> {
 	
 	state:IItemPage;
 	constructor(props:Props){
@@ -30,8 +39,59 @@ export class ItemPage extends React.Component<Props,IItemPage> {
 				sortByAmountIncome:0,
 				sortByItemCode:0,
 				sortByAmountSold:0
+			},
+			snackbar:{
+				isShown:false,
+				severity:"info",
+				msg:[]
 			}
 		}
+	}
+
+	deleteConfirm = (isYes:boolean, key:string) => {
+		if(isYes) this.deleteItem(key);
+	}
+	
+	closeSnackbar = () => {
+		this.setState({
+			snackbar:{
+				isShown:false,
+				severity:"info",
+				msg:[]
+			}
+		});
+	}
+
+	deleteItem = async (key:string) => {
+		await serviceDeleteItem(key).subscribe(
+			(res:IDeleteItemResponse) => {
+
+				var array = [...this.state.rawContent]
+				var index = array.map((e) => {
+					return e.itemCode
+				}).indexOf(key);
+				array.splice(index,1);
+
+				this.setState({rawContent:array});
+				this.setState({
+					snackbar:{
+						isShown:true,
+						severity: ((res.data['status'] == HTTPCallStatus.Success) ? "success" : "error"),
+						msg:res.data['msg']
+					}
+				})
+			},
+			(err)=>{
+				console.log("delete item err:"+err);
+				this.setState({
+					snackbar:{
+						isShown:true,
+						severity:"error",
+						msg:err
+					}
+				})
+			}
+		);
 	}
 
 	async componentDidMount(){
@@ -58,6 +118,18 @@ export class ItemPage extends React.Component<Props,IItemPage> {
 			titlePage = {"Items"}			
 			content={
 				<div>
+
+					<div>
+						{
+							this.state.snackbar.isShown &&
+							(<CustomizedSnackbars
+								severity={this.state.snackbar.severity}
+								msg={this.state.snackbar.msg}
+								parentCallback={this.closeSnackbar}
+							/>)
+						}
+					</div>
+
 					{/* {console.log("ATTABLE:"+this.state.rawContent[0].itemCode)} */}
 					<CustomTable 
 						test={"test"} 
@@ -69,15 +141,34 @@ export class ItemPage extends React.Component<Props,IItemPage> {
 								return(
 									<React.Fragment>
 									<tr>
-										<td key={colName[0]}>{idx+1}</td>
-										<td key={colName[1]}>{c.itemCode}</td>
-										<td key={colName[2]}>{c.name}</td>
-										<td key={colName[3]}>{c.description}</td>
-										<td key={colName[4]}>{c.price}</td>
-										<td key={colName[5]}>{c.stock}</td>
-										<td key={colName[6]}>{c.capacity}</td>
-										<td key={colName[7]}>{c.totalSold}</td>
-										<td key={colName[8]}>{c.incomeAmount}</td>
+										<td>{idx+1}</td>
+										<td>{c.itemCode}</td>
+										<td>{c.name}</td>
+										<td>{c.description}</td>
+										<td>{c.price}</td>
+										<td>{c.stock}</td>
+										<td>{c.capacity}</td>
+										<td>{c.totalSold}</td>
+										<td>{c.incomeAmount}</td>
+										<td>{
+											<React.Fragment>
+												<Button variant="outlined" color="primary" >
+												Edit
+											</Button>
+											<AlertDialog
+												color="secondary"
+												param={c.itemCode}
+												buttonTitle="delete"
+												dialogTitle="This following item will be deleted"
+												dialogYes="Yes"
+												dialogNo="Cancel"
+												dialogContent="Are you sure ?"
+												parentCallback={
+													this.deleteConfirm
+												}
+											/>
+											</React.Fragment>
+										}</td>
 									</tr>
 									</React.Fragment>
 								);
