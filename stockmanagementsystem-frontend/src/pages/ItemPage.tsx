@@ -8,6 +8,7 @@ import "regenerator-runtime/runtime.js";
 import { Button } from '@material-ui/core';
 import { async } from 'rxjs/internal/scheduler/async';
 import { serviceDeleteItem } from '../data/services/ItemService';
+import { Form } from '../components/organism/form';
 
 interface Props extends RouteComponentProps{};
 
@@ -56,9 +57,9 @@ export class ItemPage extends React.Component<Props,any> {
 			},
 			addDialog:{
 				isShown:false,
-				usingAction:true,
+				usingAction:false,
 				title:"Add new item",
-				content:(<form><input type="text" placeholder="test"/></form>), // TODO: FORM
+				content:(<Form/>), // TODO: FORM
 				parentCallback:
 					this.closeAddDialog,
 				dialogNo:"cancel",

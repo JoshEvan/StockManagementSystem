@@ -53,7 +53,7 @@ export class CustomTable extends React.Component<Props,IState> {
   }
 
   openAddDialog = () => {
-    console.log("OPENNNN")
+    // console.log("OPENNNN")
     this.setState({
       addDialog:{
         isShown:true
