@@ -14,6 +14,7 @@ import com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.Trans
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.dao.spec.TransactionSpec;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ItemDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.TransactionHeaderDataEntity;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -147,14 +148,12 @@ public class ItemServiceImpl implements ItemService {
   }
 
   @Override
-  public List<String> delete(String itemCode) {
-    List<String> stats = new LinkedList<>();
+  public Pair<Boolean,List<String>> delete(String itemCode) {
     if(itemDAO.delete(itemCode) == 1){
-      stats.add( ITEM+ itemCode + SUCCESS+" "+ PostgresHelper.REMOVED);
+      return new Pair<>(true, Collections.singletonList(ITEM+ itemCode + SUCCESS+" "+ PostgresHelper.REMOVED));
     }else{
-      stats.add(ITEM+ itemCode + FAIL+" "+ PostgresHelper.REMOVED);
+      return new Pair<>(false, Collections.singletonList(ITEM+ itemCode + FAIL+" "+ PostgresHelper.REMOVED));
     }
-    return stats;
   }
 
   @Override
