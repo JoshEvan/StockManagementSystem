@@ -16,28 +16,10 @@ type Props = {
     title:string,
     content:any,
     usingAction:boolean,
-    parentCallback:any,
     dialogNo:string,
     dialogYes:string
   }
 };
-
-// interface IFeatures{
-//   features:any;
-//   snackbar:{
-//     isShown:boolean,
-//     severity:string,
-//     msg:string[]
-//   },
-//   showDetail:{
-//     isShown:boolean,
-//     title:string,
-//     body:any
-//   },
-//   showAddDialog:{
-//     isShown:boolean
-//   }
-// };
 
 interface IState{
   addDialog:{
@@ -53,13 +35,24 @@ export class CustomTable extends React.Component<Props,IState> {
   }
 
   openAddDialog = () => {
-    // console.log("OPENNNN")
+    console.log("OPENNNN")
+    console.log(this.state.addDialog.isShown)
+    // this.props.addDialog.parentCallbackClose()
     this.setState({
       addDialog:{
         isShown:true
       }
     })
   }
+
+  
+	closeAddDialog = (isYes:Boolean) => {
+		this.setState({
+			addDialog:{
+				isShown:false
+			}
+		});
+	}
 
   render() {
     return (
@@ -72,10 +65,10 @@ export class CustomTable extends React.Component<Props,IState> {
                   dialogTitle={this.props.addDialog.title}
                   dialogContent={this.props.addDialog.content}
                   usingAction={this.props.addDialog.usingAction}
-                  parentCallback={this.props.addDialog.parentCallback}
+                  parentCallbackClose={this.closeAddDialog}
+                  parentCallbackOpen={this.openAddDialog}
                   dialogNo={this.props.addDialog.dialogNo}
                   dialogYes={this.props.addDialog.dialogYes}
-                  
                 />
               )
             }
@@ -83,7 +76,7 @@ export class CustomTable extends React.Component<Props,IState> {
           <IconButton color="primary" 
           style={{float:'right'}}
           onClick={
-            () => {this.openAddDialog()}
+            () => {this.openAddDialog();}
           }>
             <AddBoxIcon/>
           </IconButton>

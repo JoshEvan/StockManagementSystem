@@ -25,11 +25,10 @@ interface IItemPage{
 		msg:[]
 	},
 	addDialog:{
-    isShown:boolean,
-    title:string,
-    content:any,
-    usingAction:boolean,
-		parentCallback:any,
+		isShown:boolean,
+		title:string,
+		content:any,
+		usingAction:boolean,
 		dialogYes:string,
 		dialogNo:string,
   }
@@ -60,18 +59,18 @@ export class ItemPage extends React.Component<Props,any> {
 				usingAction:false,
 				title:"Add new item",
 				content:(<Form/>), // TODO: FORM
-				parentCallback:
-					this.closeAddDialog,
 				dialogNo:"cancel",
 				dialogYes:"yes"
 			}
 		}
 	}
 
-	closeAddDialog = (isYes:Boolean) => {
+
+	openAddDialog = () => {
+		console.log("closeadddialog");
 		this.setState({
 			addDialog:{
-				isShown:false
+				isShown:true
 			}
 		});
 	}

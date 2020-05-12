@@ -15,8 +15,8 @@ export function ResponsiveDialog(props:any) {
 
 		const handleClose = (isYes:boolean = false) => {
 			setOpen(false);
-			if(!props.usingAction) props.parentCallback();
-			else props.parentCallback(isYes);
+			if(!props.usingAction) props.parentCallbackClose();
+			else props.parentCallbackClose(isYes);
 		};
 
 		return (
