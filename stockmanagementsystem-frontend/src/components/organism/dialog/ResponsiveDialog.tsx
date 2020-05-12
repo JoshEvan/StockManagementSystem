@@ -14,7 +14,7 @@ export function ResponsiveDialog(props:any) {
 	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
 		const handleClose = (isYes:boolean = false) => {
-			setOpen(false);
+			// setOpen(false);
 			if(!props.usingAction) props.parentCallbackClose();
 			else props.parentCallbackClose(isYes);
 		};
@@ -23,7 +23,7 @@ export function ResponsiveDialog(props:any) {
 			<div>
 				<Dialog
 				fullScreen={fullScreen}
-				open={open}
+				open={true}
 				onClose={handleClose}
 				aria-labelledby="responsive-dialog-title"
 				>

@@ -31,6 +31,10 @@ export class CustomTable extends React.Component<Props,IState> {
     isShown:false
   }
 
+  componentWillReceiveProps(newProps) {
+      this.setState({isShown: newProps.isShown});
+  }
+
   openAddDialog = () => {
     console.log("OPENNNN")
     // console.log(this.state.addDialog.isShown)
@@ -50,9 +54,10 @@ export class CustomTable extends React.Component<Props,IState> {
   render() {
     return (
         <React.Fragment>
+          {console.log(this.state.isShown+"STATETABLE")}
           <div>
             {
-              (this.state.isShown || this.props.isShown) &&
+              (this.state.isShown) &&
               (
                 <ResponsiveDialog
                   open={this.state.isShown}

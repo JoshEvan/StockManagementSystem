@@ -112,7 +112,12 @@ export class ItemPage extends React.Component<Props,any> {
 		)
 		this.setState({
 			addDialog:{
-				isShown:false
+				isShown:false,
+				content:(
+					<Form
+						submitData = {this.addItem}
+					/>
+				)
 			}
 		})
 	}
