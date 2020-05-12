@@ -11,6 +11,7 @@ import { ResponsiveDialog } from './Dialog';
 type Props = {
   header:string[],
   body:any,
+  isShown:boolean,
   addDialog:{
     isShown:boolean,
     title:string,
@@ -22,35 +23,27 @@ type Props = {
 };
 
 interface IState{
-  addDialog:{
-    isShown:boolean
-  }
+  isShown:boolean
 }
 export class CustomTable extends React.Component<Props,IState> {
 
   state:IState = {
-    addDialog:{
-      isShown:false
-    }
+    isShown:false
   }
 
   openAddDialog = () => {
     console.log("OPENNNN")
-    console.log(this.state.addDialog.isShown)
+    // console.log(this.state.addDialog.isShown)
     // this.props.addDialog.parentCallbackClose()
     this.setState({
-      addDialog:{
-        isShown:true
-      }
+      isShown:true
     })
   }
 
   
 	closeAddDialog = (isYes:Boolean) => {
 		this.setState({
-			addDialog:{
-				isShown:false
-			}
+      isShown:false
 		});
 	}
 
@@ -59,9 +52,10 @@ export class CustomTable extends React.Component<Props,IState> {
         <React.Fragment>
           <div>
             {
-              (this.state.addDialog.isShown) &&
+              (this.state.isShown || this.props.isShown) &&
               (
                 <ResponsiveDialog
+                  open={this.state.isShown}
                   dialogTitle={this.props.addDialog.title}
                   dialogContent={this.props.addDialog.content}
                   usingAction={this.props.addDialog.usingAction}
@@ -76,7 +70,7 @@ export class CustomTable extends React.Component<Props,IState> {
           <IconButton color="primary" 
           style={{float:'right'}}
           onClick={
-            () => {this.openAddDialog();}
+            () => {this.openAddDialog();n}
           }>
             <AddBoxIcon/>
           </IconButton>

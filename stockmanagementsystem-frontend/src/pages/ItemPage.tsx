@@ -2,12 +2,12 @@ import React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Dashboard } from '../components/template/Dashboard';
 import { CustomTable, AlertDialog, CustomizedSnackbars } from '../components/organism';
-import { IItem, IIndexItemRequest, IDeleteItemResponse, HTTPCallStatus } from '../data/interfaces';
+import { IItem, IIndexItemRequest, IDeleteItemResponse, HTTPCallStatus, IAddItemRequest, IAddItemResponse } from '../data/interfaces';
 import { serviceIndexItem } from '../data/services';
 import "regenerator-runtime/runtime.js";
 import { Button } from '@material-ui/core';
 import { async } from 'rxjs/internal/scheduler/async';
-import { serviceDeleteItem } from '../data/services/ItemService';
+import { serviceDeleteItem, serviceAddItem } from '../data/services/ItemService';
 import { Form } from '../components/organism/form';
 
 interface Props extends RouteComponentProps{};
@@ -18,7 +18,7 @@ interface Props extends RouteComponentProps{};
 
 interface IItemPage{
 	rawContent:IItem[],
-	dataPayload:IIndexItemRequest,
+	viewConstraint:IIndexItemRequest,
 	snackbar:{
 		isShown:boolean,
 		severity:string,
@@ -44,7 +44,7 @@ export class ItemPage extends React.Component<Props,any> {
 		super(props);
 		this.state = {
 			rawContent:[],
-			dataPayload:{
+			viewConstraint:{
 				sortByAmountIncome:0,
 				sortByItemCode:0,
 				sortByAmountSold:0
@@ -58,23 +58,17 @@ export class ItemPage extends React.Component<Props,any> {
 				isShown:false,
 				usingAction:false,
 				title:"Add new item",
-				content:(<Form/>), // TODO: FORM
+				content:(
+					<Form
+						submitData = {this.addItem}
+					/>
+				), // TODO: FORM
 				dialogNo:"cancel",
 				dialogYes:"yes"
 			}
 		}
 	}
 
-
-	openAddDialog = () => {
-		console.log("closeadddialog");
-		this.setState({
-			addDialog:{
-				isShown:true
-			}
-		});
-	}
-	
 	closeSnackbar = () => {
 		this.setState({
 			snackbar:{
@@ -89,17 +83,52 @@ export class ItemPage extends React.Component<Props,any> {
 		if(isYes) this.deleteItem(key);
 	}
 
+	addItem = async (data:IAddItemRequest) => {
+		await serviceAddItem(data).subscribe(
+			(res:IAddItemResponse) => {
+				if(res.data['status'] == HTTPCallStatus.Success){
+					// TODO: set viewConstraint to default ?
+					
+					this.loadAllItems()
+				}
+				this.setState({
+					snackbar:{
+						isShown:true,
+						severity: ((res.data['status'] == HTTPCallStatus.Success) ? "success" : "error"),
+						msg:res.data['msg']
+					}
+				})
+			},
+			(err)=>{
+				console.log("add item err:"+err);
+				this.setState({
+					snackbar:{
+						isShown:true,
+						severity:"error",
+						msg:err
+					}
+				})
+			}
+		)
+		this.setState({
+			addDialog:{
+				isShown:false
+			}
+		})
+	}
+
 	deleteItem = async (key:string) => {
-		await serviceDeleteItem(key).subscribe(
+		await serviceDeleteItem(key).subscribe(	
 			(res:IDeleteItemResponse) => {
+				if(res.data['status'] == HTTPCallStatus.Success){
+					var array = [...this.state.rawContent]
+					var index = array.map((e) => {
+						return e.itemCode
+					}).indexOf(key);
+					array.splice(index,1);
 
-				var array = [...this.state.rawContent]
-				var index = array.map((e) => {
-					return e.itemCode
-				}).indexOf(key);
-				array.splice(index,1);
-
-				this.setState({rawContent:array});
+					this.setState({rawContent:array});
+				}
 				this.setState({
 					snackbar:{
 						isShown:true,
@@ -121,9 +150,9 @@ export class ItemPage extends React.Component<Props,any> {
 		);
 	}
 
-	async componentDidMount(){
+	loadAllItems = async () => {
 		console.log("posting index request")
-		await serviceIndexItem(this.state.dataPayload).subscribe(
+		await serviceIndexItem(this.state.viewConstraint).subscribe(
 			(res) => {
 				console.log("RES:"+Object.keys(res).length);
 				console.log(res.data["items"]);
@@ -137,6 +166,10 @@ export class ItemPage extends React.Component<Props,any> {
 				console.log("axios err:"+err);
 			}
 		);
+	}
+
+	async componentDidMount(){
+		this.loadAllItems();
 	}
 
 	render(){
@@ -162,6 +195,7 @@ export class ItemPage extends React.Component<Props,any> {
 						addDialog={
 							this.state.addDialog
 						}
+						isShown={this.state.addDialog.isShown}
 						header={colName}
 						body={
 							this.state.rawContent.map(

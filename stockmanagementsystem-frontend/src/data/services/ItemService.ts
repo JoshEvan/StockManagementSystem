@@ -1,7 +1,7 @@
 import { getBaseUrl, JOSEPH_URL } from "../../configs/api";
 import  Axios from  'axios-observable';
 import { Observable } from "rxjs";
-import { IIndexItemRequest, IIndexItemResponse, IDeleteItemResponse } from "../interfaces";
+import { IIndexItemRequest, IIndexItemResponse, IDeleteItemResponse, IAddItemRequest } from "../interfaces";
 
 const usingBaseUrl = getBaseUrl()
 
@@ -17,5 +17,13 @@ export const serviceDeleteItem = (dataPayload:string): Observable<any> => {
         usingBaseUrl+JOSEPH_URL.DELETE_ITEM+dataPayload
     )
 }
+
+export const serviceAddItem = (dataPayload:IAddItemRequest): Observable<any> => {
+    return Axios.post(
+        usingBaseUrl+JOSEPH_URL.ADD_ITEM,
+        dataPayload
+    )
+}
+
 
 export {serviceIndexItem};

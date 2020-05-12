@@ -2,19 +2,17 @@ import React from 'react';
 import { Formik, Field, useField, FieldAttributes, FieldArray } from 'formik';
 import { TextField, Button, Checkbox, Radio, Select, MenuItem, TextareaAutosize, Typography } from '@material-ui/core';
 import * as yup from 'yup';
+import { IAddItemRequest } from '../../../data/interfaces';
 
 
 const validationSchema = yup.object({
 // key: rule
 	// firstName: yup.string().required("error message (ada default juga kalo dikosongin)").max(10),
 	itemCode: yup.string().required("Item Code must be filled"),
-	itemName: yup.string().required("Item Name must be filled"),
-	itemPrice: yup.string().required("Item Price must be filled"),
-	itemStock: yup.string().required("Item Stock must be filled"),
-	itemCap: yup.string().required("Item Capacity must be filled"),
-	pets: yup.array().of(yup.object(
-		{name:yup.string().required()}
-	))
+	name: yup.string().required("Item Name must be filled"),
+	price: yup.string().required("Item Price must be filled"),
+	stock: yup.string().required("Item Stock must be filled"),
+	capacity: yup.string().required("Item Capacity must be filled")
 })
 
 const TextFieldWValidation:React.FC<FieldAttributes<{}>> = ({placeholder,type,...props}) => {
@@ -38,7 +36,8 @@ const TextAreaWValidation:React.FC<FieldAttributes<{}>> = ({placeholder,...props
 	// kalo ada error dan udah diiisi/ disentuh
 	return(
 		
-		<TextareaAutosize aria-label={placeholder} rowsMin={3} placeholder={placeholder} {...field} helperText={errorText} error={!!errorText} />
+		<TextareaAutosize aria-label={placeholder} rowsMin={3} placeholder={placeholder} {...field} 
+		helperText={errorText} error={!!errorText} />
 		// <TextField placeholder={placeholder} {...field} helperText={errorText} error={!!errorText}/>
 		// ... field sebarin kaya values,onchange, dll (kaya paste in aja)
 		// error={!!errorText} ubah T jadi F dan sebaliknya
@@ -55,19 +54,24 @@ export class Form extends React.Component<any,any>{
 				*/}
 				<Formik
 					initialValues={{
-					itemCode:'',
+						itemCode:'',
+						description:'',
+						name:'',
+						errors:'',
+						values:''
+					}}
 					
-					isTall:false,
-					lastName:"",
-					food:[],
-					yogurt:'',
-					pets:[{ type:'cat', name:'jarvis',id:Math.random()+""}]}}
 					onSubmit = {(data, { setSubmitting }) => {
 						// setSubmitting itu untuk async request ke server dan sembari disable button (ini function)
 						setSubmitting(true)
 						console.log(data);
+
+						this.props.submitData(data);
+						
 						setSubmitting(false);
+						console.log("done submit add data")
 					}}
+					
 					validationSchema = {validationSchema}
 					/* // VALIDASI tanpa yup */
 					// validate = {values => {
@@ -103,7 +107,7 @@ export class Form extends React.Component<any,any>{
 						<div style={{padding:'2%'}}>
 							<TextFieldWValidation
 								placeholder="item name"
-								name="itemName" 
+								name="name" 
 								type="input" 
 								as={TextField}/>
 						</div>
@@ -111,7 +115,7 @@ export class Form extends React.Component<any,any>{
 						<div style={{padding:'2%'}}>
 							<TextFieldWValidation
 								placeholder="item price"
-								name="itemPrice" 
+								name="price" 
 								type="number" 
 								as={TextField}/>
 						</div>
@@ -119,7 +123,7 @@ export class Form extends React.Component<any,any>{
 						<div style={{padding:'2%'}}>
 							<TextFieldWValidation
 								placeholder="item stock"
-								name="itemStock" 
+								name="stock" 
 								type="number"
 								as={TextField}/>
 						</div>
@@ -128,7 +132,7 @@ export class Form extends React.Component<any,any>{
 						<div style={{padding:'2%'}}>
 							<TextFieldWValidation
 								placeholder="item capacity dozen/box"
-								name="itemCap" 
+								name="capacity" 
 								type="number" 
 								as={TextField}/>
 									
@@ -137,7 +141,7 @@ export class Form extends React.Component<any,any>{
 						<div style={{padding:'2%'}}>
 							<TextAreaWValidation
 								placeholder="item description"
-								name="itemDesc"
+								name="description"
 								type="input"
 								// as={TextareaAutosize}
 								/>
