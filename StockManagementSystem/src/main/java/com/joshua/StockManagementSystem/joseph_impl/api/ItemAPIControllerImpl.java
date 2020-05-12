@@ -1,16 +1,14 @@
 package com.joshua.StockManagementSystem.joseph_impl.api;
 
 import com.joshua.StockManagementSystem.joseph_api.api.ItemAPIController;
-import com.joshua.StockManagementSystem.joseph_api.api.payload.delete.DeleteItemResponsePayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.ItemResponsePayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexItemRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexItemResponsePayload;
-import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexTransactionRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertItemRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.ItemService;
 import com.joshua.StockManagementSystem.joseph_api.model.Item;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.HttpStatus;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.util.Pair;
 import org.flywaydb.core.internal.util.FileCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +31,10 @@ public class ItemAPIControllerImpl implements ItemAPIController {
   }
 
   @Override
-  public List<String> insertItem(@NotNull UpsertItemRequestPayload upsertItemRequestPayload) {
-    return itemService.insert(upsertItemRequestPayload);
+  public ItemResponsePayload insertItem(@NotNull UpsertItemRequestPayload upsertItemRequestPayload) {
+    Pair<Boolean, List<String>> resp = itemService.insert(upsertItemRequestPayload);
+    return new ItemResponsePayload().setMsg(resp.getValue())
+            .setStatus((resp.getKey() ? HttpStatus.SUCCESS : HttpStatus.FAIL).toString());
   }
 
   @Override
@@ -53,9 +53,9 @@ public class ItemAPIControllerImpl implements ItemAPIController {
   }
 
   @Override
-  public DeleteItemResponsePayload deleteItem(@NotNull String id) {
+  public ItemResponsePayload deleteItem(@NotNull String id) {
     Pair<Boolean, List<String>> resp = itemService.delete(id);
-    return new DeleteItemResponsePayload()
+    return new ItemResponsePayload()
             .setMsg(resp.getValue())
             .setStatus(resp.getKey() ? HttpStatus.SUCCESS.toString() : HttpStatus.FAIL.toString());
   }

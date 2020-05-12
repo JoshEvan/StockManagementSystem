@@ -1,8 +1,8 @@
-package com.joshua.StockManagementSystem.joseph_api.api.payload.delete;
+package com.joshua.StockManagementSystem.joseph_api.api.payload;
 
 import java.util.List;
 
-public class DeleteItemResponsePayload {
+public class ItemResponsePayload {
   private String status;
   private List<String> msg;
 
@@ -10,7 +10,7 @@ public class DeleteItemResponsePayload {
     return status;
   }
 
-  public DeleteItemResponsePayload setStatus(String status) {
+  public ItemResponsePayload setStatus(String status) {
     this.status = status;return this;
   }
 
@@ -18,7 +18,7 @@ public class DeleteItemResponsePayload {
     return msg;
   }
 
-  public DeleteItemResponsePayload setMsg(List<String> msg) {
+  public ItemResponsePayload setMsg(List<String> msg) {
     this.msg = msg;return this;
   }
 }

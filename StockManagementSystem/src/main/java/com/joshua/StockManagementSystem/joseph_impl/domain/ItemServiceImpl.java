@@ -14,6 +14,7 @@ import com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.Trans
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.dao.spec.TransactionSpec;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ItemDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.TransactionHeaderDataEntity;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,14 +42,13 @@ public class ItemServiceImpl implements ItemService {
   }
 
   @Override
-  public List<String> insert(UpsertItemRequestPayload upsertItemRequestPayload) {
-    List<String> stats = new LinkedList<>();
-    if(itemDAO.insert(convertUpsertPayloadToDataEntity(upsertItemRequestPayload)) == 1){
-      stats.add(ITEM+ upsertItemRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.INSERTED);
+  public Pair<Boolean,List<String>> insert(UpsertItemRequestPayload upsertItemRequestPayload) {
+    int flag = itemDAO.insert(convertUpsertPayloadToDataEntity(upsertItemRequestPayload));
+    if(flag == 1){
+      return new Pair<>(true,Collections.singletonList(ITEM+ upsertItemRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.INSERTED));
     }else{
-      stats.add(ITEM+ upsertItemRequestPayload.getName()+ FAIL+" "+ PostgresHelper.INSERTED);
+      return new Pair<>(false, Collections.singletonList(ITEM+ upsertItemRequestPayload.getName()+ FAIL+" "+ PostgresHelper.INSERTED));
     }
-    return stats;
   }
 
   @Override
