@@ -9,7 +9,7 @@ import javafx.util.Pair;
 import java.util.List;
 
 public interface ItemService {
-  List<String> insert(UpsertItemRequestPayload upsertCustomerRequestPayload);
+  Pair<Boolean,List<String>> insert(UpsertItemRequestPayload upsertCustomerRequestPayload);
   List<Item> index(IndexItemRequestPayload indexItemRequestPayload);
   Item show(String id);
   List<String> update(UpsertItemRequestPayload upsertCustomerRequestPayload);
