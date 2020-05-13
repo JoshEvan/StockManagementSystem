@@ -31,7 +31,10 @@ interface IItemPage{
 		usingAction:boolean,
 		dialogYes:string,
 		dialogNo:string,
-  	}
+	},
+	editDialog:{
+		isShown:boolean
+	}
 }
 
 const colName: string[] = ["NUM","ITEM CODE", "NAME", 
@@ -77,6 +80,9 @@ export class ItemPage extends React.Component<Props,any> {
 				), // TODO: FORM
 				dialogNo:"cancel",
 				dialogYes:"yes"
+			},
+			editDialog:{
+				isShown:true
 			}
 		}
 	}
@@ -161,7 +167,9 @@ export class ItemPage extends React.Component<Props,any> {
 				})
 			}
 		)
-		
+		this.setState({
+			editDialog:{isShown:false}
+		})
 	}
 
 	deleteItem = async (key:string) => {
@@ -265,7 +273,9 @@ export class ItemPage extends React.Component<Props,any> {
 												<AlertDialog
 													color="primary"
 													param={c.itemCode}
+													parentAllowance = {this.state.editDialog.isShown}
 													buttonTitle="edit"
+													parentCallbackOpen={()=>this.setState({editDialog:{isShown:true}})}
 													dialogTitle="Update item"
 													usingAction={false}
 													dialogContent={
@@ -287,6 +297,7 @@ export class ItemPage extends React.Component<Props,any> {
 											<AlertDialog
 												color="secondary"
 												usingAction={true}
+												parentAllowance = {true}
 												param={c.itemCode}
 												buttonTitle="delete"
 												dialogTitle="This following item will be deleted"

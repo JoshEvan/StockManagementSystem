@@ -10,7 +10,9 @@ export function AlertDialog(props:any) {
 	const [open, setOpen] = React.useState(false);
 
 	const handleClickOpen = () => {
-	setOpen(true);
+		setOpen(true);
+		console.log(open+"_"+props.parentAllowance)
+		props.parentCallbackOpen();
 	};
 
 	const handleClose = (isYes:boolean) => {
@@ -21,13 +23,13 @@ export function AlertDialog(props:any) {
 	return (
 		<div>
 				<Button variant="outlined" color={props.color} onClick={handleClickOpen}>
-				{props.buttonTitle}
+					{props.buttonTitle}
 				</Button>
 				<Dialog
-				open={open}
-				onClose={handleClose}
-				aria-labelledby="alert-dialog-title"
-				aria-describedby="alert-dialog-description"
+					open={open && props.parentAllowance}
+					onClose={() => handleClose(false)}
+					aria-labelledby="alert-dialog-title"
+					aria-describedby="alert-dialog-description"
 				>
 				<DialogTitle id="alert-dialog-title">{props.dialogTitle}</DialogTitle>
 				<DialogContent>
