@@ -286,6 +286,7 @@ export class ItemPage extends React.Component<Props,any> {
 												/>
 											<AlertDialog
 												color="secondary"
+												usingAction={true}
 												param={c.itemCode}
 												buttonTitle="delete"
 												dialogTitle="This following item will be deleted"
