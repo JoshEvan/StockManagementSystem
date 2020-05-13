@@ -8,7 +8,8 @@ const API_URL = {
 export const JOSEPH_URL={
     INDEX_ITEM: '/item/',
     DELETE_ITEM:'/item/delete/',
-    ADD_ITEM:'/item/insert/'
+    ADD_ITEM:'/item/insert/',
+    EDIT_ITEM:'/item/update'
 }
 
 export const getBaseUrl = () =>{

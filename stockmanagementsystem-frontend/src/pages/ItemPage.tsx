@@ -2,12 +2,12 @@ import React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Dashboard } from '../components/template/Dashboard';
 import { CustomTable, AlertDialog, CustomizedSnackbars } from '../components/organism';
-import { IItem, IIndexItemRequest, IDeleteItemResponse, HTTPCallStatus, IAddItemRequest, IAddItemResponse } from '../data/interfaces';
+import { IItem, IIndexItemRequest, IDeleteItemResponse, HTTPCallStatus, IUpsertItemRequest, IUpsertItemResponse} from '../data/interfaces';
 import { serviceIndexItem } from '../data/services';
 import "regenerator-runtime/runtime.js";
 import { Button } from '@material-ui/core';
 import { async } from 'rxjs/internal/scheduler/async';
-import { serviceDeleteItem, serviceAddItem } from '../data/services/ItemService';
+import { serviceDeleteItem, serviceAddItem, serviceEditItem } from '../data/services/ItemService';
 import { Form } from '../components/organism/form';
 
 interface Props extends RouteComponentProps{};
@@ -31,11 +31,20 @@ interface IItemPage{
 		usingAction:boolean,
 		dialogYes:string,
 		dialogNo:string,
-  }
+  	}
 }
 
 const colName: string[] = ["NUM","ITEM CODE", "NAME", 
 "DESCRIPTION", "PRICE", "STOCK", "CAPACITY","TOTAL SOLD", "GENERATED INCOME","ACTION"]
+
+const initItem={
+	itemCode:'',
+	name:'',
+	description:'',
+	price:0,
+	stock:0,
+	capacity:0,
+}
 
 export class ItemPage extends React.Component<Props,any> {
 	
@@ -61,6 +70,9 @@ export class ItemPage extends React.Component<Props,any> {
 				content:(
 					<Form
 						submitData = {this.addItem}
+						item= {
+							initItem
+						}
 					/>
 				), // TODO: FORM
 				dialogNo:"cancel",
@@ -83,9 +95,9 @@ export class ItemPage extends React.Component<Props,any> {
 		if(isYes) this.deleteItem(key);
 	}
 
-	addItem = async (data:IAddItemRequest) => {
+	addItem = async (data:IUpsertItemRequest) => {
 		await serviceAddItem(data).subscribe(
-			(res:IAddItemResponse) => {
+			(res:IUpsertItemResponse) => {
 				if(res.data['status'] == HTTPCallStatus.Success){
 					// TODO: set viewConstraint to default ?
 					
@@ -116,10 +128,40 @@ export class ItemPage extends React.Component<Props,any> {
 				content:(
 					<Form
 						submitData = {this.addItem}
+						item={initItem}
 					/>
 				)
 			}
 		})
+	}
+
+	editItem = async (data:IUpsertItemRequest) => {
+		await serviceEditItem(data).subscribe(
+			(res:IUpsertItemResponse) => {
+				if(res.data['status'] == HTTPCallStatus.Success){
+					// TODO: set viewConstraint to default ?
+					this.loadAllItems()
+				}
+				this.setState({
+					snackbar:{
+						isShown:true,
+						severity: ((res.data['status'] == HTTPCallStatus.Success) ? "success" : "error"),
+						msg:res.data['msg']
+					}
+				})
+			},
+			(err)=>{
+				console.log("edit item err:"+err);
+				this.setState({
+					snackbar:{
+						isShown:true,
+						severity:"error",
+						msg:err
+					}
+				})
+			}
+		)
+		
 	}
 
 	deleteItem = async (key:string) => {
@@ -220,9 +262,28 @@ export class ItemPage extends React.Component<Props,any> {
 										<td>{c.incomeAmount}</td>
 										<td>{
 											<React.Fragment>
-												<Button variant="outlined" color="primary" >
-												Edit
-											</Button>
+												<AlertDialog
+													color="primary"
+													param={c.itemCode}
+													buttonTitle="edit"
+													dialogTitle="Update item"
+													usingAction={false}
+													dialogContent={
+														<Form
+															submitData = {this.editItem}
+															item={
+																{
+																	itemCode:c.itemCode,
+																	name:c.name,
+																	price:c.priceDec,
+																	stock:c.stock,
+																	capacity:c.capacity,
+																	description:c.description,
+																}
+															}
+														/>
+													}
+												/>
 											<AlertDialog
 												color="secondary"
 												param={c.itemCode}

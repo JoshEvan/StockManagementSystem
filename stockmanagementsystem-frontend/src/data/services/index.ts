@@ -1,1 +1,1 @@
-export { serviceIndexItem,serviceDeleteItem as serviceDeletetem } from './ItemService';
+export { serviceIndexItem,serviceDeleteItem as serviceDeletetem, serviceEditItem} from './ItemService';

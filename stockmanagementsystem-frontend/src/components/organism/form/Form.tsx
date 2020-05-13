@@ -54,9 +54,12 @@ export class Form extends React.Component<any,any>{
 				*/}
 				<Formik
 					initialValues={{
-						itemCode:'',
-						description:'',
-						name:'',
+						itemCode:this.props.item.itemCode,
+						description:this.props.item.description,
+						name:this.props.item.name,
+						price:this.props.item.price,
+						stock:this.props.item.stock,
+						capacity:this.props.item.capacity,
 						errors:'',
 						values:''
 					}}

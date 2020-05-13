@@ -9,4 +9,4 @@ export interface BaseResponse{
 export { IItem } from './IItem';
 export { IIndexItemRequest, IIndexItemResponse } from './IIndexItem';
 export { IDeleteItemResponse } from './IDeleteItem';
-export { IAddItemRequest,IAddItemResponse } from './IAddItem';
+export { IUpsertItemRequest,IUpsertItemResponse } from './IUpsertItem';

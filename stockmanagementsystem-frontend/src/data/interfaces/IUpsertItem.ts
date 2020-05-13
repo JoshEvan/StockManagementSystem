@@ -1,6 +1,6 @@
 import { HTTPCallStatus } from ".";
 
-export interface IAddItemRequest{
+export interface IUpsertItemRequest{
     itemCode:string,
 	name:string,
 	description:string,
@@ -9,7 +9,7 @@ export interface IAddItemRequest{
 	capacity:number
 }
 
-export interface IAddItemResponse{
+export interface IUpsertItemResponse{
 	status: HTTPCallStatus,
     data:string[]
 }

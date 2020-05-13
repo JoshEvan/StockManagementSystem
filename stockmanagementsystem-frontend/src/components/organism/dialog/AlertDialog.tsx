@@ -14,8 +14,8 @@ export function AlertDialog(props:any) {
 	};
 
 	const handleClose = (isYes:boolean) => {
-	props.parentCallback(isYes, props.param);
-	setOpen(false);
+		if(props.usingAction) props.parentCallback(isYes, props.param);
+		setOpen(false);
 	};
 
 	return (
@@ -35,14 +35,16 @@ export function AlertDialog(props:any) {
 								{props.dialogContent}
 						</DialogContentText>
 				</DialogContent>
-				<DialogActions>
+				{
+				(props.usingAction) &&	
+				(<DialogActions>
 						<Button onClick={() => handleClose(false)} color="primary">
 						{props.dialogNo}
 						</Button>
 						<Button onClick={() => handleClose(true)} color="primary" autoFocus>
 						{props.dialogYes}
 				</Button>
-				</DialogActions>
+				</DialogActions>)}
 		</Dialog>
 		</div>
 	);
