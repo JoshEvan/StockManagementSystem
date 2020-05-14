@@ -7,7 +7,7 @@ import { serviceIndexItem } from '../data/services';
 import "regenerator-runtime/runtime.js";
 import { Button } from '@material-ui/core';
 import { async } from 'rxjs/internal/scheduler/async';
-import { serviceDeleteItem, serviceAddItem, serviceEditItem } from '../data/services/ItemService';
+import { serviceDeleteItem, serviceAddItem, serviceEditItem, serviceDownloadPdfItem } from '../data/services/ItemService';
 import { Form } from '../components/organism/form';
 
 interface Props extends RouteComponentProps{};
@@ -223,6 +223,19 @@ export class ItemPage extends React.Component<Props,any> {
 		);
 	}
 
+	downloadPdf = async() => {
+		await serviceDownloadPdfItem(this.state.viewConstraint).subscribe(
+			(res) => {
+				const url = window.URL.createObjectURL(new Blob([res.data]));
+				const link = document.createElement('a');
+				link.href = url;
+				link.setAttribute('download', 'file.pdf');
+				document.body.appendChild(link);
+				link.click();
+			}
+		)
+	}
+
 	async componentDidMount(){
 		this.loadAllItems();
 	}
@@ -233,7 +246,7 @@ export class ItemPage extends React.Component<Props,any> {
 			titlePage = {"Items"}			
 			content={
 				<div>
-
+					
 					<div>
 						{
 							this.state.snackbar.isShown &&
@@ -244,7 +257,12 @@ export class ItemPage extends React.Component<Props,any> {
 							/>)
 						}
 					</div>
-
+					
+					<div style={{float:'left',width:'auto',padding:'1% 1% 1% 0%'}}>
+						<Button variant="outlined" color={"primary"} onClick={this.downloadPdf}>
+							{"download pdf"}
+						</Button>
+					</div>
 					{/* {console.log("ATTABLE:"+this.state.rawContent[0].itemCode)} */}
 					<CustomTable 
 						addDialog={

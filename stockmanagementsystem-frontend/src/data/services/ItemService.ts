@@ -32,5 +32,15 @@ export const serviceEditItem = (dataPayload:IUpsertItemRequest): Observable<any>
     )
 }
 
+export const serviceDownloadPdfItem = (dataPayload:IIndexItemRequest): Observable<any> => {
+    return Axios.request(
+       {
+           method:'post',
+           url: usingBaseUrl+JOSEPH_URL.DOWNLOAD_PDF,
+           data: dataPayload,
+           responseType:'blob' // very important, else corrupted file
+       }
+    )
+}
 
 export {serviceIndexItem};

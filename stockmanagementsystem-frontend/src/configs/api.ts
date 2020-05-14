@@ -9,7 +9,8 @@ export const JOSEPH_URL={
     INDEX_ITEM: '/item/',
     DELETE_ITEM:'/item/delete/',
     ADD_ITEM:'/item/insert/',
-    EDIT_ITEM:'/item/update'
+    EDIT_ITEM:'/item/update',
+    DOWNLOAD_PDF:'/item/report'
 }
 
 export const getBaseUrl = () =>{

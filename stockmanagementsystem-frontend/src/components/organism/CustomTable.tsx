@@ -54,7 +54,7 @@ export class CustomTable extends React.Component<Props,IState> {
   render() {
     return (
         <React.Fragment>
-          {console.log(this.state.isShown+"STATETABLE")}
+          {/* {console.log(this.state.isShown+"STATETABLE")} */}
           <div>
             {
               (this.state.isShown) &&
