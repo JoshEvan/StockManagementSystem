@@ -3,7 +3,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Dashboard } from '../components/template/Dashboard';
 import { CustomTable, AlertDialog, CustomizedSnackbars } from '../components/organism';
 import { IItem, IIndexItemRequest, IDeleteItemResponse, HTTPCallStatus, IUpsertItemRequest, IUpsertItemResponse} from '../data/interfaces';
-import { serviceIndexItem } from '../data/services';
+import { serviceIndexItem, getCurrentDate } from '../data/services';
 import "regenerator-runtime/runtime.js";
 import { Button } from '@material-ui/core';
 import { async } from 'rxjs/internal/scheduler/async';
@@ -222,14 +222,14 @@ export class ItemPage extends React.Component<Props,any> {
 			}
 		);
 	}
-
+	
 	downloadPdf = async() => {
 		await serviceDownloadPdfItem(this.state.viewConstraint).subscribe(
 			(res) => {
 				const url = window.URL.createObjectURL(new Blob([res.data]));
 				const link = document.createElement('a');
 				link.href = url;
-				link.setAttribute('download', 'file.pdf');
+				link.setAttribute('download', 'ItemReport'+getCurrentDate("_")+'.pdf');
 				document.body.appendChild(link);
 				link.click();
 			}
