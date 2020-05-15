@@ -5,10 +5,13 @@ import { CustomTable, AlertDialog, CustomizedSnackbars } from '../components/org
 import { IItem, IIndexItemRequest, IDeleteItemResponse, HTTPCallStatus, IUpsertItemRequest, IUpsertItemResponse} from '../data/interfaces';
 import { serviceIndexItem, getCurrentDate } from '../data/services';
 import "regenerator-runtime/runtime.js";
-import { Button } from '@material-ui/core';
+import { Button, Paper, Card, CardContent, Typography } from '@material-ui/core';
 import { async } from 'rxjs/internal/scheduler/async';
 import { serviceDeleteItem, serviceAddItem, serviceEditItem, serviceDownloadPdfItem } from '../data/services/ItemService';
 import { Form } from '../components/organism/form';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import { SimpleExpansionPanel } from '../components/organism/expansion_panel/SimpleExpansionPanel';
 
 interface Props extends RouteComponentProps{};
 
@@ -246,7 +249,16 @@ export class ItemPage extends React.Component<Props,any> {
 			titlePage = {"Items"}			
 			content={
 				<div>
-					
+					<SimpleExpansionPanel 
+						title="sort"
+						content={
+							<div>
+								<div><ArrowDropUpIcon color="disabled"/><ArrowDropDownIcon color="disabled"/>By Amount Income</div>
+								<div><ArrowDropUpIcon color="disabled"/><ArrowDropDownIcon color="disabled"/>By Amount Sold</div>
+								<div><ArrowDropUpIcon color="disabled"/><ArrowDropDownIcon color="disabled"/>By Item Code</div>
+								<div><Button color="primary" variant="outlined">show</Button></div>
+							</div>
+						}/>
 					<div>
 						{
 							this.state.snackbar.isShown &&

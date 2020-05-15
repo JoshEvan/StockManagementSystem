@@ -1,0 +1,1 @@
+export { SimpleExpansionPanel } from './SimplExpansionPanel';
