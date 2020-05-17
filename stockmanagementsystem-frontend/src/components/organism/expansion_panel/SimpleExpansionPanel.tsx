@@ -29,7 +29,7 @@ export function SimpleExpansionPanel(props:any) {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className={classes.heading}>{props.title}</Typography>
+          <Typography className={classes.heading}><strong>{props.title}</strong></Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Typography>

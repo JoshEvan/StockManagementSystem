@@ -52,6 +52,18 @@ const initItem={
 	capacity:0,
 }
 
+const getInitViewConstraint = () => ({
+	/*
+		dibuat seperti ini karena kalo dibuat item
+		react bakal ngerusak initial item nya juga, dia engga ngopy init item nya
+		https://stackoverflow.com/questions/34845650/clearing-state-es6-react
+	 */
+	sortByAmountIncome:0,
+	sortByItemCode:0,
+	sortByAmountSold:0
+})
+
+
 export class ItemPage extends React.Component<Props,any> {
 	
 	state:IItemPage;
@@ -59,11 +71,7 @@ export class ItemPage extends React.Component<Props,any> {
 		super(props);
 		this.state = {
 			rawContent:[],
-			viewConstraint:{
-				sortByAmountIncome:0,
-				sortByItemCode:0,
-				sortByAmountSold:0
-			},
+			viewConstraint:getInitViewConstraint(),
 			snackbar:{
 				isShown:false,
 				severity:"info",
@@ -253,10 +261,57 @@ export class ItemPage extends React.Component<Props,any> {
 						title="sort"
 						content={
 							<div>
-								<div><ArrowDropUpIcon color="disabled"/><ArrowDropDownIcon color="disabled"/>By Amount Income</div>
-								<div><ArrowDropUpIcon color="disabled"/><ArrowDropDownIcon color="disabled"/>By Amount Sold</div>
-								<div><ArrowDropUpIcon color="disabled"/><ArrowDropDownIcon color="disabled"/>By Item Code</div>
-								<div><Button color="primary" variant="outlined">show</Button></div>
+								<div>
+									<ArrowDropUpIcon color={(this.state.viewConstraint.sortByAmountIncome > 0) ? "secondary" : "disabled"}
+									onClick = {() => {
+													console.log(this.state.viewConstraint)
+													const temp = this.state.viewConstraint;
+													temp.sortByAmountIncome = 1;
+													this.setState({viewConstraint:temp})}}/>
+									<ArrowDropDownIcon color={(this.state.viewConstraint.sortByAmountIncome < 0) ? "secondary" : "disabled"}
+									onClick = 
+										{() =>{const temp = this.state.viewConstraint;
+										temp.sortByAmountIncome = -1;
+										this.setState({viewConstraint:temp})}}/>
+									By Amount Income
+								</div>
+								<div>
+									<ArrowDropUpIcon color={(this.state.viewConstraint.sortByAmountSold > 0) ? "secondary" : "disabled"}
+									onClick = 
+										{() =>{const temp = this.state.viewConstraint;
+										temp.sortByAmountSold = 1;
+										this.setState({viewConstraint:temp})}}/>
+									<ArrowDropDownIcon color={(this.state.viewConstraint.sortByAmountSold < 0) ? "secondary" : "disabled"}
+									onClick = 
+										{() =>{const temp = this.state.viewConstraint;
+										temp.sortByAmountSold = -1;
+										this.setState({viewConstraint:temp})}}/>
+									By Amount Sold
+								</div>
+								<div>
+									<ArrowDropUpIcon color={(this.state.viewConstraint.sortByItemCode > 0) ? "secondary" : "disabled"}
+									onClick = 
+										{() =>{const temp = this.state.viewConstraint;
+										temp.sortByItemCode = 1;
+										this.setState({viewConstraint:temp})}}/>
+									<ArrowDropDownIcon color={(this.state.viewConstraint.sortByItemCode < 0) ? "secondary" : "disabled"}
+									onClick = 
+										{() =>{const temp = this.state.viewConstraint;
+										temp.sortByItemCode = -1;
+										this.setState({viewConstraint:temp})}}/>
+									By Item Code
+								</div>
+								<div>
+									<Button color="primary" variant="outlined">show</Button>
+									<Button color="secondary" variant="outlined"
+										onClick ={() => {
+											this.setState({viewConstraint:getInitViewConstraint()})
+											console.log(this.state.viewConstraint)
+										}
+										}>
+										reset</Button>
+								</div>
+								
 							</div>
 						}/>
 					<div>
