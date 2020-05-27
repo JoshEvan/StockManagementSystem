@@ -137,14 +137,12 @@ public class ItemServiceImpl implements ItemService {
   }
 
   @Override
-  public List<String> update(UpsertItemRequestPayload upsertItemRequestPayload) {
-    List<String> stats = new LinkedList<>();
+  public Pair<Boolean,List<String>> update(UpsertItemRequestPayload upsertItemRequestPayload) {
     if(itemDAO.update(convertUpsertPayloadToDataEntity(upsertItemRequestPayload)) == 1){
-      stats.add(ITEM+ upsertItemRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.UPDATED);
+      return new Pair<>(true,Collections.singletonList(ITEM+ upsertItemRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.UPDATED));
     }else{
-      stats.add(ITEM+ upsertItemRequestPayload.getName()+ FAIL+" "+ PostgresHelper.UPDATED);
+      return new Pair<>(true,Collections.singletonList(ITEM+ upsertItemRequestPayload.getName()+ FAIL+" "+ PostgresHelper.UPDATED));
     }
-    return stats;
   }
 
   @Override

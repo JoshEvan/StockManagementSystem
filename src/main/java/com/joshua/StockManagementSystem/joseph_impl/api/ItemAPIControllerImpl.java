@@ -48,8 +48,11 @@ public class ItemAPIControllerImpl implements ItemAPIController {
   }
 
   @Override
-  public List<String> updateItem(@NotNull UpsertItemRequestPayload upsertItemRequestPayload) {
-    return itemService.update(upsertItemRequestPayload);
+  public ItemResponsePayload updateItem(@NotNull UpsertItemRequestPayload upsertItemRequestPayload) {
+    Pair<Boolean, List<String>> resp = itemService.update(upsertItemRequestPayload);
+    return new ItemResponsePayload()
+            .setMsg(resp.getValue())
+            .setStatus(resp.getKey() ? HttpStatus.SUCCESS.toString() : HttpStatus.FAIL.toString());
   }
 
   @Override

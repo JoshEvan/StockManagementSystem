@@ -32,7 +32,7 @@ public interface ItemAPIController {
   Item showIndex(@NotNull @PathVariable("id") String id);
 
   @PutMapping("/update")
-  public List<String> updateItem(@NotNull @RequestBody UpsertItemRequestPayload upsertItemRequestPayload);
+  public ItemResponsePayload updateItem(@NotNull @RequestBody UpsertItemRequestPayload upsertItemRequestPayload);
 
   @DeleteMapping("/delete/{id}")
   public ItemResponsePayload deleteItem(@NotNull @PathVariable("id") String id);
