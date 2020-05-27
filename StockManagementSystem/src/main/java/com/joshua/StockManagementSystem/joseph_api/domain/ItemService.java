@@ -12,7 +12,7 @@ public interface ItemService {
   Pair<Boolean,List<String>> insert(UpsertItemRequestPayload upsertCustomerRequestPayload);
   List<Item> index(IndexItemRequestPayload indexItemRequestPayload);
   Item show(String id);
-  List<String> update(UpsertItemRequestPayload upsertCustomerRequestPayload);
+  Pair<Boolean,List<String>> update(UpsertItemRequestPayload upsertCustomerRequestPayload);
   Pair<Boolean,List<String>> delete(String itemCode);
   void generateReport(IndexItemRequestPayload indexItemRequestPayload);
 }
