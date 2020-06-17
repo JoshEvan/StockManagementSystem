@@ -302,11 +302,14 @@ export class ItemPage extends React.Component<Props,any> {
 									By Item Code
 								</div>
 								<div>
-									<Button color="primary" variant="outlined">show</Button>
+									<Button color="primary" variant="outlined" onClick = {this.loadAllItems}>
+										show
+									</Button>
 									<Button color="secondary" variant="outlined"
 										onClick ={() => {
 											this.setState({viewConstraint:getInitViewConstraint()})
 											console.log(this.state.viewConstraint)
+											this.loadAllItems()
 										}
 										}>
 										reset</Button>

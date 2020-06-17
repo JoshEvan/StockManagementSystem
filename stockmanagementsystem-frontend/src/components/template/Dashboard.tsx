@@ -20,18 +20,18 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from '../organism';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+// function Copyright() {
+//   return (
+//     <Typography variant="body2" color="textSecondary" align="center">
+//       {'Copyright © '}
+//       <Link color="inherit" href="https://material-ui.com/">
+//         Your Website
+//       </Link>{' '}
+//       {new Date().getFullYear()}
+//       {'.'}
+//     </Typography>
+//   );
+// }
 
 const drawerWidth = 240;
 
@@ -182,7 +182,7 @@ export default function Dashboard({titlePage, content}){
           
         </Container>
         
-      <footer style={{position:"absolute", bottom: '0', justifyContent:"center",width: "auto"}}>
+      {/* <footer style={{position:"absolute", bottom: '0', justifyContent:"center",width: "auto"}}>
         <div>
         <Container maxWidth="lg" className={classes.container}>
           <Box pt={4}>
@@ -190,7 +190,7 @@ export default function Dashboard({titlePage, content}){
           </Box>
         </Container>
         </div>
-      </footer>
+      </footer> */}
       </main>
     </div>
   );
