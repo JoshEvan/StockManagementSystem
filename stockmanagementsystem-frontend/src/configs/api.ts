@@ -6,11 +6,20 @@ const API_URL = {
 }
 
 export const JOSEPH_URL={
-    INDEX_ITEM: '/item/',
-    DELETE_ITEM:'/item/delete/',
-    ADD_ITEM:'/item/insert/',
-    EDIT_ITEM:'/item/update',
-    DOWNLOAD_PDF:'/item/report'
+    ITEM: {
+        INDEX: '/item/',
+        DELETE:'/item/delete/',
+        ADD:'/item/insert/',
+        EDIT:'/item/update',
+        DOWNLOAD_PDF:'/item/report'
+    },
+    CUSTOMER: {
+        INDEX: '/customer/',
+        DELETE:'/customer/delete/',
+        ADD:'/customer/insert/',
+        EDIT:'/customer/update',
+    }
+    
 }
 
 export const getBaseUrl = () =>{

@@ -1,5 +1,9 @@
 export { serviceIndexItem,serviceDeleteItem as serviceDeletetem, serviceEditItem, serviceDownloadPdfItem} from './ItemService';
 
+
+export { serviceIndexCustomer,serviceEditCustomer, serviceAddCustomer, serviceDeleteCustomer } from './CustomerService';
+
+
 export function getCurrentDate(separator=''){
     let currDate = new Date()
     let date = currDate.getDate();

@@ -2,17 +2,11 @@ import React from 'react';
 import { Formik, Field, useField, FieldAttributes, FieldArray } from 'formik';
 import { TextField, Button, Checkbox, Radio, Select, MenuItem, TextareaAutosize, Typography } from '@material-ui/core';
 import * as yup from 'yup';
-import { IAddItemRequest } from '../../../data/interfaces';
 
 
 const validationSchema = yup.object({
-// key: rule
-	// firstName: yup.string().required("error message (ada default juga kalo dikosongin)").max(10),
-	itemCode: yup.string().required("Item Code must be filled"),
-	name: yup.string().required("Item Name must be filled"),
-	price: yup.string().required("Item Price must be filled"),
-	stock: yup.string().required("Item Stock must be filled"),
-	capacity: yup.string().required("Item Capacity must be filled")
+	id: yup.string().required("Customer Id must be filled"),
+	name: yup.string().required("Customer Name must be filled")
 })
 
 const TextFieldWValidation:React.FC<FieldAttributes<{}>> = ({placeholder,type,...props}) => {
@@ -22,10 +16,6 @@ const TextFieldWValidation:React.FC<FieldAttributes<{}>> = ({placeholder,type,..
 	return(
 		<TextField label={placeholder} type={type}
 			{...field} helperText={errorText} error={!!errorText} variant="outlined" />
-		
-		// ... field sebarin kaya values,onchange, dll (kaya paste in aja)
-		// error={!!errorText} ubah T jadi F dan sebaliknya
-
 	)
 }
 
@@ -38,14 +28,11 @@ const TextAreaWValidation:React.FC<FieldAttributes<{}>> = ({placeholder,...props
 		
 		<TextareaAutosize aria-label={placeholder} rowsMin={3} placeholder={placeholder} {...field} 
 		helperText={errorText} error={!!errorText} />
-		// <TextField placeholder={placeholder} {...field} helperText={errorText} error={!!errorText}/>
-		// ... field sebarin kaya values,onchange, dll (kaya paste in aja)
-		// error={!!errorText} ubah T jadi F dan sebaliknya
 	)
 }
 
 
-export class Form extends React.Component<any,any>{
+export class CustomerForm extends React.Component<any,any>{
 	render(){
 		return (
 			<div>
@@ -54,14 +41,10 @@ export class Form extends React.Component<any,any>{
 				*/}
 				<Formik
 					initialValues={{
-						itemCode:this.props.item.itemCode,
+						id:this.props.item.itemCode,
 						description:this.props.item.description,
 						name:this.props.item.name,
-						price:this.props.item.price,
-						stock:this.props.item.stock,
-						capacity:this.props.item.capacity,
-						errors:'',
-						values:''
+                        contact:this.props.item.contact,
 					}}
 					
 					onSubmit = {(data, { setSubmitting }) => {
@@ -76,40 +59,25 @@ export class Form extends React.Component<any,any>{
 					}}
 					
 					validationSchema = {validationSchema}
-					/* // VALIDASI tanpa yup */
-					// validate = {values => {
-					// const errors:Record<string,string> = {};
-					// if(values.firstName.includes("bob")){
-					// errors.firstName = "no bob";
-					// }
-					// return errors;
-					// }}
+					
 				>
-
-					{/* ( ini properties dari formik yg bisa diakses ) => {} pake ini karena render prop... */}
 					{
-					// values ini object curr state dari form
 					({ errors, values, isSubmitting, /*handleChange, handleBlur, */handleSubmit }) => (
-					// display content form
-					// ini dibawah sama aj kaya lgsg <Form> // import dari formik
+					
 					<form onSubmit={handleSubmit}>
-						{/* <TextField
-						name="firstName" // nama ini harus sejalan dengan initValues (state dari currForm)
-						value={values.firstName}
-						onChange={handleChange}
-						onBlur={handleBlur}/> */}
+					
 
 						<div style={{padding:'2%'}}>
 							<TextFieldWValidation
-								placeholder="item code"
-								name="itemCode" 
+								placeholder="customer id"
+								name="id" 
 								type="input" 
 								as={TextField}/>
 						</div>
 
 						<div style={{padding:'2%'}}>
 							<TextFieldWValidation
-								placeholder="item name"
+								placeholder="customer name"
 								name="name" 
 								type="input" 
 								as={TextField}/>
@@ -117,33 +85,15 @@ export class Form extends React.Component<any,any>{
 
 						<div style={{padding:'2%'}}>
 							<TextFieldWValidation
-								placeholder="item price"
-								name="price" 
-								type="number" 
+								placeholder="customer contact"
+								name="contact" 
+								type="input" 
 								as={TextField}/>
 						</div>
 						
-						<div style={{padding:'2%'}}>
-							<TextFieldWValidation
-								placeholder="item stock"
-								name="stock" 
-								type="number"
-								as={TextField}/>
-						</div>
-
-						
-						<div style={{padding:'2%'}}>
-							<TextFieldWValidation
-								placeholder="item capacity dozen/box"
-								name="capacity" 
-								type="number" 
-								as={TextField}/>
-									
-						</div>
-
 						<div style={{padding:'2%'}}>
 							<TextAreaWValidation
-								placeholder="item description"
+								placeholder="customer description"
 								name="description"
 								type="input"
 								// as={TextareaAutosize}

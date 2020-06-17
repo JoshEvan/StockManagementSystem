@@ -8,7 +8,7 @@ import "regenerator-runtime/runtime.js";
 import { Button, Paper, Card, CardContent, Typography } from '@material-ui/core';
 import { async } from 'rxjs/internal/scheduler/async';
 import { serviceDeleteItem, serviceAddItem, serviceEditItem, serviceDownloadPdfItem } from '../data/services/ItemService';
-import { Form } from '../components/organism/form';
+import { ItemForm } from '../components/organism/form';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import { SimpleExpansionPanel } from '../components/organism/expansion_panel/SimpleExpansionPanel';
@@ -82,7 +82,7 @@ export class ItemPage extends React.Component<Props,any> {
 				usingAction:false,
 				title:"Add new item",
 				content:(
-					<Form
+					<ItemForm
 						submitData = {this.addItem}
 						item= {
 							initItem
@@ -143,7 +143,7 @@ export class ItemPage extends React.Component<Props,any> {
 			addDialog:{
 				isShown:false,
 				content:(
-					<Form
+					<ItemForm
 						submitData = {this.addItem}
 						item={initItem}
 					/>
@@ -367,7 +367,7 @@ export class ItemPage extends React.Component<Props,any> {
 													dialogTitle="Update item"
 													usingAction={false}
 													dialogContent={
-														<Form
+														<ItemForm
 															submitData = {this.editItem}
 															item={
 																{

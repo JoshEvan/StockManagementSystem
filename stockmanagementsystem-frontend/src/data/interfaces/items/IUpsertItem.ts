@@ -1,4 +1,4 @@
-import { HTTPCallStatus } from ".";
+import { HTTPCallStatus } from "..";
 
 export interface IUpsertItemRequest{
     itemCode:string,
