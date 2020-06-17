@@ -87,7 +87,7 @@ public class CustomerDataAccessService implements CustomerDAO {
         HashMap<String,Object> setter = new HashMap<>();
         setter.put(ItemDataEntity.ISACTIVE, false);
         final String sql = PostgresHelper.updateOperation(customerDataEntity,
-                setter,ItemDataEntity.ITEMCODE+" = \'" +customerDataEntity.getId()+"\'");
+                setter,CustomerDataEntity.ID+" = \'" +customerDataEntity.getId()+"\'");
         return jdbcTemplate.update(sql);
     }
 

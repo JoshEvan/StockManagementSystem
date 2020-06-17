@@ -74,6 +74,7 @@ public class PostgresHelper {
   }
 
   public static String formatCurrency(BigDecimal amount){
+    if(amount == null) amount = BigDecimal.ZERO;
     DecimalFormat kursIndo = (DecimalFormat) DecimalFormat.getCurrencyInstance();
     DecimalFormatSymbols rp = new DecimalFormatSymbols();
     rp.setCurrencySymbol("IDR ");
