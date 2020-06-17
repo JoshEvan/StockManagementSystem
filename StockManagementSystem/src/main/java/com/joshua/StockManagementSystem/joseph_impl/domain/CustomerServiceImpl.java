@@ -12,6 +12,8 @@ import com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.Custo
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.TransactionAdapter;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.dao.spec.TransactionSpec;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.CustomerDataEntity;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -40,14 +42,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<String> insertCustomer(UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
-        List<String> stats = new LinkedList<>();
-        if(customerDAO.insert(CustomerAdapter.convertUpsertPayloadToDataEntity(upsertCustomerRequestPayload)) == 1){
-            stats.add(ITEM+ upsertCustomerRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.INSERTED);
-        }else{
-            stats.add(ITEM+ upsertCustomerRequestPayload.getName()+ FAIL+" "+ PostgresHelper.INSERTED);
-        }
-        return stats;
+    public Pair<Boolean,List<String>> insertCustomer(UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
+        Integer flag = customerDAO.insert(CustomerAdapter.convertUpsertPayloadToDataEntity(upsertCustomerRequestPayload));
+        return new Pair<>((flag == 1), (flag == 1 ? Collections.singletonList(ITEM+ upsertCustomerRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.INSERTED)
+                : Collections.singletonList(ITEM+ upsertCustomerRequestPayload.getName()+ FAIL+" "+ PostgresHelper.INSERTED)));
     }
 
     @Override
@@ -109,13 +107,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<String> deleteCustomer(String id) {
-        List<String> stats = new LinkedList<>();
-        if(customerDAO.delete(id) == 1){
-            stats.add(ITEM+ id + SUCCESS+" "+ PostgresHelper.REMOVED);
-        }else{
-            stats.add(ITEM+ id + FAIL+" "+ PostgresHelper.REMOVED);
-        }
-        return stats;
+    public Pair<Boolean,List<String>> deleteCustomer(String id) {
+        Integer flag = customerDAO.delete(id);
+        return new Pair<>((flag == 1), (flag == 1) ? Collections.singletonList((ITEM+ id + SUCCESS+" "+ PostgresHelper.REMOVED))
+            : Collections.singletonList(ITEM+ id + FAIL+" "+ PostgresHelper.REMOVED));
+
     }
 }

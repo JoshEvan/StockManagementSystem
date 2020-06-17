@@ -1,6 +1,6 @@
 package com.joshua.StockManagementSystem.joseph_api.api;
 
-import com.joshua.StockManagementSystem.joseph_api.api.payload.ItemResponsePayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.ResponsePayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexItemRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexItemResponsePayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertItemRequestPayload;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("api/v1/joseph/item")
@@ -21,7 +20,7 @@ import java.util.List;
 @Component("itemAPIV1")
 public interface ItemAPIController {
   @PostMapping("/insert")
-  public ItemResponsePayload insertItem(@NotNull @RequestBody UpsertItemRequestPayload upsertItemRequestPayload);
+  public ResponsePayload insertItem(@NotNull @RequestBody UpsertItemRequestPayload upsertItemRequestPayload);
 
   @PostMapping(value = "/", produces = "application/json")
   public @ResponseBody
@@ -32,10 +31,10 @@ public interface ItemAPIController {
   Item showIndex(@NotNull @PathVariable("id") String id);
 
   @PutMapping("/update")
-  public ItemResponsePayload updateItem(@NotNull @RequestBody UpsertItemRequestPayload upsertItemRequestPayload);
+  public ResponsePayload updateItem(@NotNull @RequestBody UpsertItemRequestPayload upsertItemRequestPayload);
 
   @DeleteMapping("/delete/{id}")
-  public ItemResponsePayload deleteItem(@NotNull @PathVariable("id") String id);
+  public ResponsePayload deleteItem(@NotNull @PathVariable("id") String id);
 
   @PostMapping("/report")
   public void generateReport(

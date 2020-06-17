@@ -1,9 +1,13 @@
 package com.joshua.StockManagementSystem.joseph_impl.api;
 
 import com.joshua.StockManagementSystem.joseph_api.api.CustomerAPIController;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.ResponsePayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexCustomerResponsePayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertCustomerRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.CustomerService;
 import com.joshua.StockManagementSystem.joseph_api.model.Customer;
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.HttpStatus;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -23,14 +27,15 @@ public class CustomerAPIControllerImpl implements CustomerAPIController {
   }
 
   @Override
-  public List<String> insertCustomer(@NotNull @RequestBody UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
-    return customerService.insertCustomer(upsertCustomerRequestPayload);
+  public ResponsePayload insertCustomer(@NotNull @RequestBody UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
+    Pair<Boolean,List<String>> res =customerService.insertCustomer(upsertCustomerRequestPayload);
+    return new ResponsePayload().setMsg(res.getValue()).setStatus(res.getKey() ? HttpStatus.SUCCESS.toString() : HttpStatus.FAIL.toString());
   }
 
   @Override
   public @ResponseBody
-  List<Customer> indexCustomer() {
-      return customerService.indexCustomer();
+  IndexCustomerResponsePayload indexCustomer() {
+      return new IndexCustomerResponsePayload().setCustomers(customerService.indexCustomer());
   }
 
   @Override
@@ -44,8 +49,9 @@ public class CustomerAPIControllerImpl implements CustomerAPIController {
   }
 
   @Override
-  public List<String> deleteCustomer(@NotNull String id) {
-    return customerService.deleteCustomer(id);
+  public ResponsePayload deleteCustomer(@NotNull String id) {
+    Pair<Boolean,List<String>> res = customerService.deleteCustomer(id);
+    return new ResponsePayload().setStatus(res.getKey() ? HttpStatus.SUCCESS.toString() : HttpStatus.FAIL.toString()).setMsg(res.getValue());
   }
 
 
