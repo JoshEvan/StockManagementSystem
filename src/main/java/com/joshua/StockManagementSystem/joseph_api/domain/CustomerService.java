@@ -10,6 +10,6 @@ public interface CustomerService {
   Pair<Boolean,List<String>> insertCustomer(UpsertCustomerRequestPayload upsertCustomerRequestPayload);
   List<Customer> indexCustomer();
   Customer showCustomer(String id);
-  List<String> updateCustomer(UpsertCustomerRequestPayload upsertCustomerRequestPayload);
+  Pair<Boolean,List<String>> updateCustomer(UpsertCustomerRequestPayload upsertCustomerRequestPayload);
   Pair<Boolean,List<String>> deleteCustomer(String id);
 }

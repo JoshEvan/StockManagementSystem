@@ -44,8 +44,9 @@ public class CustomerAPIControllerImpl implements CustomerAPIController {
   }
 
   @Override
-  public List<String> updateCustomer(@NotNull UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
-    return customerService.updateCustomer(upsertCustomerRequestPayload);
+  public ResponsePayload updateCustomer(@NotNull UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
+    Pair<Boolean, List<String>> res = customerService.updateCustomer(upsertCustomerRequestPayload);
+    return new ResponsePayload().setStatus(res.getKey() ? HttpStatus.SUCCESS.toString() : HttpStatus.FAIL.toString()).setMsg(res.getValue());
   }
 
   @Override

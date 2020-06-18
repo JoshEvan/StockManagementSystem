@@ -44,8 +44,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Pair<Boolean,List<String>> insertCustomer(UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
         Integer flag = customerDAO.insert(CustomerAdapter.convertUpsertPayloadToDataEntity(upsertCustomerRequestPayload));
-        return new Pair<>((flag == 1), (flag == 1 ? Collections.singletonList(ITEM+ upsertCustomerRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.INSERTED)
-                : Collections.singletonList(ITEM+ upsertCustomerRequestPayload.getName()+ FAIL+" "+ PostgresHelper.INSERTED)));
+        return new Pair<>((flag == 1), (flag == 1 ? Collections.singletonList(CUSTOMER+ upsertCustomerRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.INSERTED)
+                : Collections.singletonList(CUSTOMER+ upsertCustomerRequestPayload.getName()+ FAIL+" "+ PostgresHelper.INSERTED)));
     }
 
     @Override
@@ -96,21 +96,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<String> updateCustomer(UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
-        List<String> stats = new LinkedList<>();
-        if(customerDAO.update(CustomerAdapter.convertUpsertPayloadToDataEntity(upsertCustomerRequestPayload)) == 1){
-            stats.add(ITEM+ upsertCustomerRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.UPDATED);
-        }else{
-            stats.add(ITEM+ upsertCustomerRequestPayload.getName()+ FAIL+" "+ PostgresHelper.UPDATED);
-        }
-        return stats;
+    public Pair<Boolean,List<String>> updateCustomer(UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
+        Integer flag = customerDAO.update(CustomerAdapter.convertUpsertPayloadToDataEntity(upsertCustomerRequestPayload));
+        return new Pair<>(flag == 1, (flag == 1 ? Collections.singletonList(CUSTOMER+ upsertCustomerRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.UPDATED)
+        : Collections.singletonList(CUSTOMER+ upsertCustomerRequestPayload.getName()+ FAIL+" "+ PostgresHelper.UPDATED)));
     }
 
     @Override
     public Pair<Boolean,List<String>> deleteCustomer(String id) {
         Integer flag = customerDAO.delete(id);
-        return new Pair<>((flag == 1), (flag == 1) ? Collections.singletonList((ITEM+ id + SUCCESS+" "+ PostgresHelper.REMOVED))
-            : Collections.singletonList(ITEM+ id + FAIL+" "+ PostgresHelper.REMOVED));
+        return new Pair<>((flag == 1), (flag == 1) ? Collections.singletonList((CUSTOMER+ id + SUCCESS+" "+ PostgresHelper.REMOVED))
+            : Collections.singletonList(CUSTOMER+ id + FAIL+" "+ PostgresHelper.REMOVED));
 
     }
 }
