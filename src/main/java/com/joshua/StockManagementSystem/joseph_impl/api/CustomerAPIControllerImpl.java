@@ -29,7 +29,7 @@ public class CustomerAPIControllerImpl implements CustomerAPIController {
   @Override
   public ResponsePayload insertCustomer(@NotNull @RequestBody UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
     Pair<Boolean,List<String>> res =customerService.insertCustomer(upsertCustomerRequestPayload);
-    return new ResponsePayload().setMsg(res.getValue()).setStatus(res.getKey() ? HttpStatus.SUCCESS.toString() : HttpStatus.FAIL.toString());
+    return new ResponsePayload().setMessage(res.getValue()).setStatus(res.getKey() ? HttpStatus.SUCCESS.toString() : HttpStatus.FAIL.toString());
   }
 
   @Override
@@ -46,13 +46,13 @@ public class CustomerAPIControllerImpl implements CustomerAPIController {
   @Override
   public ResponsePayload updateCustomer(@NotNull UpsertCustomerRequestPayload upsertCustomerRequestPayload) {
     Pair<Boolean, List<String>> res = customerService.updateCustomer(upsertCustomerRequestPayload);
-    return new ResponsePayload().setStatus(res.getKey() ? HttpStatus.SUCCESS.toString() : HttpStatus.FAIL.toString()).setMsg(res.getValue());
+    return new ResponsePayload().setStatus(res.getKey() ? HttpStatus.SUCCESS.toString() : HttpStatus.FAIL.toString()).setMessage(res.getValue());
   }
 
   @Override
   public ResponsePayload deleteCustomer(@NotNull String id) {
     Pair<Boolean,List<String>> res = customerService.deleteCustomer(id);
-    return new ResponsePayload().setStatus(res.getKey() ? HttpStatus.SUCCESS.toString() : HttpStatus.FAIL.toString()).setMsg(res.getValue());
+    return new ResponsePayload().setStatus(res.getKey() ? HttpStatus.SUCCESS.toString() : HttpStatus.FAIL.toString()).setMessage(res.getValue());
   }
 
 

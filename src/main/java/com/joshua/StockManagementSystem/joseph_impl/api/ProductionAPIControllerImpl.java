@@ -1,9 +1,13 @@
 package com.joshua.StockManagementSystem.joseph_impl.api;
 
 import com.joshua.StockManagementSystem.joseph_api.api.ProductionAPIController;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.ResponsePayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexProductionRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertProductionRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.ProductionService;
 import com.joshua.StockManagementSystem.joseph_api.model.Production;
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.HttpStatus;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -21,13 +25,14 @@ public class ProductionAPIControllerImpl implements ProductionAPIController {
   }
 
   @Override
-  public List<String> insert(@NotNull UpsertProductionRequestPayload upsertProductionRequestPayload) {
-    return productionService.insert(upsertProductionRequestPayload);
+  public ResponsePayload insert(@NotNull UpsertProductionRequestPayload upsertProductionRequestPayload) {
+    Pair<Boolean,List<String>> res = productionService.insert(upsertProductionRequestPayload);
+    return new ResponsePayload().setMessage(res.getValue()).setStatus((res.getKey() ? HttpStatus.SUCCESS : HttpStatus.FAIL).toString());
   }
 
   @Override
-  public List<Production> index() {
-    return productionService.index();
+  public IndexProductionRequestPayload index() {
+    return new IndexProductionRequestPayload().setProductions(productionService.index());
   }
 
   @Override

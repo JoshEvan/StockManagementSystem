@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ResponsePayload {
   private String status;
-  private List<String> msg;
+  private List<String> message;
 
   public String getStatus() {
     return status;
@@ -14,11 +14,11 @@ public class ResponsePayload {
     this.status = status;return this;
   }
 
-  public List<String> getMsg() {
-    return msg;
+  public List<String> getMessage() {
+    return message;
   }
 
-  public ResponsePayload setMsg(List<String> msg) {
-    this.msg = msg;return this;
+  public ResponsePayload setMessage(List<String> message) {
+    this.message = message;return this;
   }
 }
