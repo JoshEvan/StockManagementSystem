@@ -33,7 +33,7 @@ public class ItemAPIControllerImpl implements ItemAPIController {
   @Override
   public ResponsePayload insertItem(@NotNull UpsertItemRequestPayload upsertItemRequestPayload) {
     Pair<Boolean, List<String>> resp = itemService.insert(upsertItemRequestPayload);
-    return new ResponsePayload().setMsg(resp.getValue())
+    return new ResponsePayload().setMessage(resp.getValue())
             .setStatus((resp.getKey() ? HttpStatus.SUCCESS : HttpStatus.FAIL).toString());
   }
 
@@ -51,7 +51,7 @@ public class ItemAPIControllerImpl implements ItemAPIController {
   public ResponsePayload updateItem(@NotNull UpsertItemRequestPayload upsertItemRequestPayload) {
     Pair<Boolean, List<String>> resp = itemService.update(upsertItemRequestPayload);
     return new ResponsePayload()
-            .setMsg(resp.getValue())
+            .setMessage(resp.getValue())
             .setStatus(resp.getKey() ? HttpStatus.SUCCESS.toString() : HttpStatus.FAIL.toString());
   }
 
@@ -59,7 +59,7 @@ public class ItemAPIControllerImpl implements ItemAPIController {
   public ResponsePayload deleteItem(@NotNull String id) {
     Pair<Boolean, List<String>> resp = itemService.delete(id);
     return new ResponsePayload()
-            .setMsg(resp.getValue())
+            .setMessage(resp.getValue())
             .setStatus(resp.getKey() ? HttpStatus.SUCCESS.toString() : HttpStatus.FAIL.toString());
   }
 

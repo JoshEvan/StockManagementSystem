@@ -6,6 +6,7 @@ import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.Production
 import com.joshua.StockManagementSystem.joseph_api.model.Production;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ProductionDataEntity;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -29,14 +30,10 @@ public class ProductionServiceImpl implements ProductionService {
   }
 
   @Override
-  public List<String> insert(UpsertProductionRequestPayload upsertProductionRequestPayload) {
-    List<String> stats = new LinkedList<>();
-    if(productionDAO.insert(convertUpsertPayloadToDataEntity(upsertProductionRequestPayload)) == 1){
-      stats.add(ITEM+ upsertProductionRequestPayload.getId()+ SUCCESS+" "+ PostgresHelper.INSERTED);
-    }else{
-      stats.add(ITEM+ upsertProductionRequestPayload.getId()+ FAIL+" "+ PostgresHelper.INSERTED);
-    }
-    return stats;
+  public Pair<Boolean,List<String>> insert(UpsertProductionRequestPayload upsertProductionRequestPayload) {
+    Integer flag = productionDAO.insert(convertUpsertPayloadToDataEntity(upsertProductionRequestPayload));
+    return new Pair<>(flag == 1, Collections.singletonList(
+            ITEM+ upsertProductionRequestPayload.getId()+ (flag == 1? SUCCESS : FAIL )+" "+ PostgresHelper.INSERTED));
   }
 
   @Override
