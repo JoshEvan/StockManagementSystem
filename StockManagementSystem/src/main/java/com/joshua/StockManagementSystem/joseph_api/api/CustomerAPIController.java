@@ -28,7 +28,7 @@ public interface CustomerAPIController {
     public @ResponseBody Customer showCustomer(@NotNull @PathVariable("id") String id);
 
     @PutMapping("/update")
-    public List<String> updateCustomer(@NotNull @RequestBody UpsertCustomerRequestPayload upsertCustomerRequestPayload);
+    public ResponsePayload updateCustomer(@NotNull @RequestBody UpsertCustomerRequestPayload upsertCustomerRequestPayload);
 
     @DeleteMapping("/delete/{id}")
     public ResponsePayload deleteCustomer(@NotNull @PathVariable("id") String id);
