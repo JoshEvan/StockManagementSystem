@@ -63,6 +63,7 @@ export class CustomerPage extends React.Component<Props,any> {
 				title:"Add new customer",
 				content:(
 					<CustomerForm
+						isEdit = {false}
 						submitData = {this.addCustomer}
 						item= {
 							initCustomer
@@ -265,6 +266,7 @@ export class CustomerPage extends React.Component<Props,any> {
 													usingAction={false}
 													dialogContent={
 														<CustomerForm
+															isEdit = {true}
 															submitData = {this.editItem}
 															item={
 																{

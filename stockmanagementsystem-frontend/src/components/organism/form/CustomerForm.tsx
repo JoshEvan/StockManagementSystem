@@ -67,13 +67,13 @@ export class CustomerForm extends React.Component<any,any>{
 					<form onSubmit={handleSubmit}>
 					
 
-						<div style={{padding:'2%'}}>
+						{!this.props.isEdit && <div style={{padding:'2%'}}>
 							<TextFieldWValidation
 								placeholder="customer id"
 								name="id" 
 								type="input" 
 								as={TextField}/>
-						</div>
+						</div>}
 
 						<div style={{padding:'2%'}}>
 							<TextFieldWValidation
