@@ -75,7 +75,7 @@ export class CustomTable extends React.Component<Props,IState> {
           <IconButton color="primary" 
           style={{float:'right'}}
           onClick={
-            () => {this.openAddDialog();n}
+            () => {this.openAddDialog();}
           }>
             <AddBoxIcon/>
           </IconButton>

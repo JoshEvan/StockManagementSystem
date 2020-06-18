@@ -18,8 +18,13 @@ export const JOSEPH_URL={
         DELETE:'/customer/delete/',
         ADD:'/customer/insert/',
         EDIT:'/customer/update',
-    }
-    
+    },
+    PRODUCTION: {
+        INDEX: '/production/',
+        DELETE:'/production/delete/',
+        ADD:'/production/insert/',
+        EDIT:'/production/update',
+    },
 }
 
 export const getBaseUrl = () =>{

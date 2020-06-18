@@ -14,3 +14,6 @@ export { IUpsertItemRequest,IUpsertItemResponse } from './items/IUpsertItem';
 export { ICustomer } from './customers/ICustomer'
 export { IIndexCustomerResponse } from './customers/IIndexCustomer'
 export { IUpsertCustomerRequest,IUpsertCustomerResponse } from './customers/IUpsertCustomer'
+
+export { IProduction } from './productions/IProduction'
+export { IIndexProductionResponse } from './productions/IIndexProduction'

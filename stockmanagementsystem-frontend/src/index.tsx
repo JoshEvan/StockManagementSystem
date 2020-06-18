@@ -6,6 +6,7 @@ import { About } from './pages/About';
 import { Post } from './pages/Post';
 import { ItemPage } from './pages/ItemPage';
 import { CustomerPage } from './pages/CustomerPage';
+import { ProductionPage } from './pages/ProductionPage';
 
 export default function App(): JSX.Element {
     
@@ -32,6 +33,9 @@ export default function App(): JSX.Element {
                 />
                 <Route
                     path = "/customers" exact component={CustomerPage}
+                />
+                <Route
+                    path = "/productions" exact component={ProductionPage}
                 />
                 <Route
                     path = "/posts/:id" exact component={Post}

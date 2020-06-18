@@ -46,12 +46,14 @@ export const mainListItems = (
         <ListItemText primary="Customers" />
         </ListItem>
     </Link>
-    <ListItem button>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Productions" />
-    </ListItem>
+    <Link to="/productions" style={{ textDecoration: 'none', color:'#000' }}>
+      <ListItem button>
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Productions" />
+      </ListItem>
+    </Link>
     <ListItem button>
       <ListItemIcon>
         <ReceiptIcon />

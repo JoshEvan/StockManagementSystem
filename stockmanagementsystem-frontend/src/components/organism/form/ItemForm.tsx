@@ -146,7 +146,7 @@ export class ItemForm extends React.Component<any,any>{
 								placeholder="item description"
 								name="description"
 								type="input"
-								// as={TextareaAutosize}
+								// as={TextareaAutosize}	
 								/>
 						</div>
 						

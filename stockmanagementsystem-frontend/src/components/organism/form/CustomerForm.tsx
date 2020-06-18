@@ -41,7 +41,7 @@ export class CustomerForm extends React.Component<any,any>{
 				*/}
 				<Formik
 					initialValues={{
-						id:this.props.item.itemCode,
+						id:this.props.item.id,
 						description:this.props.item.description,
 						name:this.props.item.name,
                         contact:this.props.item.contact,
