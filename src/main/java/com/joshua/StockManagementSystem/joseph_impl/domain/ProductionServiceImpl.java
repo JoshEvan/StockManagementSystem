@@ -33,7 +33,7 @@ public class ProductionServiceImpl implements ProductionService {
   public Pair<Boolean,List<String>> insert(UpsertProductionRequestPayload upsertProductionRequestPayload) {
     Integer flag = productionDAO.insert(convertUpsertPayloadToDataEntity(upsertProductionRequestPayload));
     return new Pair<>(flag == 1, Collections.singletonList(
-            ITEM+ upsertProductionRequestPayload.getId()+ (flag == 1? SUCCESS : FAIL )+" "+ PostgresHelper.INSERTED));
+            PRODUCTION+ upsertProductionRequestPayload.getId()+ (flag == 1? SUCCESS : FAIL )+" "+ PostgresHelper.INSERTED));
   }
 
   @Override
@@ -50,24 +50,20 @@ public class ProductionServiceImpl implements ProductionService {
   }
 
   @Override
-  public List<String> update(UpsertProductionRequestPayload upsertProductionRequestPayload) {
+  public Pair<Boolean,List<String>> update(UpsertProductionRequestPayload upsertProductionRequestPayload) {
     List<String> stats = new LinkedList<>();
-    if(productionDAO.update(convertUpsertPayloadToDataEntity(upsertProductionRequestPayload)) == 1){
-      stats.add(ITEM+ upsertProductionRequestPayload.getId()+ SUCCESS+" "+ PostgresHelper.UPDATED);
-    }else{
-      stats.add(ITEM+ upsertProductionRequestPayload.getId()+ FAIL+" "+ PostgresHelper.UPDATED);
-    }
-    return stats;
+    Integer flag =productionDAO.update(convertUpsertPayloadToDataEntity(upsertProductionRequestPayload));
+    return new Pair<>(
+      (flag == 1 ),
+      Collections.singletonList(PRODUCTION+ upsertProductionRequestPayload.getId()+(flag == 1 ? SUCCESS : FAIL)+UPDATED)
+    );
   }
 
   @Override
-  public List<String> delete(String id) {
-    List<String> stats = new LinkedList<>();
-    if(productionDAO.delete(id) == 1){
-      stats.add( ITEM+ id + SUCCESS+" "+ PostgresHelper.REMOVED);
-    }else{
-      stats.add(ITEM+ id + FAIL+" "+ PostgresHelper.REMOVED);
-    }
-    return stats;
+  public Pair<Boolean,List<String> >delete(String id) {
+    Integer flag = productionDAO.delete(id);
+    return new Pair<>((flag == 1), Collections.singletonList(
+            PRODUCTION+ id + ((flag == 1)? SUCCESS : FAIL )+PostgresHelper.REMOVED));
+
   }
 }

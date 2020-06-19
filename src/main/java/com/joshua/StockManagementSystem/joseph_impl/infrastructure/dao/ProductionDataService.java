@@ -7,6 +7,7 @@ import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.Prod
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,19 +24,22 @@ public class ProductionDataService implements ProductionDAO {
     this.jdbcTemplate = jdbcTemplate;
   }
 
+  @Transactional
   @Override
   public Integer insert(ProductionDataEntity productionDataEntity) {
     if(show(productionDataEntity.getId()) != null){
       return update(productionDataEntity);
     }
     final String sql = PostgresHelper.insertOperation(productionDataEntity);
-    return jdbcTemplate.update(sql
+    Integer stats = jdbcTemplate.update(sql
             ,productionDataEntity.getId()
             ,productionDataEntity.getItemCode()
             ,productionDataEntity.getProductionDate()
             ,productionDataEntity.getProducer()
             ,productionDataEntity.getQuantity()
     );
+//    stats =
+    return stats;
   }
 
   @Override
@@ -86,7 +90,7 @@ public class ProductionDataService implements ProductionDAO {
     HashMap<String,Object> setter = new HashMap<>();
     setter.put(ItemDataEntity.ISACTIVE, false);
     final String sql = PostgresHelper.updateOperation(productionDataEntity,
-            setter,ItemDataEntity.ITEMCODE+" = \'" +productionDataEntity.getItemCode()+"\'");
+            setter,ProductionDataEntity.ID+" = \'" +productionDataEntity.getId()+"\'");
     return jdbcTemplate.update(sql);
   }
 }

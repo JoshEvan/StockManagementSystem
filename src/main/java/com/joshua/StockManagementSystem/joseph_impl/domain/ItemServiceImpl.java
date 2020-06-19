@@ -139,9 +139,9 @@ public class ItemServiceImpl implements ItemService {
   @Override
   public Pair<Boolean,List<String>> update(UpsertItemRequestPayload upsertItemRequestPayload) {
     if(itemDAO.update(convertUpsertPayloadToDataEntity(upsertItemRequestPayload)) == 1){
-      return new Pair<>(true,Collections.singletonList(ITEM+ upsertItemRequestPayload.getItemCode()+ SUCCESS+" "+ PostgresHelper.UPDATED));
+      return new Pair<>(true,Collections.singletonList(ITEM+ upsertItemRequestPayload.getItemCode()+ SUCCESS+PostgresHelper.UPDATED));
     }else{
-      return new Pair<>(true,Collections.singletonList(ITEM+ upsertItemRequestPayload.getItemCode()+ FAIL+" "+ PostgresHelper.UPDATED));
+      return new Pair<>(true,Collections.singletonList(ITEM+ upsertItemRequestPayload.getItemCode()+ FAIL+ PostgresHelper.UPDATED));
     }
   }
 
