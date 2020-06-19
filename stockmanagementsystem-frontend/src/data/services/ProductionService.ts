@@ -16,3 +16,16 @@ export const serviceAddProduction = (dataPayload:IProduction) : Observable<any> 
         dataPayload
     )
 } 
+
+export const serviceDeleteProduction = (dataPayload:string) : Observable<any> => {
+    return Axios.delete(
+        usingBaseUrl+JOSEPH_URL.PRODUCTION.DELETE+dataPayload
+    )
+}
+
+export const serviceEditProduction = (dataPayload:IProduction) : Observable<any> => {
+    return Axios.put(
+        usingBaseUrl+JOSEPH_URL.PRODUCTION.EDIT,
+        dataPayload
+    )
+} 

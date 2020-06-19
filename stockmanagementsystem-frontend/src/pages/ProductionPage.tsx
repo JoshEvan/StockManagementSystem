@@ -7,7 +7,7 @@ import "regenerator-runtime/runtime.js";
 import { serviceAddCustomer, serviceEditCustomer, serviceIndexCustomer,serviceDeleteCustomer, serviceIndexProduction } from '../data/services';
 import { CustomerForm, ProductionForm } from '../components/organism/form';
 import { IProduction } from '../data/interfaces/productions/IProduction';
-import { serviceAddProduction } from '../data/services/ProductionService';
+import { serviceAddProduction, serviceDeleteProduction, serviceEditProduction } from '../data/services/ProductionService';
 import { IUpsertProductionResponse } from '../data/interfaces/productions/IUpsertProduction';
 
 interface Props extends RouteComponentProps{};
@@ -90,7 +90,7 @@ export class ProductionPage extends React.Component<Props,any> {
 	}
 	
 	deleteConfirm = (isYes:boolean, key:string) => {
-		if(isYes) this.deleteCustomer(key);
+		if(isYes) this.deleteData(key);
 	}
 
 	addData = async (data:IProduction) => {
@@ -137,18 +137,17 @@ export class ProductionPage extends React.Component<Props,any> {
 		})
 	}
 
-	editItem = async (data:IUpsertCustomerRequest) => {
-		await serviceEditCustomer(data).subscribe(
+	editData = async (data:IProduction) => {
+		await serviceEditProduction(data).subscribe(
 			(res:IUpsertItemResponse) => {
 				if(res.data['status'] == HTTPCallStatus.Success){
-					// TODO: set viewConstraint to default ?
 					this.loadAll()
 				}
 				this.setState({
 					snackbar:{
 						isShown:true,
 						severity: ((res.data['status'] == HTTPCallStatus.Success) ? "success" : "error"),
-						message:res.data['message'].split().split()
+						message:res.data['message']
 					}
 				})
 			},
@@ -158,7 +157,7 @@ export class ProductionPage extends React.Component<Props,any> {
 					snackbar:{
 						isShown:true,
 						severity:"error",
-						message:err
+						message:err.message.split()
 					}
 				})
 			}
@@ -168,8 +167,8 @@ export class ProductionPage extends React.Component<Props,any> {
 		})
 	}
 
-	deleteCustomer = async (key:string) => {
-		await serviceDeleteCustomer(key).subscribe(	
+	deleteData = async (key:string) => {
+		await serviceDeleteProduction(key).subscribe(	
 			(res:IDeleteItemResponse) => {
 				if(res.data['status'] == HTTPCallStatus.Success){
 					var array = [...this.state.rawContent]
@@ -184,7 +183,7 @@ export class ProductionPage extends React.Component<Props,any> {
 					snackbar:{
 						isShown:true,
 						severity: ((res.data['status'] == HTTPCallStatus.Success) ? "success" : "error"),
-						message:res.data['message'].split()
+						message:res.data['message']
 					}
 				})
 			},
@@ -271,14 +270,14 @@ export class ProductionPage extends React.Component<Props,any> {
 													dialogContent={
 														<ProductionForm
 															isEdit = {true}
-															submitData = {this.editItem}
+															submitData = {this.editData}
 															item={
 																{
 																	id:c.id,
 																	itemCode:c.itemCode,
 																	producer:c.producer,
-                                                                    productionDate:c.productionDate,
-                                                                    quantity:c.quantity
+																	productionDate:c.productionDate,
+																	quantity:c.quantity
 																}
 															}
 														/>

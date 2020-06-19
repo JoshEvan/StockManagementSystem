@@ -80,7 +80,8 @@ export class ProductionForm extends React.Component<any,any>{
 						id:this.props.item.id,
 						itemCode:this.props.item.itemCode,
 						producer:this.props.item.producer,
-                        productionDate:this.props.item.productionDate
+						productionDate:this.props.item.productionDate,
+						quantity:this.props.item.quantity
 					}}
 					
 					onSubmit = {(data, { setSubmitting }) => {
@@ -118,11 +119,12 @@ export class ProductionForm extends React.Component<any,any>{
                                 <InputLabel htmlFor="outlined-age-native-simple">produced item code</InputLabel>
                                 
                                 <SelectWValidation
-                                native
-                                // value={data.itemCode}
-                                name="itemCode"
-                                // onChange={handleChange}
-                                label="produced item code"
+									// native
+									inputProps={{ displayEmpty:true}}
+									// value={data.itemCode}
+									name="itemCode"
+									// onChange={handleChange}
+									label="produced item code"
                                 >
                                 
                                 <option aria-label="None" value=""/>
@@ -130,7 +132,11 @@ export class ProductionForm extends React.Component<any,any>{
                                 {
                                 this.state.itemCodes.map(
                                     (e:string) => {
-                                        return <option value={e}>{e}</option>
+                                        return <option value={e}
+										selected={
+											(e === this.props.item.itemCode && this.props.isEdit)
+										}
+										>{e}</option>
                                     }
                                 )}
                                 

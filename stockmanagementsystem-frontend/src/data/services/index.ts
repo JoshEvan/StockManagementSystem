@@ -3,7 +3,7 @@ export { serviceIndexItem,serviceDeleteItem as serviceDeletetem, serviceEditItem
 
 export { serviceIndexCustomer,serviceEditCustomer, serviceAddCustomer, serviceDeleteCustomer } from './CustomerService';
 
-export { serviceIndexProduction } from './ProductionService';
+export { serviceIndexProduction, serviceDeleteProduction, serviceAddProduction, serviceEditProduction } from './ProductionService';
 
 export function getCurrentDate(separator=''){
     let currDate = new Date()
