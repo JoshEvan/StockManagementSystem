@@ -27,8 +27,8 @@ public interface ProductionAPIController {
   public @ResponseBody Production show(@NotNull @PathVariable("id") String id);
 
   @PutMapping("/update")
-  public List<String> update(@NotNull @RequestBody UpsertProductionRequestPayload upsertProductionRequestPayload);
+  public ResponsePayload update(@NotNull @RequestBody UpsertProductionRequestPayload upsertProductionRequestPayload);
 
   @DeleteMapping("/delete/{id}")
-  public List<String> delete(@NotNull @PathVariable("id") String id);
+  public ResponsePayload delete(@NotNull @PathVariable("id") String id);
 }
