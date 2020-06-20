@@ -1,5 +1,5 @@
-import { IUpsertResponse } from "../IUpsert";
+import { ICRUDResponse } from "../ICRUD";
 
-export interface IUpsertProductionResponse extends IUpsertResponse{
+export interface IUpsertProductionResponse extends ICRUDResponse{
 
 }

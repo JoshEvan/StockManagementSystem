@@ -17,7 +17,12 @@ export const Home: React.FC<Props> = ({ history,location,match }) => {
 			<div>
 					<Dashboard 
 						titlePage="Dashboard"
-						content={<div>"This is dahsboard page"</div>}
+						content={
+						<div>
+							<br/>
+							<h3>Hello, Welcome to JOSEPH</h3>
+							<h5>Stock Management System</h5>
+						</div>}
 						
 					/>
 					{/* <Link to ="/about">

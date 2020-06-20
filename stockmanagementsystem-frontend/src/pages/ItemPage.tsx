@@ -124,7 +124,7 @@ export class ItemPage extends React.Component<Props,any> {
 					snackbar:{
 						isShown:true,
 						severity: ((res.data['status'] == HTTPCallStatus.Success) ? "success" : "error"),
-						msg:res.data['msg']
+						msg:res.data['message']
 					}
 				})
 			},
@@ -134,7 +134,7 @@ export class ItemPage extends React.Component<Props,any> {
 					snackbar:{
 						isShown:true,
 						severity:"error",
-						msg:err
+						msg:err.message.split()
 					}
 				})
 			}
@@ -163,7 +163,7 @@ export class ItemPage extends React.Component<Props,any> {
 					snackbar:{
 						isShown:true,
 						severity: ((res.data['status'] == HTTPCallStatus.Success) ? "success" : "error"),
-						msg:res.data['msg']
+						msg:res.data['message']
 					}
 				})
 			},
@@ -173,7 +173,7 @@ export class ItemPage extends React.Component<Props,any> {
 					snackbar:{
 						isShown:true,
 						severity:"error",
-						msg:err
+						msg:err.message.split()
 					}
 				})
 			}
@@ -199,7 +199,7 @@ export class ItemPage extends React.Component<Props,any> {
 					snackbar:{
 						isShown:true,
 						severity: ((res.data['status'] == HTTPCallStatus.Success) ? "success" : "error"),
-						msg:res.data['msg']
+						msg:res.data['message']
 					}
 				})
 			},
