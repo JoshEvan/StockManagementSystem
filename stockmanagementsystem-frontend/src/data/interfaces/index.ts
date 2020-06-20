@@ -6,6 +6,9 @@ export interface BaseResponse{
     status:HTTPCallStatus,
     data:{}
 }
+
+export { ICRUDResponse } from './ICRUD'
+
 export { IItem } from './items/IItem';
 export { IIndexItemRequest, IIndexItemResponse } from './items/IIndexItem';
 export { IDeleteItemResponse } from './items/IDeleteItem';

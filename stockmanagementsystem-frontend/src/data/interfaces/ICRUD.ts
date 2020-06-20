@@ -1,6 +1,6 @@
 import { HTTPCallStatus } from ".";
 
-export interface IUpsertResponse{
+export interface ICRUDResponse{
 	status: HTTPCallStatus,
     data:string[]
 }

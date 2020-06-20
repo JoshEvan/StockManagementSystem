@@ -25,6 +25,12 @@ export const JOSEPH_URL={
         ADD:'/production/insert/',
         EDIT:'/production/update',
     },
+    PAYTYPE:{
+        INDEX: '/payment/',
+        DELETE:'/payment/delete/',
+        ADD:'/payment/insert/',
+        EDIT:'/payment/update',
+    }
 }
 
 export const getBaseUrl = () =>{

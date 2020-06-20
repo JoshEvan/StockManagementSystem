@@ -12,11 +12,26 @@ import ReceiptIcon from '@material-ui/icons/Receipt';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles'
+import CSS from 'csstype'
+
+// const useStyles = makeStyles(theme => ({
+//   plainLink:{
+//     textDecoration: "none",
+//     color:'#000'
+//   }})
+// );
+
+
+const plainLinkStyle: CSS.Properties = {
+  textDecoration: "none",
+  color:'#000'
+}
 
 export const mainListItems = (
   <div>
     
-    <Link to="/" style={{ textDecoration: 'none', color:'#000' }}>
+    <Link to="/" style={plainLinkStyle}>
       <ListItem button>
         <ListItemIcon>
           <DashboardIcon />
@@ -30,7 +45,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Transactions" />
     </ListItem>
-    <Link to="/items"  style={{ textDecoration: 'none', color:'#000' }}>
+    <Link to="/items"  style={plainLinkStyle}>
         <ListItem button>
         <ListItemIcon>
             <ShoppingCartIcon />
@@ -38,7 +53,7 @@ export const mainListItems = (
         <ListItemText primary="Items" />
         </ListItem>
     </Link>
-    <Link to="/customers" style={{ textDecoration: 'none', color:'#000' }}>
+    <Link to="/customers" style={plainLinkStyle}>
         <ListItem button>
         <ListItemIcon>
             <PeopleIcon />
@@ -46,7 +61,7 @@ export const mainListItems = (
         <ListItemText primary="Customers" />
         </ListItem>
     </Link>
-    <Link to="/productions" style={{ textDecoration: 'none', color:'#000' }}>
+    <Link to="/productions" style={plainLinkStyle}>
       <ListItem button>
         <ListItemIcon>
           <LayersIcon />
@@ -54,12 +69,14 @@ export const mainListItems = (
         <ListItemText primary="Productions" />
       </ListItem>
     </Link>
+    <Link to="/payments" style={plainLinkStyle} >
     <ListItem button>
       <ListItemIcon>
         <ReceiptIcon />
       </ListItemIcon>
-      <ListItemText primary="Payments type" />
+      <ListItemText primary="Payment types" />
     </ListItem>
+    </Link>
     <ListItem button>
       <ListItemIcon>
         <BarChartIcon />
