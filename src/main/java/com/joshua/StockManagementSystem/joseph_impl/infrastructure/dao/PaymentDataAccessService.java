@@ -80,7 +80,7 @@ public class PaymentDataAccessService implements PaymentDAO {
     HashMap<String,Object> setter = new HashMap<>();
     setter.put(ItemDataEntity.ISACTIVE, false);
     final String sql = PostgresHelper.updateOperation(paymentDataEntity,
-            setter,ItemDataEntity.ITEMCODE+" = \'" +paymentDataEntity.getId()+"\'");
+            setter,PaymentDataEntity.ID+" = \'" +paymentDataEntity.getId()+"\'");
     return jdbcTemplate.update(sql);
   }
 }

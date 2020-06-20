@@ -21,6 +21,7 @@ public class PostgresHelper {
   public static final String ITEM = "ITEM ";
   public static final String PRODUCTION = "PRODUCTION ";
   public static final String CUSTOMER = "CUSTOMER ";
+  public static final String PAYTYPE = "PAYMENT TYPE ";
   public static final String TRANHEAD = " TRANSACTION ";
   public static final String NOTFOUND = " is not exist";
   public static final String PDF_PATH = "/web/generatedpdf/";

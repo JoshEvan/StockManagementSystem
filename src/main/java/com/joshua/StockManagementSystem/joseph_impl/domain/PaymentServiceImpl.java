@@ -6,6 +6,7 @@ import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.PaymentDAO
 import com.joshua.StockManagementSystem.joseph_api.model.Payment;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.PaymentDataEntity;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -29,14 +30,12 @@ public class PaymentServiceImpl implements PaymentService {
   }
 
   @Override
-  public List<String> insert(UpsertPaymentRequestPayload upsertPaymentRequestPayload) {
-    List<String> stats = new LinkedList<>();
-    if(paymentDAO.insert(convertUpsertPayloadToDataEntity(upsertPaymentRequestPayload)) == 1){
-      stats.add(ITEM+ upsertPaymentRequestPayload.getPaymentType()+ SUCCESS+" "+ PostgresHelper.INSERTED);
-    }else{
-      stats.add(ITEM+ upsertPaymentRequestPayload.getPaymentType()+ FAIL+" "+ PostgresHelper.INSERTED);
-    }
-    return stats;
+  public Pair<Boolean,List<String>> insert(UpsertPaymentRequestPayload upsertPaymentRequestPayload) {
+    Integer flag = paymentDAO.insert(convertUpsertPayloadToDataEntity(upsertPaymentRequestPayload));
+    return new Pair<>(
+            (flag ==1 ),
+            Collections.singletonList(PAYTYPE+ upsertPaymentRequestPayload.getPaymentType()+ ((flag == 1) ? SUCCESS : FAIL)+ PostgresHelper.INSERTED)
+    );
   }
 
   @Override
@@ -53,24 +52,20 @@ public class PaymentServiceImpl implements PaymentService {
   }
 
   @Override
-  public List<String> update(UpsertPaymentRequestPayload upsertPaymentRequestPayload) {
-    List<String> stats = new LinkedList<>();
-    if(paymentDAO.update(convertUpsertPayloadToDataEntity(upsertPaymentRequestPayload)) == 1){
-      stats.add(ITEM+ upsertPaymentRequestPayload.getPaymentType()+ SUCCESS+" "+ PostgresHelper.UPDATED);
-    }else{
-      stats.add(ITEM+ upsertPaymentRequestPayload.getPaymentType()+ FAIL+" "+ PostgresHelper.UPDATED);
-    }
-    return stats;
+  public Pair<Boolean,List<String>> update(UpsertPaymentRequestPayload upsertPaymentRequestPayload) {
+    Integer flag = paymentDAO.update(convertUpsertPayloadToDataEntity(upsertPaymentRequestPayload));
+    return new Pair<>(
+            (flag ==1 ),
+            Collections.singletonList(PAYTYPE+ upsertPaymentRequestPayload.getPaymentType()+ ((flag == 1) ? SUCCESS : FAIL)+ UPDATED)
+    );
   }
 
   @Override
-  public List<String> delete(String id) {
-    List<String> stats = new LinkedList<>();
-    if(paymentDAO.delete(id) == 1){
-      stats.add( ITEM+ id + SUCCESS+" "+ PostgresHelper.REMOVED);
-    }else{
-      stats.add(ITEM+ id + FAIL+" "+ PostgresHelper.REMOVED);
-    }
-    return stats;
+  public Pair<Boolean,List<String>> delete(String id) {
+    Integer flag = paymentDAO.delete(id);
+    return new Pair<>(
+            (flag ==1 ),
+            Collections.singletonList(PAYTYPE+ id+ ((flag == 1) ? SUCCESS : FAIL)+ REMOVED)
+    );
   }
 }
