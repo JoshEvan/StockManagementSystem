@@ -1,9 +1,14 @@
 package com.joshua.StockManagementSystem.joseph_impl.api;
 
+
 import com.joshua.StockManagementSystem.joseph_api.api.PaymentAPIController;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.ResponsePayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexPayTypeResponsePayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertPaymentRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.PaymentService;
 import com.joshua.StockManagementSystem.joseph_api.model.Payment;
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.HttpStatus;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -22,13 +27,15 @@ public class PaymentAPIControllerImpl implements PaymentAPIController {
   }
 
   @Override
-  public List<String> insert(@NotNull UpsertPaymentRequestPayload upsertPaymentRequestPayload) {
-    return paymentService.insert(upsertPaymentRequestPayload);
+  public ResponsePayload insert(@NotNull UpsertPaymentRequestPayload upsertPaymentRequestPayload) {
+    Pair<Boolean, List<String>> ret = paymentService.insert(upsertPaymentRequestPayload);
+    return new ResponsePayload().setStatus((ret.getKey() ? HttpStatus.SUCCESS : HttpStatus.FAIL).toString())
+            .setMessage(ret.getValue());
   }
 
   @Override
-  public List<Payment> index() {
-    return paymentService.index();
+  public IndexPayTypeResponsePayload index() {
+    return new IndexPayTypeResponsePayload().setPaymentTypes(paymentService.index());
   }
 
   @Override
@@ -37,12 +44,15 @@ public class PaymentAPIControllerImpl implements PaymentAPIController {
   }
 
   @Override
-  public List<String> update(@NotNull UpsertPaymentRequestPayload upsertPaymentRequestPayload) {
-    return paymentService.update(upsertPaymentRequestPayload);
+  public ResponsePayload update(@NotNull UpsertPaymentRequestPayload upsertPaymentRequestPayload) {
+    Pair<Boolean,List<String>> ret = paymentService.update(upsertPaymentRequestPayload);
+    return new ResponsePayload().setStatus((ret.getKey() ? HttpStatus.SUCCESS : HttpStatus.FAIL).toString())
+            .setMessage(ret.getValue());
   }
 
   @Override
-  public List<String> delete(@NotNull String id) {
-    return paymentService.delete(id);
+  public ResponsePayload delete(@NotNull String id) {
+    Pair<Boolean,List<String>> ret = paymentService.delete(id);
+    return new ResponsePayload().setStatus((ret.getKey() ? HttpStatus.SUCCESS : HttpStatus.FAIL).toString()).setMessage(ret.getValue());
   }
 }
