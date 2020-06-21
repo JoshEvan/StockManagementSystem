@@ -11,3 +11,9 @@ export const serviceIndexTransaction = (dataPayload: IIndexTransactionRequest) :
         dataPayload
     )
 }
+
+export const serviceDeleteTransaction = (dataPayload:string) : Observable<any> => {
+    return Axios.delete(
+        baseUrl+JOSEPH_URL.TRANSACTION.DELETE+dataPayload
+    )
+}

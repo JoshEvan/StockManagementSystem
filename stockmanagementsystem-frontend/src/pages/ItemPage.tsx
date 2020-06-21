@@ -209,7 +209,7 @@ export class ItemPage extends React.Component<Props,any> {
 					snackbar:{
 						isShown:true,
 						severity:"error",
-						msg:err
+						msg:err.message.split()
 					}
 				})
 			}

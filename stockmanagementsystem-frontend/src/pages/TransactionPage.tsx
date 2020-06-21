@@ -2,12 +2,12 @@ import React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Dashboard } from '../components/template/Dashboard';
 import { CustomTable, AlertDialog, CustomizedSnackbars } from '../components/organism';
-import { IItem, IIndexItemRequest, IDeleteItemResponse, HTTPCallStatus, IUpsertItemRequest, IUpsertItemResponse} from '../data/interfaces';
-import { serviceIndexItem, getCurrentDate, serviceIndexTransaction } from '../data/services';
+import { IItem, IIndexItemRequest, IDeleteItemResponse, HTTPCallStatus, IUpsertItemRequest, IUpsertItemResponse, ICRUDResponse} from '../data/interfaces';
+import { serviceIndexItem, getCurrentDate, serviceIndexTransaction, serviceDeleteTransaction } from '../data/services';
 import "regenerator-runtime/runtime.js";
 import { Button } from '@material-ui/core';
 import { serviceDeleteItem, serviceAddItem, serviceEditItem, serviceDownloadPdfItem } from '../data/services/ItemService';
-import { ItemForm } from '../components/organism/form';
+import { TransactionForm } from '../components/organism/form';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import { SimpleExpansionPanel } from '../components/organism/expansion_panel/SimpleExpansionPanel';
@@ -60,15 +60,15 @@ export class TransactionPage extends React.Component<Props,any> {
 			addDialog:{
 				isShown:false,
 				usingAction:false,
-				title:"Add new item",
+				title:"Add new transactions",
 				content:(
-					<ItemForm
-						submitData = {this.addItem}
+					<TransactionForm
+						submitData = {this.addData}
 						item= {
 							initTransaction
 						}
 					/>
-				), // TODO: FORM
+				),
 				dialogNo:"cancel",
 				dialogYes:"yes"
 			},
@@ -89,10 +89,10 @@ export class TransactionPage extends React.Component<Props,any> {
 	}
 	
 	deleteConfirm = (isYes:boolean, key:string) => {
-		if(isYes) this.deleteItem(key);
+		if(isYes) this.deleteData(key);
 	}
 
-	addItem = async (data:IUpsertItemRequest) => {
+	addData = async (data:IUpsertItemRequest) => {
 		await serviceAddItem(data).subscribe(
 			(res:IUpsertItemResponse) => {
 				if(res.data['status'] == HTTPCallStatus.Success){
@@ -123,8 +123,8 @@ export class TransactionPage extends React.Component<Props,any> {
 			addDialog:{
 				isShown:false,
 				content:(
-					<ItemForm
-						submitData = {this.addItem}
+					<TransactionForm
+						submitData = {this.addData}
 						item={getInitIndexTransactionRequest}
 					/>
 				)
@@ -163,9 +163,9 @@ export class TransactionPage extends React.Component<Props,any> {
 		})
 	}
 
-	deleteItem = async (key:string) => {
-		await serviceDeleteItem(key).subscribe(	
-			(res:IDeleteItemResponse) => {
+	deleteData = async (key:string) => {
+		await serviceDeleteTransaction(key).subscribe(	
+			(res:ICRUDResponse) => {
 				if(res.data['status'] == HTTPCallStatus.Success){
 					var array = [...this.state.rawContent]
 					var index = array.map((e) => {
@@ -189,7 +189,7 @@ export class TransactionPage extends React.Component<Props,any> {
 					snackbar:{
 						isShown:true,
 						severity:"error",
-						msg:err
+						msg:err.message.split()
 					}
 				})
 			}
@@ -375,7 +375,7 @@ export class TransactionPage extends React.Component<Props,any> {
 													dialogTitle="Update item"
 													usingAction={false}
 													dialogContent={
-														<ItemForm
+														<TransactionForm
 															submitData = {this.editItem}
 															// item={
 															// 	// {

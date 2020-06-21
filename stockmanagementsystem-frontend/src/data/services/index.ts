@@ -7,7 +7,7 @@ export { serviceIndexProduction, serviceDeleteProduction, serviceAddProduction, 
 
 export { serviceIndexPaymentType, serviceAddPayType, serviceDeletePayType, serviceEditPayType } from './PaymentTypeService';
 
-export { serviceIndexTransaction } from './TransaactionService';
+export { serviceIndexTransaction, serviceDeleteTransaction } from './TransaactionService';
 
 export function getCurrentDate(separator=''){
     let currDate = new Date()
