@@ -1,6 +1,8 @@
 package com.joshua.StockManagementSystem.joseph_api.api;
 
+import com.joshua.StockManagementSystem.joseph_api.api.payload.ResponsePayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexTransactionRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexTransactionResponsePayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertTransactionHeaderRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.model.TransactionHeader;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -12,6 +14,8 @@ import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
 
+
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("api/v1/joseph/transaction")
 @RestController
 @EnableAutoConfiguration
@@ -21,7 +25,8 @@ public interface TransactionAPIController {
   public List<String> insert(@NotNull @RequestBody UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload);
 
   @PostMapping(value = "/", produces = "application/json")
-  public @ResponseBody List<TransactionHeader> index(@NotNull @RequestBody IndexTransactionRequestPayload indexTransactionRequestPayload);
+  public @ResponseBody
+  IndexTransactionResponsePayload index(@NotNull @RequestBody IndexTransactionRequestPayload indexTransactionRequestPayload);
 
   @GetMapping(value = "/show/{id}", produces = "application/json")
   public @ResponseBody TransactionHeader show(@NotNull @PathVariable("id") String id);
@@ -30,7 +35,7 @@ public interface TransactionAPIController {
   public List<String> update(@NotNull @RequestBody UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload);
 
   @DeleteMapping("/delete/{id}")
-  public List<String> delete(@NotNull @PathVariable("id") String id);
+  public ResponsePayload delete(@NotNull @PathVariable("id") String id);
 
   @PostMapping("/report")
   public @ResponseBody  void generateReport(
