@@ -8,6 +8,7 @@ import { ItemPage } from './pages/ItemPage';
 import { CustomerPage } from './pages/CustomerPage';
 import { ProductionPage } from './pages/ProductionPage';
 import { PaymentTypePage } from './pages/PaymentTypePage';
+import { TransactionPage } from './pages/TransactionPage';
 
 export default function App(): JSX.Element {
     
@@ -40,6 +41,9 @@ export default function App(): JSX.Element {
                 />
                 <Route
                     path = "/productions" exact component={ProductionPage}
+                />
+                <Route
+                    path="/transactions" exact component={TransactionPage}
                 />
                 <Route
                     path = "/posts/:id" exact component={Post}

@@ -168,7 +168,7 @@ export default function Dashboard({titlePage, content}){
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         
-        <Container maxWidth="lg"style={{paddingTop:'2%'}}>
+        <Container maxWidth="xl"style={{paddingTop:'2%'}}>
           <Grid>
             <Paper elevation={3} style={{padding:'2%'}}>
               <Typography variant="h4" component="h2">

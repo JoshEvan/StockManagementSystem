@@ -39,12 +39,14 @@ export const mainListItems = (
         <ListItemText primary="Dashboard" />
       </ListItem>
     </Link>
-    <ListItem button>
-      <ListItemIcon>
-        <LocalAtmIcon />
-      </ListItemIcon>
-      <ListItemText primary="Transactions" />
-    </ListItem>
+    <Link to="/transactions" style={plainLinkStyle}>
+      <ListItem button>
+        <ListItemIcon>
+          <LocalAtmIcon />
+        </ListItemIcon>
+        <ListItemText primary="Transactions" />
+      </ListItem>
+    </Link>
     <Link to="/items"  style={plainLinkStyle}>
         <ListItem button>
         <ListItemIcon>

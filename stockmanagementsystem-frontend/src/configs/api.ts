@@ -30,6 +30,12 @@ export const JOSEPH_URL={
         DELETE:'/payment/delete/',
         ADD:'/payment/insert/',
         EDIT:'/payment/update',
+    },
+    TRANSACTION:{
+        INDEX: '/transaction/',
+        DELETE:'/transaction/delete/',
+        ADD:'/transaction/insert/',
+        EDIT:'/transaction/update',
     }
 }
 

@@ -20,3 +20,6 @@ export { IUpsertCustomerRequest,IUpsertCustomerResponse } from './customers/IUps
 
 export { IProduction } from './productions/IProduction'
 export { IIndexProductionResponse } from './productions/IIndexProduction'
+
+export { ITransaction, ITransactionDetail, initTransaction, initTransactionDetail } from './transactions/ITransaction'
+export { IIndexTransactionRequest, getInitIndexTransactionRequest } from './transactions/IIndexTransaction'

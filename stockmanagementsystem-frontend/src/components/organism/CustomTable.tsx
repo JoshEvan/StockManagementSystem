@@ -11,8 +11,9 @@ import { ResponsiveDialog } from './Dialog';
 type Props = {
   header:string[],
   body:any,
-  isShown:boolean,
-  addDialog:{
+  isShown?:boolean,
+  notShowAddButton?:boolean,
+  addDialog?:{
     isShown:boolean,
     title:string,
     content:any,
@@ -72,13 +73,13 @@ export class CustomTable extends React.Component<Props,IState> {
               )
             }
           </div>
-          <IconButton color="primary" 
+          {!this.props.notShowAddButton && <IconButton color="primary" 
           style={{float:'right'}}
           onClick={
             () => {this.openAddDialog();}
           }>
             <AddBoxIcon/>
-          </IconButton>
+          </IconButton>}
           <Table hover responsive bordered>
               <thead>
                 <tr>
