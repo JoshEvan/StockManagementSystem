@@ -14,6 +14,7 @@ import com.joshua.StockManagementSystem.joseph_impl.infrastructure.dao.spec.Tran
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.CustomerDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ItemDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.TransactionDetailDataEntity;
+import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -204,7 +205,7 @@ public class TransactionServiceImpl implements TransactionService {
   }
 
   @Override
-  public List<String> delete(String id) {
+  public Pair<Boolean,List<String>> delete(String id) {
     List<String> stats = new LinkedList<>();
     // return item's stock as previous
     TransactionSpec transactionSpec = transactionDAO.show(id).orElse(null);
@@ -214,24 +215,24 @@ public class TransactionServiceImpl implements TransactionService {
     log.info("success delete "+PostgresHelper.TRANHEAD+id);
 
     if(flag == 0){
-     return Collections.singletonList(PostgresHelper.TRANHEAD+id+PostgresHelper.FAIL+ PostgresHelper.REMOVED);
+     return new Pair<>(false,Collections.singletonList(PostgresHelper.TRANHEAD+id+PostgresHelper.FAIL+ PostgresHelper.REMOVED));
     }
     log.info(PostgresHelper.TRANHEAD+id+PostgresHelper.REMOVED+ PostgresHelper.SUCCESS);
     stats.add(PostgresHelper.TRANHEAD+id+PostgresHelper.SUCCESS+ PostgresHelper.REMOVED);
 
-    if(transactionSpec == null) return Collections.singletonList(PostgresHelper.TRANHEAD + " " + id + PostgresHelper.NOTFOUND);
+    if(transactionSpec == null) return new Pair<>(false,Collections.singletonList(PostgresHelper.TRANHEAD + " " + id + PostgresHelper.NOTFOUND));
 
     for(TransactionDetailDataEntity detailDataEntity : transactionSpec.getTransactionDetailDataEntityList()){
       ItemDataEntity item = itemDAO.show(detailDataEntity.getItemCode()).orElse(null);
 
-      if(item == null) return Collections.singletonList(PostgresHelper.ITEM + id + PostgresHelper.NOTFOUND);
+      if(item == null) return new Pair<>(false,Collections.singletonList(PostgresHelper.ITEM + id + PostgresHelper.NOTFOUND));
 
       log.info("rolling back "+PostgresHelper.ITEM+item.getItemCode()+" stock");
       item.setStock(item.getStock()+detailDataEntity.getQuantity());
       itemDAO.update(item);
       stats.add(PostgresHelper.ITEM+detailDataEntity.getItemCode()+PostgresHelper.SUCCESS+"rolled back");
     }
-    return stats;
+    return new Pair<>(true, stats);
   }
 
   @Override

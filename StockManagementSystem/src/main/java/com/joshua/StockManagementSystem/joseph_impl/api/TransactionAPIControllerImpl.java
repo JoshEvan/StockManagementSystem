@@ -1,15 +1,21 @@
 package com.joshua.StockManagementSystem.joseph_impl.api;
 
 import com.joshua.StockManagementSystem.joseph_api.api.TransactionAPIController;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.ResponsePayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexTransactionRequestPayload;
+import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexTransactionResponsePayload;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertTransactionHeaderRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.domain.TransactionService;
 import com.joshua.StockManagementSystem.joseph_api.model.TransactionHeader;
+import com.joshua.StockManagementSystem.joseph_impl.infrastructure.HttpStatus;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.util.Pair;
 import org.flywaydb.core.internal.util.FileCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
@@ -35,8 +41,8 @@ public class TransactionAPIControllerImpl implements TransactionAPIController {
   }
 
   @Override
-  public List<TransactionHeader> index(IndexTransactionRequestPayload indexTransactionRequestPayload) {
-    return transactionService.index(indexTransactionRequestPayload);
+  public IndexTransactionResponsePayload index(IndexTransactionRequestPayload indexTransactionRequestPayload) {
+    return new IndexTransactionResponsePayload().setTransactions(transactionService.index(indexTransactionRequestPayload));
   }
 
   @Override
@@ -50,8 +56,10 @@ public class TransactionAPIControllerImpl implements TransactionAPIController {
   }
 
   @Override
-  public List<String> delete(@NotNull String id) {
-    return transactionService.delete(id);
+  public ResponsePayload delete(@NotNull String id) {
+    Pair<Boolean,List<String>> ret = transactionService.delete(id);
+    return new ResponsePayload().setMessage(ret.getValue())
+            .setStatus((ret.getKey() ? HttpStatus.SUCCESS : HttpStatus.FAIL).toString());
   }
 
   @Override
