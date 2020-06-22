@@ -2,8 +2,8 @@ import React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Dashboard } from '../components/template/Dashboard';
 import { CustomTable, AlertDialog, CustomizedSnackbars } from '../components/organism';
-import { IItem, IIndexItemRequest, IDeleteItemResponse, HTTPCallStatus, IUpsertItemRequest, IUpsertItemResponse, ICRUDResponse} from '../data/interfaces';
-import { serviceIndexItem, getCurrentDate, serviceIndexTransaction, serviceDeleteTransaction } from '../data/services';
+import { IItem, IIndexItemRequest, IDeleteItemResponse, HTTPCallStatus, IUpsertItemRequest, IUpsertItemResponse, ICRUDResponse, IUpsertTransactionRequest, IUpsertTransactionDetailRequest} from '../data/interfaces';
+import { serviceIndexItem, getCurrentDate, serviceIndexTransaction, serviceDeleteTransaction, serviceAddTransaction } from '../data/services';
 import "regenerator-runtime/runtime.js";
 import { Button } from '@material-ui/core';
 import { serviceDeleteItem, serviceAddItem, serviceEditItem, serviceDownloadPdfItem } from '../data/services/ItemService';
@@ -92,42 +92,43 @@ export class TransactionPage extends React.Component<Props,any> {
 		if(isYes) this.deleteData(key);
 	}
 
-	addData = async (data:IIndexTransactionRequest, dataDetail:ITransactionDetail[]) => {
-		// await serviceAddItem(data).subscribe(
-		// 	(res:IUpsertItemResponse) => {
-		// 		if(res.data['status'] == HTTPCallStatus.Success){
-		// 			this.loadAllData()
-		// 		}
-		// 		this.setState({
-		// 			snackbar:{
-		// 				isShown:true,
-		// 				severity: ((res.data['status'] == HTTPCallStatus.Success) ? "success" : "error"),
-		// 				msg:res.data['message']
-		// 			}
-		// 		})
-		// 	},
-		// 	(err)=>{
-		// 		console.log("add item err:"+err);
-		// 		this.setState({
-		// 			snackbar:{
-		// 				isShown:true,
-		// 				severity:"error",
-		// 				msg:err.message.split()
-		// 			}
-		// 		})
-		// 	}
-		// )
-		// this.setState({
-		// 	addDialog:{
-		// 		isShown:false,
-		// 		content:(
-		// 			<TransactionForm
-		// 				submitData = {this.addData}
-		// 				item={getInitIndexTransactionRequest}
-		// 			/>
-		// 		)
-		// 	}
-		// })
+	addData = async (data:IUpsertTransactionRequest, dataDetail:IUpsertTransactionDetailRequest[]) => {
+		data.transactionDetails = dataDetail
+		await serviceAddTransaction(data).subscribe(
+			(res:IUpsertItemResponse) => {
+				if(res.data['status'] == HTTPCallStatus.Success){
+					this.loadAllData()
+				}
+				this.setState({
+					snackbar:{
+						isShown:true,
+						severity: ((res.data['status'] == HTTPCallStatus.Success) ? "success" : "error"),
+						msg:res.data['message']
+					}
+				})
+			},
+			(err)=>{
+				console.log("add item err:"+err);
+				this.setState({
+					snackbar:{
+						isShown:true,
+						severity:"error",
+						msg:err.message.split()
+					}
+				})
+			}
+		)
+		this.setState({
+			addDialog:{
+				isShown:false,
+				content:(
+					<TransactionForm
+						submitData = {this.addData}
+						item={getInitIndexTransactionRequest}
+					/>
+				)
+			}
+		})
 	}
 
 	editItem = async (data:IUpsertItemRequest) => {

@@ -1,13 +1,12 @@
 export { serviceIndexItem,serviceDeleteItem as serviceDeletetem, serviceEditItem, serviceDownloadPdfItem} from './ItemService';
 
-
 export { serviceIndexCustomer,serviceEditCustomer, serviceAddCustomer, serviceDeleteCustomer } from './CustomerService';
 
 export { serviceIndexProduction, serviceDeleteProduction, serviceAddProduction, serviceEditProduction } from './ProductionService';
 
 export { serviceIndexPaymentType, serviceAddPayType, serviceDeletePayType, serviceEditPayType } from './PaymentTypeService';
 
-export { serviceIndexTransaction, serviceDeleteTransaction } from './TransaactionService';
+export { serviceIndexTransaction, serviceDeleteTransaction, serviceAddTransaction } from './TransaactionService';
 
 export function getCurrentDate(separator=''){
     let currDate = new Date()

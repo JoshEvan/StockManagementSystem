@@ -7,16 +7,19 @@ import { IItem, ICustomer, ITransactionDetail, initTransactionDetail } from '../
 import { IPayemntType } from '../../../data/interfaces/paymentTypes/IPaymentType';
 import { CustomTable, AlertDialog } from '..';
 import { TransactionDetailForm } from './TransactionDetailForm';
+import CSS from 'csstype';
 
+const errorStyles:CSS.Properties = {
+
+}
 
 const validationSchema = yup.object({
 	id: yup.string().required("Transaction Id must be filled"),
     customerId: yup.string().required("Customer Id must be filled"),
     paymentId: yup.string().required("Payment Id must be filled"),
-    // paymentStatus:yup.string().required("Payment ")
-    itemCode: yup.string().required("Item Code must be filled"),
-    transactionDate: yup.string().required("Transaction Date must be filled"),
-    quantity: yup.string().required("Produced Quantity must be filled"),
+    paymentStatus:yup.string().required("Payment status must be filled"),
+	transactionDate: yup.string().required("Transaction Date must be filled"),
+	transactionDetailsLength:yup.number().positive("Must have minimal 1 transaction details")
 })
 
 const TextFieldWValidation:any = ({placeholder,type,...props}) => {
@@ -57,6 +60,13 @@ interface ITransactionForm{
 	},
 	editDialog:{
 		isShown:boolean
+	},
+	errorTransactionDetails:{
+		isShown:boolean,
+		message:string
+	},
+	selectedTransactionDetailItemCodes:{
+		[id:string]:boolean
 	}
 }
 
@@ -87,7 +97,12 @@ export class TransactionForm extends React.Component<any,any>{
 			},
 			editDialog:{
 				isShown:false
-			}
+			},
+			errorTransactionDetails:{
+				isShown:false,
+				message:""
+			},
+			selectedTransactionDetailItemCodes:{}
         }
     }
 
@@ -103,6 +118,18 @@ export class TransactionForm extends React.Component<any,any>{
 			transactionDetails:this.state.transactionDetails.concat(data)
 		})
 		console.log(this.state.transactionDetails)
+		this.setState({
+			errorTransactionDetails:{
+				isShown:false,
+				message:""
+			}
+		})
+		var currDict = this.state.selectedTransactionDetailItemCodes;
+		currDict[data.itemCode] = true;
+		this.setState({
+			selectedTransactionDetailItemCodes:currDict
+		})
+		this.setAddDialog()
 	}
 
     loadAllItemCodes = () => {
@@ -180,7 +207,7 @@ export class TransactionForm extends React.Component<any,any>{
 						item= {
 							initTransactionDetail
 						}
-						itemCodes = {this.state.itemCodes}
+						itemCodes = {this.state.itemCodes.filter(e => !this.state.selectedTransactionDetailItemCodes[e])}
 					/>
 				)
 			}
@@ -194,6 +221,12 @@ export class TransactionForm extends React.Component<any,any>{
 			array.splice(pos, 1);
 			this.setState({transactionDetails: array});
 		}
+		var currDict = this.state.selectedTransactionDetailItemCodes;
+		currDict[key] = false;
+		this.setState({
+			selectedTransactionDetailItemCodes:currDict
+		})
+		this.setAddDialog()
 	}
 
 	deleteConfirm = (isYes:boolean, key:string) => {
@@ -203,6 +236,17 @@ export class TransactionForm extends React.Component<any,any>{
 	editData = (data:any) => {
 		this.deleteData(data.updatedItemCode)
 		this.passDetailState(data)
+	}
+
+	validateTransactionDetail = () => {
+		if(this.state.transactionDetails.length <= 0){
+			this.setState({
+				errorTransactionDetails:{
+					isShown:true,
+					message:"must include minimal 1 transaction details"
+				}
+			})
+		}
 	}
 
 	render(){
@@ -221,17 +265,26 @@ export class TransactionForm extends React.Component<any,any>{
 						quantity:this.props.item.quantity
 					}}
 					onSubmit = {(data, { setSubmitting }) => {
-						setSubmitting(true)
-						data["test"] = "test"
-						console.log(data);
-						console.log("SUBMITTING")
-
-						this.props.submitData(data, this.state.transactionDetails);
-						
-						setSubmitting(false);
-						console.log("done submit add data")
+						if(this.state.transactionDetails.length <= 0){
+							this.setState({
+								errorTransactionDetails:{
+									isShown:true,
+									message:"must include minimal 1 transaction details"
+								}
+							})
+						}else {
+							setSubmitting(true)
+							// data["test"] = "test"
+							// console.log(data);
+							console.log("SUBMITTING")
+							
+							this.props.submitData(data, this.state.transactionDetails);
+							setSubmitting(false);
+							console.log("done submit add data")
+						}
 					}}
-					validationSchema = {validationSchema}>
+					validationSchema = {validationSchema}
+					>
 					{
 					({ errors, values, isSubmitting, /*handleChange, handleBlur, */handleSubmit }) => (
 					
@@ -331,69 +384,74 @@ export class TransactionForm extends React.Component<any,any>{
 										shrink: true,
 								}}/>
 						</div>
-						<CustomTable
-							addDialog = {this.state.addDialog}
-							header={detailColName}
-							body={
-								this.state.transactionDetails.map(
-									(e:ITransactionDetail, idx:number) => {
-										return (
-											<React.Fragment>
-												<tr>
-													<td>{idx+1}</td>
-													<td>{e.itemCode}</td>
-													<td>{e.quantity}</td>
-													<td>{e.note}</td>
-													<td>{
-														<React.Fragment>
-															<AlertDialog
-																color="primary"
-																param={e.itemCode}
-																parentAllowance = {this.state.editDialog.isShown}
-																buttonTitle="edit"
-																parentCallbackOpen={()=>this.setState({editDialog:{isShown:true}})}
-																dialogTitle="Update item"
-																usingAction={false}
-																dialogContent={
-																	<TransactionDetailForm
-																		submitData = {this.editData}
-																		item={
-																			{
-																				updatedItemCode:e.itemCode,
-																				itemCode:e.itemCode,
-																				quantity:e.quantity,
-																				note:e.note,
+
+						<div style={{padding:'2%'}}>
+							
+							<CustomTable
+								addDialog = {this.state.addDialog}
+								header={detailColName}
+								body={
+									this.state.transactionDetails.map(
+										(e:ITransactionDetail, idx:number) => {
+											return (
+												<React.Fragment>
+													<tr>
+														<td>{idx+1}</td>
+														<td>{e.itemCode}</td>
+														<td>{e.quantity}</td>
+														<td>{e.note}</td>
+														<td>{
+															<React.Fragment>
+																<AlertDialog
+																	color="primary"
+																	param={e.itemCode}
+																	parentAllowance = {this.state.editDialog.isShown}
+																	buttonTitle="edit"
+																	parentCallbackOpen={()=>this.setState({editDialog:{isShown:true}})}
+																	dialogTitle="Update item"
+																	usingAction={false}
+																	dialogContent={
+																		<TransactionDetailForm
+																			submitData = {this.editData}
+																			item={
+																				{
+																					updatedItemCode:e.itemCode,
+																					itemCode:e.itemCode,
+																					quantity:e.quantity,
+																					note:e.note,
+																				}
 																			}
-																		}
-																		itemCodes={this.state.itemCodes}
-																	/>
-																}
-															/>
-															<AlertDialog
-																color="secondary"
-																usingAction={true}
-																parentAllowance = {true}
-																param={e.itemCode}
-																buttonTitle="delete"
-																dialogTitle="This following item will be deleted"
-																dialogYes="Yes"
-																dialogNo="Cancel"
-																dialogContent="Are you sure ?"
-																parentCallback={
-																	this.deleteConfirm
-																}
-															/>
-														</React.Fragment>
-													}</td>
-												</tr>
-											</React.Fragment>
-										)
-									}
-								)
-							}
-						/>
+																			itemCodes={this.state.itemCodes.filter(e => !this.state.selectedTransactionDetailItemCodes[e])}
+																		/>
+																	}
+																/>
+																<AlertDialog
+																	color="secondary"
+																	usingAction={true}
+																	parentAllowance = {true}
+																	param={e.itemCode}
+																	buttonTitle="delete"
+																	dialogTitle="This following item will be deleted"
+																	dialogYes="Yes"
+																	dialogNo="Cancel"
+																	dialogContent="Are you sure ?"
+																	parentCallback={
+																		this.deleteConfirm
+																	}
+																/>
+															</React.Fragment>
+														}</td>
+													</tr>
+												</React.Fragment>
+											)
+										}
+									)
+								}
+							/>
+							{this.state.errorTransactionDetails.isShown && <p className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error MuiFormHelperText-filled">{this.state.errorTransactionDetails.message}</p>}
+						</div>
 						
-						<Button disabled={isSubmitting} type="submit">
+						<Button disabled={isSubmitting} type="submit" onClick={this.validateTransactionDetail}>
 							submit
 						</Button>
 					</form>
