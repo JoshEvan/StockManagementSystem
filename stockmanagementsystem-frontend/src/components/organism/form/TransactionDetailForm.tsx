@@ -6,7 +6,7 @@ import * as yup from 'yup';
 
 const validationSchema = yup.object({
     itemCode: yup.string().required("Item Code must be filled"),
-    quantity: yup.string().required("Produced Quantity must be filled"),
+    quantity: yup.number().positive("Produced Quantity must be more than 0"),
 })
 
 const TextFieldWValidation:any = ({placeholder,type,...props}) => {
@@ -39,6 +39,7 @@ export class TransactionDetailForm extends React.Component<any,any>{
 				
 				<Formik
 					initialValues={{
+                        updatedItemCode:this.props.item.updatedItemCode,
 						itemCode:this.props.item.itemCode,
                         note:this.props.item.note,
 						quantity:this.props.item.quantity

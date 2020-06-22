@@ -97,7 +97,7 @@ export class TransactionForm extends React.Component<any,any>{
         this.loadAllPayTypes()
 	}
 	
-	passDetailState = (data:ITransactionDetail[]) => {
+	passDetailState = (data:ITransactionDetail) => {
 		console.log("pass detail state")
 		this.setState({
 			transactionDetails:this.state.transactionDetails.concat(data)
@@ -198,6 +198,11 @@ export class TransactionForm extends React.Component<any,any>{
 
 	deleteConfirm = (isYes:boolean, key:string) => {
 		if(isYes) this.deleteData(key);
+	}
+
+	editData = (data:any) => {
+		this.deleteData(data.updatedItemCode)
+		this.passDetailState(data)
 	}
 
 	render(){
@@ -350,18 +355,17 @@ export class TransactionForm extends React.Component<any,any>{
 																dialogTitle="Update item"
 																usingAction={false}
 																dialogContent={
-																	<TransactionForm
-																		// submitData = {this.editItem}
-																		// item={
-																		// 	// {
-																		// 	// 	itemCode:c.itemCode,
-																		// 	// 	name:c.name,
-																		// 	// 	price:c.priceDec,
-																		// 	// 	stock:c.stock,
-																		// 	// 	capacity:c.capacity,
-																		// 	// 	description:c.description,
-																		// 	// }
-																		// }
+																	<TransactionDetailForm
+																		submitData = {this.editData}
+																		item={
+																			{
+																				updatedItemCode:e.itemCode,
+																				itemCode:e.itemCode,
+																				quantity:e.quantity,
+																				note:e.note,
+																			}
+																		}
+																		itemCodes={this.state.itemCodes}
 																	/>
 																}
 															/>
