@@ -18,8 +18,8 @@ type Props = {
     title:string,
     content:any,
     usingAction:boolean,
-    dialogNo:string,
-    dialogYes:string
+    dialogNo?:string,
+    dialogYes?:string
   }
 };
 

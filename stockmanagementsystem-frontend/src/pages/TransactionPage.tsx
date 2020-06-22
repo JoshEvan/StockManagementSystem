@@ -92,44 +92,42 @@ export class TransactionPage extends React.Component<Props,any> {
 		if(isYes) this.deleteData(key);
 	}
 
-	addData = async (data:IUpsertItemRequest) => {
-		await serviceAddItem(data).subscribe(
-			(res:IUpsertItemResponse) => {
-				if(res.data['status'] == HTTPCallStatus.Success){
-					// TODO: set viewConstraint to default ?
-					
-					this.loadAllItems()
-				}
-				this.setState({
-					snackbar:{
-						isShown:true,
-						severity: ((res.data['status'] == HTTPCallStatus.Success) ? "success" : "error"),
-						msg:res.data['message']
-					}
-				})
-			},
-			(err)=>{
-				console.log("add item err:"+err);
-				this.setState({
-					snackbar:{
-						isShown:true,
-						severity:"error",
-						msg:err.message.split()
-					}
-				})
-			}
-		)
-		this.setState({
-			addDialog:{
-				isShown:false,
-				content:(
-					<TransactionForm
-						submitData = {this.addData}
-						item={getInitIndexTransactionRequest}
-					/>
-				)
-			}
-		})
+	addData = async (data:IIndexTransactionRequest, dataDetail:ITransactionDetail[]) => {
+		// await serviceAddItem(data).subscribe(
+		// 	(res:IUpsertItemResponse) => {
+		// 		if(res.data['status'] == HTTPCallStatus.Success){
+		// 			this.loadAllData()
+		// 		}
+		// 		this.setState({
+		// 			snackbar:{
+		// 				isShown:true,
+		// 				severity: ((res.data['status'] == HTTPCallStatus.Success) ? "success" : "error"),
+		// 				msg:res.data['message']
+		// 			}
+		// 		})
+		// 	},
+		// 	(err)=>{
+		// 		console.log("add item err:"+err);
+		// 		this.setState({
+		// 			snackbar:{
+		// 				isShown:true,
+		// 				severity:"error",
+		// 				msg:err.message.split()
+		// 			}
+		// 		})
+		// 	}
+		// )
+		// this.setState({
+		// 	addDialog:{
+		// 		isShown:false,
+		// 		content:(
+		// 			<TransactionForm
+		// 				submitData = {this.addData}
+		// 				item={getInitIndexTransactionRequest}
+		// 			/>
+		// 		)
+		// 	}
+		// })
 	}
 
 	editItem = async (data:IUpsertItemRequest) => {
@@ -137,7 +135,7 @@ export class TransactionPage extends React.Component<Props,any> {
 			(res:IUpsertItemResponse) => {
 				if(res.data['status'] == HTTPCallStatus.Success){
 					// TODO: set viewConstraint to default ?
-					this.loadAllItems()
+					this.loadAllData()
 				}
 				this.setState({
 					snackbar:{
@@ -196,7 +194,7 @@ export class TransactionPage extends React.Component<Props,any> {
 		);
 	}
 
-	loadAllItems = async () => {
+	loadAllData = async () => {
 		console.log("posting index request")
 		await serviceIndexTransaction(this.state.viewConstraint).subscribe(
 			(res) => {
@@ -227,7 +225,7 @@ export class TransactionPage extends React.Component<Props,any> {
 	}
 
 	async componentDidMount(){
-		this.loadAllItems();
+		this.loadAllData();
 	}
 
 	render(){
