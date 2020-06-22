@@ -36,6 +36,7 @@ export const JOSEPH_URL={
         DELETE:'/transaction/delete/',
         ADD:'/transaction/insert/',
         EDIT:'/transaction/update',
+        DOWNLOAD_PDF:'/transaction/report'
     }
 }
 

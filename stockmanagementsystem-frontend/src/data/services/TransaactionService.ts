@@ -31,3 +31,12 @@ export const serviceEditTransaction = (dataPayload:IUpsertTransactionRequest) : 
         dataPayload
     )
 }
+
+export const serviceDownloadPdfTransaction = (dataPayload: IIndexTransactionRequest) : Observable<any> => {
+    return Axios.request({
+        method:'post',
+        url:baseUrl+JOSEPH_URL.TRANSACTION.DOWNLOAD_PDF,
+        data: dataPayload,
+        responseType:'blob'
+    })
+}

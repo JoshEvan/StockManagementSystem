@@ -1,12 +1,11 @@
 import React from 'react'
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import { Dashboard } from '../components/template/Dashboard';
 import { CustomTable, AlertDialog, CustomizedSnackbars } from '../components/organism';
-import { IItem, IIndexItemRequest, IDeleteItemResponse, HTTPCallStatus, IUpsertItemRequest, IUpsertItemResponse, ICRUDResponse, IUpsertTransactionRequest, IUpsertTransactionDetailRequest} from '../data/interfaces';
-import { serviceIndexItem, getCurrentDate, serviceIndexTransaction, serviceDeleteTransaction, serviceAddTransaction, serviceEditTransaction } from '../data/services';
+import { HTTPCallStatus, IUpsertItemResponse, ICRUDResponse, IUpsertTransactionRequest, IUpsertTransactionDetailRequest} from '../data/interfaces';
+import { getCurrentDate, serviceIndexTransaction, serviceDeleteTransaction, serviceAddTransaction, serviceEditTransaction, serviceDownloadPdfItem, serviceDownloadPdfTransaction } from '../data/services';
 import "regenerator-runtime/runtime.js";
 import { Button } from '@material-ui/core';
-import { serviceDeleteItem, serviceAddItem, serviceEditItem, serviceDownloadPdfItem } from '../data/services/ItemService';
 import { TransactionForm } from '../components/organism/form';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
@@ -214,16 +213,16 @@ export class TransactionPage extends React.Component<Props,any> {
 	}
 	
 	downloadPdf = async() => {
-		// await serviceDownloadPdfItem(this.state.viewConstraint).subscribe(
-		// 	(res) => {
-		// 		const url = window.URL.createObjectURL(new Blob([res.data]));
-		// 		const link = document.createElement('a');
-		// 		link.href = url;
-		// 		link.setAttribute('download', 'ItemReport'+getCurrentDate("_")+'.pdf');
-		// 		document.body.appendChild(link);
-		// 		link.click();
-		// 	}
-		// )
+		await serviceDownloadPdfTransaction(this.state.viewConstraint).subscribe(
+			(res) => {
+				const url = window.URL.createObjectURL(new Blob([res.data]));
+				const link = document.createElement('a');
+				link.href = url;
+				link.setAttribute('download', 'TransactionReport'+getCurrentDate("_")+'.pdf');
+				document.body.appendChild(link);
+				link.click();
+			}
+		)
 	}
 
 	async componentDidMount(){
