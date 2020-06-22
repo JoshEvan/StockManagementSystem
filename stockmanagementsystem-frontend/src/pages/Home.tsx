@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { SpecialButton } from '../components/molecules/SpecialButton';
 import { Dashboard } from '../components/template/Dashboard';
+import { Typography } from '@material-ui/core';
 
 interface Props extends RouteComponentProps{};
 
@@ -20,8 +21,12 @@ export const Home: React.FC<Props> = ({ history,location,match }) => {
 						content={
 						<div>
 							<br/>
-							<h3>Hello, Welcome to JOSEPH</h3>
-							<h5>Stock Management System</h5>
+							<Typography variant="h3" component="h2" gutterBottom>
+								Hello, Welcome to Joseph
+							</Typography>
+							<Typography variant="overline" display="block" gutterBottom>
+								Stock Management System
+							</Typography>
 						</div>}
 						
 					/>
