@@ -36,8 +36,10 @@ public class TransactionAPIControllerImpl implements TransactionAPIController {
   }
 
   @Override
-  public List<String> insert(@NotNull UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload) {
-      return transactionService.insert(upsertTransactionHeaderRequestPayload);
+  public ResponsePayload insert(@NotNull UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload) {
+      Pair<Boolean,List<String>> ret = transactionService.insert(upsertTransactionHeaderRequestPayload);
+      return new ResponsePayload().setStatus((ret.getKey() ? HttpStatus.SUCCESS :HttpStatus.FAIL).toString())
+              .setMessage(ret.getValue());
   }
 
   @Override
@@ -51,8 +53,10 @@ public class TransactionAPIControllerImpl implements TransactionAPIController {
   }
 
   @Override
-  public List<String> update(@NotNull UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload) {
-    return transactionService.update(upsertTransactionHeaderRequestPayload);
+  public ResponsePayload update(@NotNull UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload) {
+    Pair<Boolean,List<String>> ret = transactionService.update(upsertTransactionHeaderRequestPayload);
+    return new ResponsePayload().setStatus((ret.getKey() ? HttpStatus.SUCCESS : HttpStatus.FAIL).toString())
+            .setMessage(ret.getValue());
   }
 
   @Override

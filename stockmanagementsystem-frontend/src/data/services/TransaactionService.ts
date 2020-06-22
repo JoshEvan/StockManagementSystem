@@ -24,3 +24,10 @@ export const serviceAddTransaction = (dataPayload:IUpsertTransactionRequest) : O
         dataPayload
     )
 }
+
+export const serviceEditTransaction = (dataPayload:IUpsertTransactionRequest) : Observable<any> => {
+    return Axios.put(
+        baseUrl+JOSEPH_URL.TRANSACTION.EDIT,
+        dataPayload
+    )
+}

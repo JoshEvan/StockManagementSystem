@@ -3,7 +3,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Dashboard } from '../components/template/Dashboard';
 import { CustomTable, AlertDialog, CustomizedSnackbars } from '../components/organism';
 import { IItem, IIndexItemRequest, IDeleteItemResponse, HTTPCallStatus, IUpsertItemRequest, IUpsertItemResponse, ICRUDResponse, IUpsertTransactionRequest, IUpsertTransactionDetailRequest} from '../data/interfaces';
-import { serviceIndexItem, getCurrentDate, serviceIndexTransaction, serviceDeleteTransaction, serviceAddTransaction } from '../data/services';
+import { serviceIndexItem, getCurrentDate, serviceIndexTransaction, serviceDeleteTransaction, serviceAddTransaction, serviceEditTransaction } from '../data/services';
 import "regenerator-runtime/runtime.js";
 import { Button } from '@material-ui/core';
 import { serviceDeleteItem, serviceAddItem, serviceEditItem, serviceDownloadPdfItem } from '../data/services/ItemService';
@@ -131,9 +131,10 @@ export class TransactionPage extends React.Component<Props,any> {
 		})
 	}
 
-	editItem = async (data:IUpsertItemRequest) => {
-		await serviceEditItem(data).subscribe(
-			(res:IUpsertItemResponse) => {
+	editData = async (data:IUpsertTransactionRequest, dataDetail:IUpsertTransactionDetailRequest[]) => {
+		data.transactionDetails = dataDetail
+		await serviceEditTransaction(data).subscribe(
+			(res:ICRUDResponse) => {
 				if(res.data['status'] == HTTPCallStatus.Success){
 					// TODO: set viewConstraint to default ?
 					this.loadAllData()
@@ -375,17 +376,26 @@ export class TransactionPage extends React.Component<Props,any> {
 													usingAction={false}
 													dialogContent={
 														<TransactionForm
-															submitData = {this.editItem}
-															// item={
-															// 	// {
-															// 	// 	itemCode:c.itemCode,
-															// 	// 	name:c.name,
-															// 	// 	price:c.priceDec,
-															// 	// 	stock:c.stock,
-															// 	// 	capacity:c.capacity,
-															// 	// 	description:c.description,
-															// 	// }
-															// }
+															submitData = {this.editData}
+															item={
+																{
+																	id:c.id,
+																	customerId:c.customerId,
+																	paymentId:c.paymentId,
+																	paymentStatus:c.paymentStatus,
+																	transactionDetails:c.transactionDetails.map(
+																		(d:ITransactionDetail) => {
+																			return {
+																				itemCode:d.itemCode,
+																				note:d.note,
+																				quantity:d.quantity
+																			}
+																		}
+																	),
+																	transactionDate:c.transactionDate,
+																	note:c.note
+																}
+															}
 														/>
 													}
 												/>

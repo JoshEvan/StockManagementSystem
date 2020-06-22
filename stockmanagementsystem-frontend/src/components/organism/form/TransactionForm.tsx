@@ -103,13 +103,21 @@ export class TransactionForm extends React.Component<any,any>{
 				message:""
 			},
 			selectedTransactionDetailItemCodes:{}
-        }
+		}
+		this.setState({
+			transactionDetails:props.item.transactionDetails
+		})
     }
 
     componentDidMount(){
         this.loadAllItemCodes()
         this.loadAllCustomers()
-        this.loadAllPayTypes()
+		this.loadAllPayTypes()
+		this.setState({
+			transactionDetails:this.props.item.transactionDetails
+		})
+		console.log(this.props.item)
+		console.log(this.state.transactionDetails)
 	}
 	
 	passDetailState = (data:ITransactionDetail) => {

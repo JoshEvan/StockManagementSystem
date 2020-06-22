@@ -47,7 +47,7 @@ public class TransactionServiceImpl implements TransactionService {
   }
 
   @Override
-  public List<String> insert(UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload) {
+  public Pair<Boolean,List<String> >insert(UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload) {
     List<String> stats = new LinkedList<>();
     List<ItemDataEntity> itemDataEntities = new LinkedList<>();
 
@@ -81,10 +81,12 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     if(!stats.isEmpty()){
-      return stats;
+      return new Pair<>(false,stats);
     }
 
-    if(transactionDAO.insert(transactionSpec.getTransactionHeaderDataEntity(), transactionSpec.getTransactionDetailDataEntityList()) == 1){
+    Integer flag = transactionDAO.insert(transactionSpec.getTransactionHeaderDataEntity(), transactionSpec.getTransactionDetailDataEntityList());
+
+    if(flag == 1){
 
       stats.add(PostgresHelper.TRANHEAD+upsertTransactionHeaderRequestPayload.getId()+ PostgresHelper.SUCCESS + PostgresHelper.INSERTED);
 
@@ -100,7 +102,7 @@ public class TransactionServiceImpl implements TransactionService {
     }else{
       stats.add(PostgresHelper.TRANHEAD+upsertTransactionHeaderRequestPayload.getId()+ PostgresHelper.FAIL + PostgresHelper.INSERTED);
     }
-    return stats;
+    return new Pair<>((flag == 1), stats);
   }
 
   @Override
@@ -131,12 +133,12 @@ public class TransactionServiceImpl implements TransactionService {
   }
 
   @Override
-  public List<String> update(UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload) {
+  public Pair<Boolean,List<String>> update(UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload) {
     List<String> stats = new LinkedList<>();
     List<ItemDataEntity> itemDataEntities = new LinkedList<>();
     TransactionSpec previousTransactionSpec = transactionDAO.show(upsertTransactionHeaderRequestPayload.getId()).orElse(null);
     if(previousTransactionSpec == null){
-      return Collections.singletonList("Transaction "+upsertTransactionHeaderRequestPayload.getId()+ PostgresHelper.NOTFOUND);
+      return new Pair<>(false, Collections.singletonList("Transaction "+upsertTransactionHeaderRequestPayload.getId()+ PostgresHelper.NOTFOUND));
     }
 
     TransactionSpec updatedTransactionSpec = convertUpsertPayloadToDataEntity(upsertTransactionHeaderRequestPayload);
@@ -180,7 +182,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     if(!stats.isEmpty()){
-      return stats;
+      return new Pair<>(false,stats);
     }
 
     if(transactionDAO.update(updatedTransactionSpec.getTransactionHeaderDataEntity(), updatedTransactionSpec.getTransactionDetailDataEntityList()) == 1){
@@ -195,11 +197,10 @@ public class TransactionServiceImpl implements TransactionService {
         itemDAO.update(itemDataEntities.get(i++));
       }
 
-
-    }else{
-      stats.add(PostgresHelper.TRANHEAD+upsertTransactionHeaderRequestPayload.getId()+ PostgresHelper.FAIL + PostgresHelper.UPDATED);
+      return new Pair<>(true, stats);
     }
-    return stats;
+    stats.add(PostgresHelper.TRANHEAD+upsertTransactionHeaderRequestPayload.getId()+ PostgresHelper.FAIL + PostgresHelper.UPDATED);
+    return new Pair<>(false,stats);
 
 
   }
