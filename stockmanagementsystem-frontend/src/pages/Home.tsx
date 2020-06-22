@@ -21,12 +21,19 @@ export const Home: React.FC<Props> = ({ history,location,match }) => {
 						content={
 						<div>
 							<br/>
-							<Typography variant="h3" component="h2" gutterBottom>
-								Hello, Welcome to Joseph
-							</Typography>
-							<Typography variant="overline" display="block" gutterBottom>
-								Stock Management System
-							</Typography>
+							<div style={{display:'table'}}>
+								<div style={{float: 'left', width:'25%'}}>
+									<img style={{width:'70%', height:'auto'}} src="https://raw.githubusercontent.com/JoshEvan/StockManagementSystem/master/stockmanagementsystem-frontend/src/assets/imgs/josephlogo.png"/>
+								</div>
+								<div style={{float: 'left', width:'75%'}}>
+								<Typography variant="h3" component="h2" gutterBottom>
+									Hello, Welcome to Joseph
+								</Typography>
+								<Typography variant="overline" display="block" gutterBottom>
+									Stock Management System
+								</Typography>
+								</div>
+							</div>
 						</div>}
 						
 					/>
