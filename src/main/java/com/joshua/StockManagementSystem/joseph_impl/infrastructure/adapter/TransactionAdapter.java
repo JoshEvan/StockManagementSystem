@@ -41,6 +41,7 @@ public class TransactionAdapter {
                         .setPaymentId(upsertTransactionHeaderRequestPayload.getPaymentId())
                         .setPaymentStatus(upsertTransactionHeaderRequestPayload.getPaymentStatus())
                         .setPaymentId(upsertTransactionHeaderRequestPayload.getPaymentId())
+                        .setNote(upsertTransactionHeaderRequestPayload.getNote())
               )
               .setTransactionDetailDataEntityList(
                       convertUpsertDetailPayloadToDataEntity(upsertTransactionHeaderRequestPayload)

@@ -22,7 +22,7 @@ import java.util.List;
 @Component("transactionV1API")
 public interface TransactionAPIController {
   @PostMapping("/insert")
-  public List<String> insert(@NotNull @RequestBody UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload);
+  public ResponsePayload insert(@NotNull @RequestBody UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload);
 
   @PostMapping(value = "/", produces = "application/json")
   public @ResponseBody
@@ -32,7 +32,7 @@ public interface TransactionAPIController {
   public @ResponseBody TransactionHeader show(@NotNull @PathVariable("id") String id);
 
   @PutMapping("/update")
-  public List<String> update(@NotNull @RequestBody UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload);
+  public ResponsePayload update(@NotNull @RequestBody UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload);
 
   @DeleteMapping("/delete/{id}")
   public ResponsePayload delete(@NotNull @PathVariable("id") String id);

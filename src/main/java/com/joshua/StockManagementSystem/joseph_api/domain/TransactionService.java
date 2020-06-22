@@ -9,10 +9,10 @@ import javafx.util.Pair;
 import java.util.List;
 
 public interface TransactionService {
-  List<String> insert(UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload);
+  Pair<Boolean,List<String>> insert(UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload);
   List<TransactionHeader> index(IndexTransactionRequestPayload indexTransactionRequestPayload);
   TransactionHeader show(String id);
-  List<String> update(UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload);
+  Pair<Boolean,List<String>> update(UpsertTransactionHeaderRequestPayload upsertTransactionHeaderRequestPayload);
   Pair<Boolean,List<String>> delete(String id);
   void generateReport(IndexTransactionRequestPayload indexTransactionRequestPayload);
 }
