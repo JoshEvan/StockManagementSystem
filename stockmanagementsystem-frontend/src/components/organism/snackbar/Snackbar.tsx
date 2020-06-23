@@ -20,6 +20,10 @@ export function CustomizedSnackbars(props:any) {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(true);
 
+	// {{console.log("snackbar")
+	// console.log(props.msg)
+	// console.log(typeof props.msg)}}
+
 	return (
 		<div className={classes.root}>
 			<Collapse in={open}>
@@ -46,6 +50,7 @@ export function CustomizedSnackbars(props:any) {
 								})
 							}
 						</ul>
+						
 				</Alert>
 			</Collapse>
 		</div>

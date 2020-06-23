@@ -17,7 +17,7 @@ interface IProductionPage{
 	snackbar:{
 		isShown:boolean,
 		severity:string,
-		message:[]
+		message:string[]
 	},
 	addDialog:{
 		isShown:boolean,
@@ -212,7 +212,15 @@ export class ProductionPage extends React.Component<Props,any> {
 				console.log("STATE:"+Object.keys(this.state.rawContent).length);
 			},
 			(err)=>{
-				console.log("axios err:"+err);
+				console.log("axios err:"+err.toString().split(''));
+				console.log(new Array(err.toString()))
+				this.setState({
+					snackbar:{
+						isShown:true,
+						severity:"error",
+						message:new Array(err.toString())
+					}
+				})
 			}
 		);
 	}

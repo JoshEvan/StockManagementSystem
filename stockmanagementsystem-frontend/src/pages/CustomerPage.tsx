@@ -210,6 +210,13 @@ export class CustomerPage extends React.Component<Props,any> {
 			},
 			(err)=>{
 				console.log("axios err:"+err);
+				this.setState({
+					snackbar:{
+						isShown:true,
+						severity:"error",
+						msg:err.message.split()
+					}
+				})
 			}
 		);
 	}
