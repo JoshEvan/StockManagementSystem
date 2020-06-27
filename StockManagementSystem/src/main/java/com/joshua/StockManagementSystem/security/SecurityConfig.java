@@ -1,6 +1,8 @@
 package com.joshua.StockManagementSystem.security;
 
 import com.joshua.StockManagementSystem.auth.UserService;
+import com.joshua.StockManagementSystem.jwt.JwtConfig;
+import com.joshua.StockManagementSystem.jwt.JwtTokenVerifier;
 import com.joshua.StockManagementSystem.jwt.JwtUsernamePasswordAuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.crypto.SecretKey;
+
 /**
  * handle all security
  */
@@ -23,11 +27,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
   private final PasswordEncoder passwordEncoder;
   private final UserService userService;
+  private final SecretKey secretKey;
+  private final JwtConfig jwtConfig;
 
   @Autowired
-  public SecurityConfig(PasswordEncoder passwordEncoder, UserService userService) {
+  public SecurityConfig(PasswordEncoder passwordEncoder, UserService userService, SecretKey secretKey, JwtConfig jwtConfig) {
     this.passwordEncoder = passwordEncoder;
     this.userService = userService;
+    this.secretKey = secretKey;
+    this.jwtConfig = jwtConfig;
   }
 
   /**
@@ -48,13 +56,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt itu stateless
             .and()
-            .addFilter(new JwtUsernamePasswordAuthFilter(authenticationManager()))
+            .addFilter(new JwtUsernamePasswordAuthFilter(authenticationManager(), jwtConfig, secretKey))
+            .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig),JwtUsernamePasswordAuthFilter.class)
             .authorizeRequests()
             .antMatchers("/","/login","/css/*","/js/*")/*2 line ini antMatchers dan permitAll untuk whitelist url yg ga hrs login untuk akses*/
             .permitAll()
-//            .antMatchers("/api/v1/joseph/login").permitAll()
-//            .antMatchers("/api/v1/joseph/production/**").hasRole(UserRole.MEMBER.name()) // onluy member can access api url
-//            .antMatchers("/api/**").hasRole(UserRole.ADMIN.name())
+            .antMatchers("/api/v1/joseph/login").permitAll()
+            .antMatchers("/api/v1/joseph/production/**").hasAnyRole(UserRole.MEMBER.name(), UserRole.ADMIN.name()) // onluy member can access api url
+            .antMatchers("/api/**").hasRole(UserRole.ADMIN.name())
             .anyRequest()
             .authenticated();
 //            .and()
