@@ -1,7 +1,6 @@
 package com.joshua.StockManagementSystem.joseph_api.infrastructure.dao;
 
-import com.joshua.StockManagementSystem.joseph_api.model.User;
-import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.UserDataEntity;
+import com.joshua.StockManagementSystem.auth.impl.infra.flushout.UserDataEntity;
 
 import java.util.Optional;
 

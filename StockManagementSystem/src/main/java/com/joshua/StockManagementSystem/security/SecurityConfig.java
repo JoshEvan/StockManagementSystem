@@ -1,6 +1,6 @@
 package com.joshua.StockManagementSystem.security;
 
-import com.joshua.StockManagementSystem.auth.UserService;
+import com.joshua.StockManagementSystem.auth.impl.domain.UserService;
 import com.joshua.StockManagementSystem.jwt.JwtConfig;
 import com.joshua.StockManagementSystem.jwt.JwtTokenVerifier;
 import com.joshua.StockManagementSystem.jwt.JwtUsernamePasswordAuthFilter;
@@ -62,14 +62,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .antMatchers("/","/login","/css/*","/js/*")/*2 line ini antMatchers dan permitAll untuk whitelist url yg ga hrs login untuk akses*/
             .permitAll()
             .antMatchers("/api/v1/joseph/login").permitAll()
-            .antMatchers("/api/v1/joseph/production/**").hasAnyRole(UserRole.MEMBER.name(), UserRole.ADMIN.name()) // onluy member can access api url
+            .antMatchers("/api/v1/auth/role").hasRole(UserRole.ADMIN.name())
+            .antMatchers("/api/v1/joseph/production/**")
+            .hasAnyRole(UserRole.MEMBER.name(), UserRole.ADMIN.name()) // onluy member can access api url
             .antMatchers("/api/**").hasRole(UserRole.ADMIN.name())
             .anyRequest()
             .authenticated();
-//            .and()
-//           .httpBasic();
-//            .formLogin()
-//            .loginPage("/login").permitAll();
   }
 
   @Override

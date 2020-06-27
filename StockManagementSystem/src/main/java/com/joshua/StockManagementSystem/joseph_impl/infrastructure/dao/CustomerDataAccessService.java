@@ -43,7 +43,7 @@ public class CustomerDataAccessService implements CustomerDAO {
     @Override
     public List<CustomerDataEntity> index(){
         final String sql = PostgresHelper.selectOperation(new CustomerDataEntity())
-                + " WHERE "+ ItemDataEntity.ISACTIVE+" = true";
+                + " WHERE "+ CustomerDataEntity.ISACTIVE+" = true";
 
         return jdbcTemplate.query(
             sql, ((resultSet, i) -> {
@@ -75,7 +75,7 @@ public class CustomerDataAccessService implements CustomerDAO {
         setter.put(CustomerDataEntity.NAME, customer.getName());
         setter.put(CustomerDataEntity.CONTACT, customer.getContact());
         setter.put(CustomerDataEntity.DESCRIPTION, customer.getDescription());
-        setter.put(ItemDataEntity.ISACTIVE, true);
+        setter.put(CustomerDataEntity.ISACTIVE, true);
         final String sql = PostgresHelper.updateOperation(customer,setter,"id = \'" +customer.getId()+"\'");
         return jdbcTemplate.update(sql);
     }
@@ -85,7 +85,7 @@ public class CustomerDataAccessService implements CustomerDAO {
         CustomerDataEntity customerDataEntity = show(idCust).orElse(null);
         if(customerDataEntity == null) return 0;
         HashMap<String,Object> setter = new HashMap<>();
-        setter.put(ItemDataEntity.ISACTIVE, false);
+        setter.put(CustomerDataEntity.ISACTIVE, false);
         final String sql = PostgresHelper.updateOperation(customerDataEntity,
                 setter,CustomerDataEntity.ID+" = \'" +customerDataEntity.getId()+"\'");
         return jdbcTemplate.update(sql);

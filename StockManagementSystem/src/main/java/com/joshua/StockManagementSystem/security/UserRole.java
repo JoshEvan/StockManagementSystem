@@ -48,4 +48,22 @@ public enum UserRole {
     permissions.add(new SimpleGrantedAuthority("ROLE_"+this.name()));
     return permissions;
   }
+
+  public static UserRole whichUserRole(String role){
+    if(isAdmin(role)) return ADMIN;
+    if(isMember(role)) return MEMBER;
+    return STRANGER;
+  }
+
+  public static boolean isAdmin(String s){
+    return ADMIN.equals(s);
+  }
+  public static boolean isMember(String s){
+    return MEMBER.equals(s);
+  }
+  public static boolean isStranger(String s){
+    return STRANGER.equals(s);
+  }
+
+
 }
