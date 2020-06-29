@@ -9,10 +9,29 @@ import { CustomerPage } from './pages/CustomerPage';
 import { ProductionPage } from './pages/ProductionPage';
 import { PaymentTypePage } from './pages/PaymentTypePage';
 import { TransactionPage } from './pages/TransactionPage';
+import { LoginPage } from './pages/LoginPage';
+import { MuiThemeProvider, ThemeProvider, createMuiTheme } from '@material-ui/core';
+import createTypography from '@material-ui/core/styles/createTypography';
+import createPalette from '@material-ui/core/styles/createPalette';
 
 export default function App(): JSX.Element {
+    const THEME = (() => {
+        const palette = createPalette({
+          type: 'light',
+        });
+      
+        const typography = createTypography(palette, {
+          fontFamily: '"Quicksand"',
+        });
+      
+        return createMuiTheme({
+          palette: palette,
+          typography: typography,
+        });
+      })();
     
     return (
+        <MuiThemeProvider theme={THEME}>
         <BrowserRouter>
             {/* Route ini akan coba cocokin path jadi /about karena ada / maka dianggap Home juga mau dipanggil
             ,
@@ -29,6 +48,9 @@ export default function App(): JSX.Element {
             <Switch>
                 <Route
                     path = "/" exact component={Home}
+                />
+                <Route
+                    path = "/login" exact component={LoginPage}
                 />
                 <Route
                     path = "/items" exact component={ItemPage}
@@ -53,7 +75,9 @@ export default function App(): JSX.Element {
                 />
             </Switch>
 
-        </BrowserRouter>            
+        </BrowserRouter>
+        </MuiThemeProvider>
+                
     )
 }
 
