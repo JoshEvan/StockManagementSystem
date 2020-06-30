@@ -29,7 +29,7 @@ const coloredBg:CSS.Properties = {
 	margin:'0'
 }
 
-class LoginPage extends React.Component<any,any>{
+export class LoginPage extends React.Component<any,any>{
 	
 	submitLogin = async (data: ILoginRequest)  => {
 		await serviceLogin(data).subscribe(
@@ -113,5 +113,3 @@ class LoginPage extends React.Component<any,any>{
 		)
 	}
 }
-
-export default withRouter(LoginPage);
