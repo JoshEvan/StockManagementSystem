@@ -4,6 +4,9 @@ import { TextField, Button, Checkbox, Radio, Select, MenuItem, TextareaAutosize,
 import * as yup from 'yup';
 import CSS from 'csstype';
 import { ILoginRequest } from '../data/interfaces';
+import { serviceLogin } from '../data/services';
+import jwt_decode from 'jwt-decode';
+import { Redirect, useHistory, withRouter } from 'react-router-dom';
 
 const validationSchema = yup.object({
 	username: yup.string().required("Username must be filled"),
@@ -26,11 +29,29 @@ const coloredBg:CSS.Properties = {
 	margin:'0'
 }
 
-export class LoginPage extends React.Component<any,any>{
+class LoginPage extends React.Component<any,any>{
+	
+	submitLogin = async (data: ILoginRequest)  => {
+		await serviceLogin(data).subscribe(
+			(res) => {
+				console.log("result of login")
+				console.log(res)
+				console.log(res.headers)
+				console.log(res.headers["authorization"])
 
-	submitLogin = (data: ILoginRequest) => {
-		
+				var JWTToken = res.headers["authorization"].replace('Bearer ','')
+				var user = jwt_decode(JWTToken)
+				console.log(user)
+
+				// localStorage.setItem("loggedInUser",JSON.stringify(user));
+				
+			},
+			(err) => {
+
+			}
+		)
 	}
+
 
 	render(){
 		return (
@@ -92,3 +113,5 @@ export class LoginPage extends React.Component<any,any>{
 		)
 	}
 }
+
+export default withRouter(LoginPage);
