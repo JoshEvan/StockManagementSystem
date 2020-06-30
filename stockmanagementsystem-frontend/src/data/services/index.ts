@@ -8,6 +8,8 @@ export { serviceIndexPaymentType, serviceAddPayType, serviceDeletePayType, servi
 
 export { serviceIndexTransaction, serviceDeleteTransaction, serviceAddTransaction, serviceEditTransaction, serviceDownloadPdfTransaction } from './TransaactionService';
 
+export { serviceLogin } from './LoginService';
+
 export function getCurrentDate(separator=''){
     let currDate = new Date()
     let date = currDate.getDate();

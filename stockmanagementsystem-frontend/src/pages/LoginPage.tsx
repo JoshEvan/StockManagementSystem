@@ -3,12 +3,11 @@ import { Formik, Field, useField, FieldAttributes, FieldArray } from 'formik';
 import { TextField, Button, Checkbox, Radio, Select, MenuItem, TextareaAutosize, Typography, FormControl, InputLabel, Container, Grid, Paper } from '@material-ui/core';
 import * as yup from 'yup';
 import CSS from 'csstype';
-import { serviceIndexItem } from '../../../data/services';
-import { IItem } from '../../../data/interfaces';
+import { ILoginRequest } from '../data/interfaces';
 
 const validationSchema = yup.object({
-	id: yup.string().required("Production Id must be filled"),
-    paymentType: yup.string().required("Payment Type Name must be filled"),
+	username: yup.string().required("Username must be filled"),
+	password: yup.string().required("Password must be filled"),
 })
 
 const TextFieldWValidation:any = ({placeholder,type,...props}) => {
@@ -28,6 +27,11 @@ const coloredBg:CSS.Properties = {
 }
 
 export class LoginPage extends React.Component<any,any>{
+
+	submitLogin = (data: ILoginRequest) => {
+		
+	}
+
 	render(){
 		return (
 			<div style={coloredBg}>
@@ -41,8 +45,8 @@ export class LoginPage extends React.Component<any,any>{
 								</Typography>
 										<Formik
 											initialValues={{
-													// id:this.props.item.id,
-													// paymentType: this.props.item.padding
+													username:'',
+													password: ''
 											}}
 											
 											onSubmit = {(data, { setSubmitting }) => {
@@ -50,7 +54,7 @@ export class LoginPage extends React.Component<any,any>{
 													console.log(data);
 													console.log("SUBMITTING")
 
-													this.props.submitData(data);
+													this.submitLogin(data);
 													
 													setSubmitting(false);
 													console.log("done submit add data")
@@ -63,16 +67,16 @@ export class LoginPage extends React.Component<any,any>{
 										<form onSubmit={handleSubmit}>
 												{!this.props.isEdit && <div style={{padding:'2%'}}>
 														<TextFieldWValidation
-																placeholder="payment type id"
-																name="id" 
+																placeholder="username"
+																name="username" 
 																type="input" 
 																as={TextField}/>
 												</div>}
 												<div style={{padding:'2%'}}>
 														<TextFieldWValidation
-																placeholder="payment type name"
-																name="paymentType"
-																type="input"
+																placeholder="password"
+																name="password"
+																type="password"
 																as={TextField}
 																/>
 												</div>

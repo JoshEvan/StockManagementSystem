@@ -45,3 +45,7 @@ export const getBaseUrl = () =>{
     URL = API_URL.DEV.BASE_URL;
     return URL;
 }
+
+export const getLoginUrl = () => {
+    return 'http://localhost:8080/login'
+}
