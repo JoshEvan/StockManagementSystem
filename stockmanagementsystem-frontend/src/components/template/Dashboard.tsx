@@ -19,6 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from '../organism';
+import { ToggleMenu } from '../organism/menu/ToggleMenu'
 
 // function Copyright() {
 //   return (
@@ -142,6 +143,10 @@ export default function Dashboard({titlePage, content}){
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Joseph 
           </Typography>
+
+         <ToggleMenu/>
+          
+
           {/* <Typography variant="overline" gutterBottom>
             Stock Management System
           </Typography> */}
