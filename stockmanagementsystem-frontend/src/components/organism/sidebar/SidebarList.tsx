@@ -30,39 +30,41 @@ const plainLinkStyle: CSS.Properties = {
 
 export const mainListItems = (
   <div>
-    
-    <Link to="/" style={plainLinkStyle}>
-      <ListItem button>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="Dashboard" />
-      </ListItem>
-    </Link>
-    <Link to="/transactions" style={plainLinkStyle}>
-      <ListItem button>
-        <ListItemIcon>
-          <LocalAtmIcon />
-        </ListItemIcon>
-        <ListItemText primary="Transactions" />
-      </ListItem>
-    </Link>
-    <Link to="/items"  style={plainLinkStyle}>
+    {
+      <div>
+      <Link to="/" style={plainLinkStyle}>
         <ListItem button>
-        <ListItemIcon>
-            <ShoppingCartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Items" />
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
         </ListItem>
-    </Link>
-    <Link to="/customers" style={plainLinkStyle}>
+      </Link>
+      <Link to="/transactions" style={plainLinkStyle}>
         <ListItem button>
-        <ListItemIcon>
-            <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Customers" />
+          <ListItemIcon>
+            <LocalAtmIcon />
+          </ListItemIcon>
+          <ListItemText primary="Transactions" />
         </ListItem>
-    </Link>
+      </Link>
+      <Link to="/items"  style={plainLinkStyle}>
+          <ListItem button>
+          <ListItemIcon>
+              <ShoppingCartIcon />
+          </ListItemIcon>
+          <ListItemText primary="Items" />
+          </ListItem>
+      </Link>
+      <Link to="/customers" style={plainLinkStyle}>
+          <ListItem button>
+          <ListItemIcon>
+              <PeopleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Customers" />
+          </ListItem>
+      </Link>
+    </div>}
     <Link to="/productions" style={plainLinkStyle}>
       <ListItem button>
         <ListItemIcon>

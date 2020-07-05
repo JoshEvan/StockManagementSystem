@@ -1,3 +1,7 @@
+import Axios from 'axios-observable';
+
+Axios.defaults.headers["Authorization"] = 'Bearer '+localStorage.getItem("JWT")
+
 export { serviceIndexItem,serviceDeleteItem as serviceDeletetem, serviceEditItem, serviceDownloadPdfItem} from './ItemService';
 
 export { serviceIndexCustomer,serviceEditCustomer, serviceAddCustomer, serviceDeleteCustomer } from './CustomerService';
@@ -7,6 +11,8 @@ export { serviceIndexProduction, serviceDeleteProduction, serviceAddProduction, 
 export { serviceIndexPaymentType, serviceAddPayType, serviceDeletePayType, serviceEditPayType } from './PaymentTypeService';
 
 export { serviceIndexTransaction, serviceDeleteTransaction, serviceAddTransaction, serviceEditTransaction, serviceDownloadPdfTransaction } from './TransaactionService';
+
+export { serviceLogin } from './LoginService';
 
 export function getCurrentDate(separator=''){
     let currDate = new Date()

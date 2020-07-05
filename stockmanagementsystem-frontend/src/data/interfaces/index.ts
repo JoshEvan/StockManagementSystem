@@ -24,3 +24,5 @@ export { IIndexProductionResponse } from './productions/IIndexProduction'
 export { ITransaction, ITransactionDetail, initTransaction, initTransactionDetail } from './transactions/ITransaction'
 export { IIndexTransactionRequest, getInitIndexTransactionRequest } from './transactions/IIndexTransaction'
 export { IUpsertTransactionRequest,IUpsertTransactionDetailRequest } from './transactions/IUpsertTransaction'
+
+export { ILoginRequest } from './ILogin';

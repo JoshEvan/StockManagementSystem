@@ -10,7 +10,7 @@ import { TransactionForm } from '../components/organism/form';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import { SimpleExpansionPanel } from '../components/organism/expansion_panel/SimpleExpansionPanel';
-import { initTransaction, ITransaction, ITransactionDetail } from '../data/interfaces/transactions/ITransaction';
+import { initTransaction, ITransaction, ITransactionDetail, getInitTransaction } from '../data/interfaces/transactions/ITransaction';
 import { getInitIndexTransactionRequest, IIndexTransactionRequest } from '../data/interfaces/transactions/IIndexTransaction';
 
 interface Props extends RouteComponentProps{};
@@ -64,7 +64,7 @@ export class TransactionPage extends React.Component<Props,any> {
 					<TransactionForm
 						submitData = {this.addData}
 						item= {
-							initTransaction
+							getInitTransaction()
 						}
 					/>
 				),
@@ -123,7 +123,7 @@ export class TransactionPage extends React.Component<Props,any> {
 				content:(
 					<TransactionForm
 						submitData = {this.addData}
-						item={getInitIndexTransactionRequest}
+						item={getInitTransaction()}
 					/>
 				)
 			}
