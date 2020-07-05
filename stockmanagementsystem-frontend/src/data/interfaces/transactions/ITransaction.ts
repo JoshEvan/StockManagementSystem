@@ -22,8 +22,8 @@ export interface ITransactionDetail{
 	subTotalDec: number
 }
 
-export const initTransaction = {
-	id : "",
+export const getInitTransaction = () => {
+	return {id : "",
 	customerId: "",
 	paymentId: "",
 	transactionDate: Date.now(),
@@ -32,7 +32,7 @@ export const initTransaction = {
 	timestamp: Date.now(),
 	note:"",
 	total:"",
-	totalDec: 0
+	totalDec: 0}
 }
 
 export const initTransactionDetail = {

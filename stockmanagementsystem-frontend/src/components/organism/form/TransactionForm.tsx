@@ -72,8 +72,10 @@ interface ITransactionForm{
 
 export class TransactionForm extends React.Component<any,any>{
 	state:ITransactionForm;
+	_isMounted:boolean = false;
     constructor(props){
-        super(props)
+			super(props)
+			this._isMounted = false
         this.state={
             itemCodes:[],
             customerDatas:[],
@@ -109,16 +111,25 @@ export class TransactionForm extends React.Component<any,any>{
 		})
     }
 
+		
     componentDidMount(){
-        this.loadAllItemCodes()
+				this._isMounted = true;			
+       if(this._isMounted){
+				this.loadAllItemCodes()
         this.loadAllCustomers()
-		this.loadAllPayTypes()
-		this.setState({
-			transactionDetails:this.props.item.transactionDetails
-		})
-		console.log(this.props.item)
-		console.log(this.state.transactionDetails)
-	}
+				this.loadAllPayTypes()
+			 }
+				this.setState({
+					transactionDetails:this.props.item.transactionDetails
+				})
+			console.log(this.props.item)
+			console.log("transdet")
+			console.log(this.state.transactionDetails)
+			console.log(this.props.item.transactionDetails)
+		}
+		componentWillUnmount(){
+			this._isMounted=false;
+		}
 	
 	passDetailState = (data:ITransactionDetail) => {
 		console.log("pass detail state")
@@ -280,6 +291,7 @@ export class TransactionForm extends React.Component<any,any>{
 									message:"must include minimal 1 transaction details"
 								}
 							})
+							setSubmitting(false);
 						}else {
 							setSubmitting(true)
 							// data["test"] = "test"
@@ -399,7 +411,7 @@ export class TransactionForm extends React.Component<any,any>{
 								addDialog = {this.state.addDialog}
 								header={detailColName}
 								body={
-									this.state.transactionDetails.map(
+									(typeof(this.state.transactionDetails) !== undefined) && this.state.transactionDetails.map(
 										(e:ITransactionDetail, idx:number) => {
 											return (
 												<React.Fragment>
