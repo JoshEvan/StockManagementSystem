@@ -82,7 +82,7 @@ export function ToggleMenu() {
                 {/* {console.log(jwt_decode(localStorage.getItem("JWT")))} */}
                 
                 {localStorage.getItem("JWT") !== null && jwt_decode(localStorage.getItem("JWT")).sub}
-                {localStorage.getItem("JWT") === null && "not logged in"}
+                {localStorage.getItem("JWT") === null && "please sign in"}
                  
             </span>
 
