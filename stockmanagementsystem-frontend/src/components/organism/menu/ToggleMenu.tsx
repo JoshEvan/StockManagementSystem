@@ -10,6 +10,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 import jwt_decode from 'jwt-decode';
+import { Redirect, Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,11 +33,20 @@ export function ToggleMenu() {
     setOpen((prevOpen) => !prevOpen);
   };
 
+  const logOut = () => {
+    localStorage.removeItem("JWT")
+  }
+
+  const toLogin = () => {
+    console.log("tologin")
+    return <Redirect push to="/login"/>
+  }
+
   const handleClose = (event: React.MouseEvent<EventTarget>) => {
     if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
       return;
     }
-
+    logOut()
     setOpen(false);
   };
 
@@ -69,9 +79,10 @@ export function ToggleMenu() {
         >
             <span style={{color:"white",padding:"1%"}}>
                 <AccountCircleSharpIcon style={{color:"white",padding:"1%"}}/>
+                {/* {console.log(jwt_decode(localStorage.getItem("JWT")))} */}
                 
-                {jwt_decode(localStorage.getItem("JWT")).sub}
-                {console.log(jwt_decode(localStorage.getItem("JWT")).sub)}
+                {localStorage.getItem("JWT") !== null && jwt_decode(localStorage.getItem("JWT")).sub}
+                {localStorage.getItem("JWT") === null && "not logged in"}
                  
             </span>
 
@@ -85,7 +96,10 @@ export function ToggleMenu() {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose}>Logout Account</MenuItem>
+                    { localStorage.getItem("JWT") !== null && <MenuItem onClick={handleClose}>Logout Account</MenuItem>}
+                    { localStorage.getItem("JWT") === null && 
+                      <Link to="/login" style={{textDecoration: "none",
+                      color:'#000'}}><MenuItem>Sign in</MenuItem></Link>}
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

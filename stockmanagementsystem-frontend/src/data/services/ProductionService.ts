@@ -6,7 +6,8 @@ const usingBaseUrl = getBaseUrl()
 
 export const serviceIndexProduction = (): Observable<IIndexProductionResponse> => {
     return Axios.get(
-        usingBaseUrl+JOSEPH_URL.PRODUCTION.INDEX
+        usingBaseUrl+JOSEPH_URL.PRODUCTION.INDEX,
+        serviceConfigCommon
     )
 }
 
