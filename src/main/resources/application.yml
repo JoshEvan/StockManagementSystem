@@ -1,0 +1,14 @@
+app:
+    datasource:
+        jdbc-url: jdbc:postgresql://localhost:5432/joseph_data?currentSchema=joseph_user,public
+        username: joseph_user
+        password: joseph_user
+        pool-size: 30
+
+application:
+    jwt:
+        secretKey: 123456789012345678901234567890123456789012345678901234567890
+        tokenPrefix: Bearer
+        tokenExpirationAfterDays: 3
+
+
