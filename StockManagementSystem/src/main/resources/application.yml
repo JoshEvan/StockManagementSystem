@@ -1,8 +1,8 @@
 app:
     datasource:
-        jdbc-url: jdbc:postgresql://localhost:5432/joseph_data?currentSchema=joseph_user,public
-        username: joseph_user
-        password: joseph_user
+        jdbc-url: ${JDBC_DATABASE_URL}
+        username: ${JDBC_DATABASE_USERNAME}
+        password: ${JDBC_DATABASE_PASSWORD}
         pool-size: 30
 
 application:
