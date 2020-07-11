@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT -jar target/StockManagementSystem-0.0.1-SNAPSHOT.jar
