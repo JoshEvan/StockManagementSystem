@@ -25,6 +25,7 @@ import org.thymeleaf.context.Context;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.TransactionAdapter.*;
 
@@ -238,12 +239,23 @@ public class TransactionServiceImpl implements TransactionService {
 
   @Override
   public void generateReport(IndexTransactionRequestPayload indexTransactionRequestPayload) {
-    List<TransactionHeader> trans = index(indexTransactionRequestPayload.setSortByDate(1)); // sort date asc
+    List<TransactionHeader> trans = index(indexTransactionRequestPayload); // sort date asc
     Map<String, Object> data = new HashMap<>();
+    if(trans.isEmpty()){
+      new ReportEngine().generate("TransactionPDF", PostgresHelper.TRANS_PDF_FILENAME,data);
+    }
+
+    List<Date> dates = trans.stream().map(
+            t -> {
+              return t.getTransactionDate();
+            }
+    ).collect(Collectors.toList());
+    Collections.sort(dates);
+
     data.put("transactions",trans);
     // TODO: CHANGE THIS
-    data.put("startDate",trans.get(0).getTransactionDate());
-    data.put("endDate",trans.get(trans.size()-1).getTransactionDate());
+    data.put("startDate",dates.get(0));
+    data.put("endDate",dates.get(dates.size()-1));
     data.put(("currDate"), new Date());
     new ReportEngine().generate("TransactionPDF", PostgresHelper.TRANS_PDF_FILENAME,data);
   }
