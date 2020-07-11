@@ -14,8 +14,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.SecretKey;
+import java.util.Arrays;
 
 /**
  * handle all security
@@ -54,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //            .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 //            .and()
             .csrf().disable()
+            .cors().and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt itu stateless
             .and()
             .addFilter(new JwtUsernamePasswordAuthFilter(authenticationManager(), jwtConfig, secretKey))
@@ -83,6 +88,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     provider.setPasswordEncoder(passwordEncoder);
     provider.setUserDetailsService(userService);
     return provider;
+  }
+
+  @Bean
+  protected CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowCredentials(true);
+    configuration.setAllowedOrigins(Arrays.asList("*"));// TODO: impl this to front end server
+    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+    configuration.setAllowedHeaders(Arrays.asList("X-Requested-With","Origin","Content-Type","Accept","Authorization"));
+
+    // This allow us to expose the headers
+    configuration.setExposedHeaders(Arrays.asList("Access-Control-Allow-Headers", "Authorization, x-xsrf-token, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, " +
+            "Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"));
+
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
   }
 
   //  /**
