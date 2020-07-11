@@ -1,8 +1,8 @@
 app:
     datasource:
-        jdbc-url: jdbc:postgres://ukfppdiequuqif:b095d0b749b6fa5ec7a01e03c4d72640f25c051d9dd42d02dbef8274e9da1061@ec2-3-215-83-17.compute-1.amazonaws.com:5432/ds6uap7r7pkd
-        username: ukfppdiequuqif
-        password: b095d0b749b6fa5ec7a01e03c4d72640f25c051d9dd42d02dbef8274e9da1061
+        jdbc-url: jdbc:postgresql://ec2-54-234-28-165.compute-1.amazonaws.com:5432/db8j87n0uhq1un
+        username: fpviifohjysycx
+        password: c9722df369b39bf3623163697f07977405958b245b2598ec7cdb3aaea71b352d
         pool-size: 30
 
 application:
