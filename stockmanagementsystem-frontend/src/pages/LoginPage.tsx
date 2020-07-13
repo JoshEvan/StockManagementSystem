@@ -35,14 +35,14 @@ export class LoginPage extends React.Component<any,any>{
 	submitLogin = async (data: ILoginRequest)  => {
 		await serviceLogin(data).subscribe(
 			(res) => {
-				console.log("result of login")
-				console.log(res)
-				console.log(res.headers)
-				console.log(res.headers["authorization"])
+				// console.log("result of login")
+				// console.log(res)
+				// console.log(res.headers)
+				// console.log(res.headers["authorization"])
 
 				var JWTToken = res.headers["authorization"].replace('Bearer ','')
 				var user = jwt_decode(JWTToken)
-				console.log(user)
+				// console.log(user)
 
 				localStorage.setItem("JWT",JWTToken)
 				this.closeSnackbar()
@@ -120,7 +120,7 @@ export class LoginPage extends React.Component<any,any>{
 								
 								onSubmit = {(data, { setSubmitting }) => {
 										setSubmitting(true)
-										console.log(data);
+										// console.log(data);
 										console.log("SUBMITTING")
 
 										this.submitLogin(data);

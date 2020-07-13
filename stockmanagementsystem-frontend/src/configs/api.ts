@@ -2,6 +2,9 @@
 const API_URL = {
     DEV: {
         BASE_URL: 'http://localhost:8080/api/v1/joseph'
+    },
+    PROD: {
+        BASE_URL:'https://joseph-sms.herokuapp.com/api/v1/joseph'
     }
 }
 
@@ -42,10 +45,15 @@ export const JOSEPH_URL={
 
 export const getBaseUrl = () =>{
     let URL: string;
-    URL = API_URL.DEV.BASE_URL;
+    if(process.env.NODE_ENV === 'production'){
+        URL = API_URL.PROD.BASE_URL;
+    }else URL = API_URL.DEV.BASE_URL;
     return URL;
 }
 
 export const getLoginUrl = () => {
+    if(process.env.NODE_ENV === 'production'){
+        return 'https://joseph-sms.herokuapp.com/login'
+    }
     return 'http://localhost:8080/login'
 }

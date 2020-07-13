@@ -197,6 +197,7 @@ export class PaymentTypePage extends React.Component<Props,any> {
 
 	loadAll = async () => {
 		console.log("posting index request "+TITLE)
+		console.log(process.env.NODE_ENV)
 		await serviceIndexPaymentType().subscribe(
 			(res) => {
 				console.log("RES:"+Object.keys(res).length);
