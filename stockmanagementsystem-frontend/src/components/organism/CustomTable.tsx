@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 // import { Table } from '../components/organisms';
 import { Table } from 'reactstrap';
 import { IItem } from '../../data/interfaces';
-import { ResponsiveDialog } from './Dialog';
+import { ResponsiveDialog } from './dialog';
 
 type Props = {
   header:string[],
