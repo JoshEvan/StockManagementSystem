@@ -10,8 +10,9 @@ import { TransactionForm } from '../components/organism/form';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import { SimpleExpansionPanel } from '../components/organism/expansion_panel/SimpleExpansionPanel';
-import { initTransaction, ITransaction, ITransactionDetail, getInitTransaction } from '../data/interfaces/transactions/ITransaction';
+import { ITransaction, ITransactionDetail, getInitTransaction } from '../data/interfaces/transactions/ITransaction';
 import { getInitIndexTransactionRequest, IIndexTransactionRequest } from '../data/interfaces/transactions/IIndexTransaction';
+import { getBaseUrl } from '../configs/api';
 
 interface Props extends RouteComponentProps{};
 interface ITransactionPage{
@@ -197,6 +198,8 @@ export class TransactionPage extends React.Component<Props,any> {
 
 	loadAllData = async () => {
 		console.log("posting index request")
+		console.log(getBaseUrl()+"WOIIII")
+
 		await serviceIndexTransaction(this.state.viewConstraint).subscribe(
 			(res) => {
 				console.log("RES:"+Object.keys(res).length);

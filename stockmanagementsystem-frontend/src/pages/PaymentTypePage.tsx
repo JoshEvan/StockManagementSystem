@@ -16,7 +16,7 @@ interface IPaymentTypePage{
 	snackbar:{
 		isShown:boolean,
 		severity:string,
-		message:[]
+		message:string[]
 	},
 	addDialog:{
 		isShown:boolean,
@@ -212,7 +212,7 @@ export class PaymentTypePage extends React.Component<Props,any> {
 					snackbar:{
 						isShown:true,
 						severity:"error",
-						msg:err.message.split()
+						message:err.message.split()
 					}
 				})
 			}
