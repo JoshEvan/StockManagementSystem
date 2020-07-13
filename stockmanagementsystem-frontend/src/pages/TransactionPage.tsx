@@ -198,7 +198,6 @@ export class TransactionPage extends React.Component<Props,any> {
 
 	loadAllData = async () => {
 		console.log("posting index request")
-		console.log(getBaseUrl()+"WOIIII")
 
 		await serviceIndexTransaction(this.state.viewConstraint).subscribe(
 			(res) => {

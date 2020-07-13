@@ -48,6 +48,7 @@ export function ToggleMenu() {
     }
     logOut()
     setOpen(false);
+    location.reload(); // refresh for read new empty localStorage of JWT
   };
 
   function handleListKeyDown(event: React.KeyboardEvent) {

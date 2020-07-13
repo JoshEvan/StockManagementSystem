@@ -41,12 +41,13 @@ export class LoginPage extends React.Component<any,any>{
 				// console.log(res.headers["authorization"])
 
 				var JWTToken = res.headers["authorization"].replace('Bearer ','')
-				var user = jwt_decode(JWTToken)
+				// var user = jwt_decode(JWTToken)
 				// console.log(user)
 
 				localStorage.setItem("JWT",JWTToken)
 				this.closeSnackbar()
 				this.setState({pass:true})
+				location.reload() // preventing error pass state true when log out then log in back without refresh page
 			},
 			(err) => {
 				console.log(typeof err.response.status)
@@ -88,11 +89,16 @@ export class LoginPage extends React.Component<any,any>{
 		}
 	}
 
-
 	render(){
+		if(localStorage.getItem("JWT")){
+			// for preventin 1 user, relogin, and also refreshing page, so react will read the newest localStorage of JWT
+			return  <Redirect to="/" />
+		}
 		if(this.state.pass){
+			// location.reload()
 			return <Redirect to="/" />
 		}
+		
 		return (
 			<div style={coloredBg}>
 				<Container  style={{paddingTop:'15%',textAlign:'center'}}>
