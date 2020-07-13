@@ -23,7 +23,7 @@ export const Home: React.FC<Props> = ({ history,location,match }) => {
 							<br/>
 							<div style={{display:'table'}}>
 								<div style={{float: 'left', width:'25%'}}>
-									<img style={{width:'70%', height:'auto'}} src="https://raw.githubusercontent.com/JoshEvan/StockManagementSystem/master/stockmanagementsystem-frontend/src/assets/imgs/josephlogo.png"/>
+									<img id="loading-img" style={{width:'70%', height:'auto'}} src="https://raw.githubusercontent.com/JoshEvan/StockManagementSystem/master/stockmanagementsystem-frontend/src/assets/imgs/josephlogo.png"/>
 								</div>
 								<div style={{float: 'left', width:'75%'}}>
 								<Typography variant="h3" component="h2" gutterBottom>

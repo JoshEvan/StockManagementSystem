@@ -12,7 +12,18 @@
         *{
           font-family: 'Quicksand', sans-serif
         }
-
+        #loading-img {
+                -webkit-animation: rotation 2s infinite linear;
+                animation-timing-function: ease-in-out;
+        }
+        @-webkit-keyframes rotation {
+                from {
+                        -webkit-transform: rotate(0deg);
+                }
+                to {
+                        -webkit-transform: rotate(359deg);
+                }
+        }
     </style>
 </head>
 <body>
