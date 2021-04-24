@@ -5,8 +5,8 @@ on:
     branches:
       - release**
     paths:
-     - stockmanagementsystem-frontend/**
-     - *github/workflows/frontend/**
+      - stockmanagementsystem-frontend/**
+      - *github/workflows/frontend/**
       
 jobs:
   deploy_to_heroku_frontend:
