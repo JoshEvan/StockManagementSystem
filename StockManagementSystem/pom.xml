@@ -166,10 +166,6 @@
 				<groupId>com.zenjava</groupId>
 				<artifactId>javafx-maven-plugin</artifactId>
 				<version>8.8.3</version>
-				<configuration>
-					<vendor>YourCompany</vendor>
-					<mainClass>your.package.with.Launcher</mainClass>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
