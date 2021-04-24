@@ -29,4 +29,4 @@ jobs:
           appdir: stockmanagementsystem-frontend
           branch: ${{ steps.extract_branch.outputs.branch }}
           remote_branch: "main"
-          procfile: npm install && npm start
+          procfile: "web: npm install && npm start"
