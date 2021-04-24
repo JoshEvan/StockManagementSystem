@@ -1,5 +1,5 @@
 HELP.md
-!target/StockManagementSystem-0.0.1-SNAPSHOT.jar
+!target/StockManagementSystem-0.0.1-SNAPSHOT-exec.jar
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**

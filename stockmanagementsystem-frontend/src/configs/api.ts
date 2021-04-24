@@ -4,7 +4,7 @@ const API_URL = {
         BASE_URL: 'http://localhost:8080/api/v1/joseph'
     },
     PROD: {
-        BASE_URL:'https://joseph-sms.herokuapp.com/api/v1/joseph'
+        BASE_URL: process.env.BACKEND_URL
     }
 }
 
