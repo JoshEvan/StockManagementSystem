@@ -1,4 +1,4 @@
-name: Deployment
+name: Backend Deployment
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
       - release**
     paths:
      - StockManagementSystem/**
+     - .github/workflows/backend**
       
 jobs:
   deploy_to_heroku:
