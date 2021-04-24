@@ -24,7 +24,7 @@ jobs:
           distribution: 'adopt'
           
       - name: Build with Maven
-        run: cd StockManagementSystem && mvn -B package --file pom.xml && cp target/*.jar jars
+        run: cd StockManagementSystem && mvn -B package --file pom.xml && mkdir jars && cp target/*.jar jars
         
         
       - name: Deploy branch ${{ steps.extract_branch.outputs.branch }} to Heroku
