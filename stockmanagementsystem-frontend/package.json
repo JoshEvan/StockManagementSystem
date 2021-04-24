@@ -7,7 +7,7 @@
     "start": "export NODE_ENV=production && node server.js",
     "dev": "webpack && webpack-dev-server --open",
     "build-development": "webpack",
-    "build": "webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors"
+    "build": "webpack -p --progress --colors --env.BACKEND_URL=${BACKEND_URL} --env.BACKEND_API=${BACKEND_API} --env.NODE_ENV=production"
   },
   "keywords": [],
   "author": "",
