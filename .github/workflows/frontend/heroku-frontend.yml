@@ -5,7 +5,8 @@ on:
     branches:
       - release**
     paths:
-     - stockmanagementsystem-frontend/**
+      - stockmanagementsystem-frontend/**
+      - .github/workflows/frontend**
       
 jobs:
   deploy_to_heroku_frontend:
@@ -28,4 +29,4 @@ jobs:
           appdir: stockmanagementsystem-frontend
           branch: ${{ steps.extract_branch.outputs.branch }}
           remote_branch: "main"
-          procfile: npm start
+          procfile: npm install && npm start
