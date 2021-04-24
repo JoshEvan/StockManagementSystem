@@ -17,6 +17,7 @@
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.9.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "@material-ui/core": "^4.9.13",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.52",
@@ -41,7 +42,6 @@
   },
   "devDependencies": {
     "@types/reactstrap": "^8.4.2",
-    "babel-plugin-transform-class-properties": "^6.24.1",
     "bootstrap": "^4.4.1",
     "react-router-dom": "^5.1.2",
     "webpack-dev-server": "^3.10.3"
