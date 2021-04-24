@@ -34,4 +34,5 @@ jobs:
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           appdir: StockManagementSystem
           branch: ${{ steps.extract_branch.outputs.branch }}
+          remote_branch: "main"
 
