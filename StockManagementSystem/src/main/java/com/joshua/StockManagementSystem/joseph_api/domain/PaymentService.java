@@ -3,7 +3,7 @@ package com.joshua.StockManagementSystem.joseph_api.domain;
 import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertPaymentRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.model.Payment;
 import com.sun.org.apache.xpath.internal.operations.Bool;
-import javafx.util.Pair;
+import com.joshua.StockManagementSystem.util.Pair;
 
 import java.util.List;
 

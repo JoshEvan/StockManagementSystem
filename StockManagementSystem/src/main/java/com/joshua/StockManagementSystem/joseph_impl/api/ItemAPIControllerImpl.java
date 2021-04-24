@@ -9,7 +9,7 @@ import com.joshua.StockManagementSystem.joseph_api.domain.ItemService;
 import com.joshua.StockManagementSystem.joseph_api.model.Item;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.HttpStatus;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
-import javafx.util.Pair;
+import com.joshua.StockManagementSystem.util.Pair;
 import org.flywaydb.core.internal.util.FileCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

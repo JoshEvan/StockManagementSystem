@@ -12,8 +12,7 @@ import com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.Custo
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.adapter.TransactionAdapter;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.dao.spec.TransactionSpec;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.CustomerDataEntity;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import javafx.util.Pair;
+import com.joshua.StockManagementSystem.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 

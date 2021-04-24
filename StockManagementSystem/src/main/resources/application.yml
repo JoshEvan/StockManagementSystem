@@ -10,6 +10,3 @@ application:
         secretKey: ${JWT_SECRET}
         tokenPrefix: Bearer
         tokenExpirationAfterDays: 1
-
-
-p

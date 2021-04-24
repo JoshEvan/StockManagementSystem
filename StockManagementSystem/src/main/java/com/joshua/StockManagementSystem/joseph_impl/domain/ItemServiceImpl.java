@@ -15,7 +15,7 @@ import com.joshua.StockManagementSystem.joseph_impl.infrastructure.dao.spec.Tran
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ItemDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.TransactionHeaderDataEntity;
 import com.sun.org.apache.xpath.internal.operations.Bool;
-import javafx.util.Pair;
+import com.joshua.StockManagementSystem.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

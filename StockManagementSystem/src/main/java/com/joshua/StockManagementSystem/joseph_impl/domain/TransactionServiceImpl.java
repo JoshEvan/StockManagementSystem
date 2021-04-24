@@ -14,7 +14,7 @@ import com.joshua.StockManagementSystem.joseph_impl.infrastructure.dao.spec.Tran
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.CustomerDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ItemDataEntity;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.TransactionDetailDataEntity;
-import javafx.util.Pair;
+import com.joshua.StockManagementSystem.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

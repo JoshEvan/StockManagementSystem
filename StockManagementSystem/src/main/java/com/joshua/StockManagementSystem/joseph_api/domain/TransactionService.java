@@ -4,7 +4,7 @@ import com.joshua.StockManagementSystem.joseph_api.api.payload.index.IndexTransa
 import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertTransactionHeaderRequestPayload;
 import com.joshua.StockManagementSystem.joseph_api.model.TransactionHeader;
 import com.sun.org.apache.xpath.internal.operations.Bool;
-import javafx.util.Pair;
+import com.joshua.StockManagementSystem.util.Pair;
 
 import java.util.List;
 
