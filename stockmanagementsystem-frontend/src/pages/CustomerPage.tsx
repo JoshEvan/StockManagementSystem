@@ -204,7 +204,7 @@ export class CustomerPage extends React.Component<Props,any> {
 				console.log("RES:"+Object.keys(res).length);
 				console.log(res.data["customers"]);
 				this.setState({
-					rawContent: res.data["customers"]
+					rawContent: res.data["customers"] || []
 				});
 				console.log("STATE:"+Object.keys(this.state.rawContent).length);
 			},

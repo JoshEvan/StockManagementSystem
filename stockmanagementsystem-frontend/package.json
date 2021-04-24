@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "set NODE_ENV=production && node server.js",
+    "start": "export NODE_ENV=production && node server.js",
     "dev": "webpack && webpack-dev-server --open",
     "build-development": "webpack",
     "build": "webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors"

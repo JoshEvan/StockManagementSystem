@@ -45,14 +45,14 @@ export const JOSEPH_URL={
 
 export const getBaseUrl = () =>{
     let URL: string;
-    if(process.env.NODE_ENV === 'production'){
+    if(process.env.NODE_ENV == 'production'){
         URL = API_URL.PROD.BASE_URL;
     }else URL = API_URL.DEV.BASE_URL;
     return URL;
 }
 
 export const getLoginUrl = () => {
-    if(process.env.NODE_ENV === 'production'){
+    if(process.env.NODE_ENV == 'production'){
         return `${process.env.BACKEND_URL}/login`
     }
     return 'http://localhost:8080/login'
