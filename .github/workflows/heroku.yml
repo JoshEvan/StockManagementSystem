@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
   build:
     runs-on: ubuntu-latest
     needs: checkout
@@ -26,6 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Deploy to Heroku
       - uses: akhileshns/heroku-deploy@v3.4.6
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
