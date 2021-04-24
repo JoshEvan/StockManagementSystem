@@ -5,10 +5,10 @@ on:
     branches:
       - release**
     paths:
-     - StockManagementSystem/**
+     - stockmanagementsystem-frontend/**
       
 jobs:
-  deploy_to_heroku:
+  deploy_to_heroku_frontend:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -18,22 +18,14 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
-        
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-          distribution: 'adopt'
-          
-      - name: Build with Maven
-        run: cd StockManagementSystem && mvn -B package --file pom.xml && mkdir jars && cp target/*.jar jars && ls -la
-        
+       
       - name: Deploy branch ${{ steps.extract_branch.outputs.branch }} to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: ${{secrets.HEROKU_APP_NAME_BE}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME_FE}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
-          appdir: StockManagementSystem
+          appdir: stockmanagementsystem-frontend
           branch: ${{ steps.extract_branch.outputs.branch }}
           remote_branch: "main"
+          procfile: npm start
