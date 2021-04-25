@@ -32,6 +32,7 @@ public class UserPostgresDataService implements UserDAO{
 			((resultSet, i) -> {return UserAdapter.resulltSetToDataEntity(resultSet);})
 			);
 		if (u != null) {
+			u.setPassword(passwordEncoder.encode(u.getPassword()));
 			List<User> users = UserAdapter.dataEntitiesToModels(Arrays.asList(u));
 			if (users.size() > 0) {
 				user = users.get(0);
