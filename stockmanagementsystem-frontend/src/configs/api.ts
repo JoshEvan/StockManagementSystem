@@ -4,7 +4,7 @@ const API_URL = {
         BASE_URL: 'http://localhost:8080/api/v1/joseph'
     },
     PROD: {
-        BASE_URL: process.env.BACKEND_URL+process.env.BACKEND_API
+        BASE_URL: (process.env.BACKEND_URL+process.env.BACKEND_API) || "https://joseph-stockman-be.herokuapp.com/api/v1/joseph"
     }
 }
 
@@ -53,7 +53,7 @@ export const getBaseUrl = () =>{
 
 export const getLoginUrl = () => {
     if(process.env.NODE_ENV == 'production'){
-        return `${process.env.BACKEND_URL}/login`
+        return `${process.env.BACKEND_URL ||  "https://joseph-stockman-be.herokuapp.com"}/login`
     }
     return 'http://localhost:8080/login'
 }
