@@ -15,7 +15,7 @@ public class UserService implements UserDetailsService {
   private final UserDAO userDAO;
 
   @Autowired
-  public UserService(@Qualifier("userPostgre") UserDAO userDAO) {
+  public UserService(@Qualifier("postgresUser") UserDAO userDAO) {
     this.userDAO = userDAO;
   }
 
