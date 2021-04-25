@@ -1,14 +1,12 @@
 app:
     datasource:
-        jdbc-url: jdbc:postgresql://ec2-54-234-28-165.compute-1.amazonaws.com:5432/db8j87n0uhq1un
-        username: fpviifohjysycx
-        password: c9722df369b39bf3623163697f07977405958b245b2598ec7cdb3aaea71b352d
+        jdbc-url: ${JDBC_DATABASE_URL}
+        username: ${JDBC_DATABASE_USERNAME}
+        password: ${JDBC_DATABASE_PASSWORD}
         pool-size: 30
 
 application:
     jwt:
-        secretKey: 123456789012345678901234567890123456789012345678901234567890
+        secretKey: ${JWT_SECRET}
         tokenPrefix: Bearer
-        tokenExpirationAfterDays: 3
-
-
+        tokenExpirationAfterDays: 1

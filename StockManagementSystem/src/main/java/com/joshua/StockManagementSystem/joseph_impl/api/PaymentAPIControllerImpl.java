@@ -8,7 +8,7 @@ import com.joshua.StockManagementSystem.joseph_api.api.payload.upsert.UpsertPaym
 import com.joshua.StockManagementSystem.joseph_api.domain.PaymentService;
 import com.joshua.StockManagementSystem.joseph_api.model.Payment;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.HttpStatus;
-import javafx.util.Pair;
+import com.joshua.StockManagementSystem.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

@@ -6,7 +6,7 @@ import com.joshua.StockManagementSystem.joseph_api.infrastructure.dao.Production
 import com.joshua.StockManagementSystem.joseph_api.model.Production;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.PostgresHelper;
 import com.joshua.StockManagementSystem.joseph_impl.infrastructure.flushout.ProductionDataEntity;
-import javafx.util.Pair;
+import com.joshua.StockManagementSystem.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
