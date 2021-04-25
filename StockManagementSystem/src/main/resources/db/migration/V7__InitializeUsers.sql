@@ -1,4 +1,5 @@
-CREATE TYPE if not exists user_role as ENUM('STRANGER', 'MEMBER', 'ADMIN');
+DROP TYPE IF EXISTS user_role;
+CREATE TYPE user_role AS ENUM('STRANGER', 'MEMBER', 'ADMIN');
 
 CREATE TABLE if not exists users(
     username varchar NOT NULL PRIMARY KEY,

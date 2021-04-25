@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-@Repository("userPostgre")
+@Repository("inMemoryUser")
 public class UserDataAccessService implements UserDAO{
   private final PasswordEncoder passwordEncoder;
 
