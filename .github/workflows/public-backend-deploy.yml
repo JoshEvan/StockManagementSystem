@@ -7,7 +7,7 @@ on:
     paths:
      - StockManagementSystem/**
      - .github/workflows/public-backend**
-      
+
 jobs:
   deploy_to_heroku:
     runs-on: ubuntu-latest
@@ -25,7 +25,7 @@ jobs:
         with:
           java-version: 1.8
           distribution: 'adopt'
-          
+
       - name: Build with Maven
         run: cd StockManagementSystem && mvn -B package --file pom.xml && mkdir jars && cp target/*.jar jars && ls -la
         
