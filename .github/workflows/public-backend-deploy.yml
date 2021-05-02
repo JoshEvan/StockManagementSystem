@@ -29,7 +29,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Build with Maven
-        run: cd StockManagementSystem && mvn -B package --file pom.xml && mkdir jars && cp target/*.jar jars && ls -la
+        run: cd StockManagementSystem && export JWT_SECRET=${{secrets.JWT_SECRET}} && mvn -B package --file pom.xml && mkdir jars && cp target/*.jar jars && ls -la
         
       - name: Deploy branch ${{ steps.extract_branch.outputs.branch }} to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
