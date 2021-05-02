@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar jars/StockManagementSystem-0.0.1-SNAPSHOT.jar -Dserver.port=$PORT
+web: java $JAVA_OPTS -jar jars/StockManagementSystem-0.0.1-SNAPSHOT.jar -Dserver.port=$PORT -DJWT_SECRET=$JWT_SECRET
