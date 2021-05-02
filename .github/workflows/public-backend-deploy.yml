@@ -1,0 +1,40 @@
+name: Public Backend Deployment
+
+on:
+  push:
+    branches:
+      - release-public**
+    paths:
+     - StockManagementSystem/**
+     - .github/workflows/public-backend**
+      
+jobs:
+  deploy_to_heroku:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+        
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          distribution: 'adopt'
+          
+      - name: Build with Maven
+        run: cd StockManagementSystem && mvn -B package --file pom.xml && mkdir jars && cp target/*.jar jars && ls -la
+        
+      - name: Deploy branch ${{ steps.extract_branch.outputs.branch }} to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME_PUBLIC_BE}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          appdir: StockManagementSystem
+          branch: ${{ steps.extract_branch.outputs.branch }}
+          remote_branch: "main"
