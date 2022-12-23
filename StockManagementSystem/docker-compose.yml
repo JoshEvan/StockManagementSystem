@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  db:
+    container_name: db
+    build:
+      context: .
+      dockerfile: postgres.Dockerfile
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+    volumes:
+      - joseph-postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+
+volumes:
+  joseph-postgres:
+    external: true

@@ -45,9 +45,9 @@ public class ItemServiceImpl implements ItemService {
   public Pair<Boolean,List<String>> insert(UpsertItemRequestPayload upsertItemRequestPayload) {
     int flag = itemDAO.insert(convertUpsertPayloadToDataEntity(upsertItemRequestPayload));
     if(flag == 1){
-      return new Pair<>(true,Collections.singletonList(ITEM+ upsertItemRequestPayload.getName()+ SUCCESS+" "+ PostgresHelper.INSERTED));
+      return new Pair<>(true,Collections.singletonList(ITEM+ upsertItemRequestPayload.getName()+ SUCCESS+PostgresHelper.INSERTED));
     }else{
-      return new Pair<>(false, Collections.singletonList(ITEM+ upsertItemRequestPayload.getName()+ FAIL+" "+ PostgresHelper.INSERTED));
+      return new Pair<>(false, Collections.singletonList(ITEM+ upsertItemRequestPayload.getName()+ FAIL+ PostgresHelper.INSERTED));
     }
   }
 

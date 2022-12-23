@@ -4,9 +4,3 @@ app:
         username: ${JDBC_DATABASE_USERNAME}
         password: ${JDBC_DATABASE_PASSWORD}
         pool-size: 30
-
-application:
-    jwt:
-        secretKey: ${JWT_SECRET}
-        tokenPrefix: Bearer
-        tokenExpirationAfterDays: 1
