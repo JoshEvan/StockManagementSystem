@@ -1,4 +1,6 @@
 # StockManagementSystem
+Live deployment: https://joseph-mansys.herokuapp.com/
+
 project status: **ongoing**, haven't done yet
 
 *Fullstack Web to manage stock, transaction history, generate pdf report, tailored and design based on specific local business*
