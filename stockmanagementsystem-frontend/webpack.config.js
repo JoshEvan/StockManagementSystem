@@ -17,6 +17,7 @@ module.exports = {
     target: 'web',
     mode:'development',
     entry:'./src/index.tsx', //main code 
+    stats: {warnings: false},
     output:{
         // untuk kasih tau tempat exported, compiled code nya kemana, ke folder build di root dir
         path: path.resolve(__dirname,'build'),

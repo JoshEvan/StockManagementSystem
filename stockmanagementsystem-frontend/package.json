@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "set NODE_ENV=production && node server.js",
+    "start": "set NODE_ENV=development && node server.js",
     "dev": "webpack && webpack-dev-server --open",
     "build-development": "webpack",
-    "build": "webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors"
+    "build": "webpack -p --define process.env.NODE_ENV='\"development\"' --progress --colors"
   },
   "keywords": [],
   "author": "",
