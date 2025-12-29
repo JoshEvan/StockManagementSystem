@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import javax.xml.ws.Response;
-import java.util.List;
 
 @CrossOrigin(origins = "*",allowedHeaders = "*")
 @RequestMapping("api/v1/joseph/payment")

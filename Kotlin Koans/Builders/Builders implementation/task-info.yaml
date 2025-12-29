@@ -1,0 +1,32 @@
+type: edu
+files:
+  - name: src/Task.kt
+    visible: true
+    placeholders:
+      - offset: 352
+        length: 10
+        placeholder_text: /* TODO */
+        initial_state:
+          length: 10
+          offset: 352
+        initialized_from_dependency: false
+        encrypted_possible_answer: ZCdEEtdujCjy5Hfg8866UakTOAVyC+Ze7Qk75FM7sqAI9qAshcahmZsgGJXnwcHLwbhJgIf9PHcy5H1CJ13Llw==
+        selected: false
+        status: Unchecked
+      - offset: 437
+        length: 10
+        placeholder_text: /* TODO */
+        initial_state:
+          length: 10
+          offset: 437
+        initialized_from_dependency: false
+        encrypted_possible_answer: 79MgSUXjf8DSmVrp3xVP2LF7bkZkjqBwalLOLXTFs8o=
+        selected: false
+        status: Unchecked
+    learner_created: false
+  - name: test/Tests.kt
+    visible: false
+    learner_created: false
+feedback_link: https://docs.google.com/forms/d/e/1FAIpQLSeYool5qTz-p77fzn_9UKQVjO3u3Al6WjzEyW5cbjspRwtQig/viewform?usp=pp_url&entry.2103429047=Builders+/+Builders+implementation
+status: Unchecked
+record: -1

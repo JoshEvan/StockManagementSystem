@@ -1,0 +1,25 @@
+type: edu
+files:
+  - name: src/Task.kt
+    visible: true
+    placeholders:
+      - offset: 0
+        length: 59
+        placeholder_text: class Person
+        initial_state:
+          length: 12
+          offset: 0
+        initialized_from_dependency: false
+        encrypted_possible_answer: YtRti9Nre+16DtuLhrUu610Zs9C2zHuHEeLeV87e6Qnzv5Y92AvPEe0RmykVWgE6N8gznmR4aG8giKZqEPLFdg==
+        selected: true
+        status: Solved
+    learner_created: false
+  - name: test/tests.kt
+    visible: false
+    learner_created: false
+feedback_link: https://docs.google.com/forms/d/e/1FAIpQLSeYool5qTz-p77fzn_9UKQVjO3u3Al6WjzEyW5cbjspRwtQig/viewform?usp=pp_url&entry.2103429047=Classes+/+Data+Classes
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Sun, 10 Aug 2025 12:37:00 UTC"
+record: -1

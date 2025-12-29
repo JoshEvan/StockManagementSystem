@@ -1,0 +1,25 @@
+type: edu
+files:
+  - name: src/Task.kt
+    visible: true
+    placeholders:
+      - offset: 97
+        length: 491
+        placeholder_text: /* TODO */
+        initial_state:
+          length: 10
+          offset: 97
+        initialized_from_dependency: false
+        encrypted_possible_answer: gFSQPoAcvKzp2J4garjj87X4mHtrfks5vwtaZfmLTUShzmQkvnBqbU4iHuvfHUXH5v4jntCwkVZ8GAZ7LXXLUtDmLcdjvXWwkQDnyVWC/m2KMNKGWKegghoaDomFiioxFLVgAHMbl2jt2/YtSzWNEsUxDuqi64ELLJlgBZkrd6rRpERIoT1hI78CswyycDhW0uizYUBx5FhYqiW1ENcEv9RhTMzQVUFiUtTR5Hd/3VMnQ9p5LzTj+CcwiugUrbqu5ot9e32AWaQ9Rjsty/3X8Q==
+        selected: true
+        status: Solved
+    learner_created: false
+  - name: test/tests.kt
+    visible: false
+    learner_created: false
+feedback_link: https://docs.google.com/forms/d/e/1FAIpQLSeYool5qTz-p77fzn_9UKQVjO3u3Al6WjzEyW5cbjspRwtQig/viewform?usp=pp_url&entry.2103429047=Conventions+/+Comparison
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Sun, 10 Aug 2025 13:38:56 UTC"
+record: -1

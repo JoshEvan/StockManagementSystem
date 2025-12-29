@@ -1,0 +1,17 @@
+FROM eclipse-temurin:21.0.8_9-jdk-jammy as builder
+WORKDIR /app
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+RUN ./mvnw dependency:go-offline
+COPY src ./src
+CMD ["./mvnw", "spring-boot:run"]
+
+
+FROM openjdk:8-jdk-alpine as runner
+WORKDIR /app
+COPY target/*.jar app.jar
+COPY start.sh .
+COPY .env .
+RUN mkdir -p /app/web/generatedpdf
+EXPOSE 8080
+ENTRYPOINT ["sh","/app/start.sh"]

@@ -1,0 +1,22 @@
+type: edu
+files:
+  - name: src/Task.kt
+    visible: true
+    placeholders:
+      - offset: 74
+        length: 3
+        placeholder_text: '   '
+        initial_state:
+          length: 3
+          offset: 74
+        initialized_from_dependency: false
+        encrypted_possible_answer: sRQTqZ2QcHNHcaF21aR8kw==
+        selected: false
+        status: Unchecked
+    learner_created: false
+  - name: test/Tests.kt
+    visible: false
+    learner_created: false
+feedback_link: https://docs.google.com/forms/d/e/1FAIpQLSeYool5qTz-p77fzn_9UKQVjO3u3Al6WjzEyW5cbjspRwtQig/viewform?usp=pp_url&entry.2103429047=Introduction+/+Nothing+Type
+status: Unchecked
+record: -1

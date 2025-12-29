@@ -116,10 +116,28 @@
 			<artifactId>joda-money</artifactId>
 			<version>1.0.1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>jakarta.xml.ws</groupId>
+			<artifactId>jakarta.xml.ws-api</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-rt</artifactId>
+			<version>4.0.1</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-ri</artifactId>
+			<version>2.3.3</version>
+			<type>pom</type>
+		</dependency>
 	</dependencies>
 
 	<build>
-		<finalName>stock-man-sys</finalName>
+		<finalName>app</finalName>
 		<plugins>
 		 <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -145,16 +163,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-						<configuration>
-							<classifier>exec</classifier>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -170,11 +178,11 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>com.zenjava</groupId>
-				<artifactId>javafx-maven-plugin</artifactId>
-				<version>8.8.3</version>
-			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>com.zenjava</groupId>-->
+<!--				<artifactId>javafx-maven-plugin</artifactId>-->
+<!--				<version>8.8.3</version>-->
+<!--			</plugin>-->
 		</plugins>
 	</build>
 

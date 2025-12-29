@@ -1,0 +1,22 @@
+type: edu
+files:
+  - name: src/Task.kt
+    visible: true
+    placeholders:
+      - offset: 91
+        length: 6
+        placeholder_text: TODO()
+        initial_state:
+          length: 6
+          offset: 91
+        initialized_from_dependency: false
+        encrypted_possible_answer: ZMVe0qZBXAyTr/N48GbGVEhGQDzwEr/aFYKA/axinwc4BLWhGDwfKY54sWRUPr4toRRxsxM2eTwUhhtqU4XEVDWqqBBMEcO4Fnrlc88re0B7AFtQqeMhg1+2nrfHmsNEpW8gJjPTfr2azqOV0gKN4SlXPMM4YEZA9EpSLOZbtdHNB8mnNlRKFvbpr73L5jnn
+        selected: false
+        status: Unchecked
+    learner_created: false
+  - name: test/tests.kt
+    visible: false
+    learner_created: false
+feedback_link: https://docs.google.com/forms/d/e/1FAIpQLSeYool5qTz-p77fzn_9UKQVjO3u3Al6WjzEyW5cbjspRwtQig/viewform?usp=pp_url&entry.2103429047=Introduction+/+Nullable+Types
+status: Unchecked
+record: -1

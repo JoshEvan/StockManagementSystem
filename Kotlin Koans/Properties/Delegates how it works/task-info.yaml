@@ -1,0 +1,35 @@
+type: edu
+files:
+  - name: src/Task.kt
+    visible: true
+    placeholders:
+      - offset: 302
+        length: 6
+        placeholder_text: TODO()
+        initial_state:
+          length: 6
+          offset: 302
+        initialized_from_dependency: false
+        encrypted_possible_answer: vPSaVhz17nkz4EJEE7JhAZQywS93JNqaciLvci2hwCs=
+        selected: false
+        status: Unchecked
+      - offset: 403
+        length: 6
+        placeholder_text: TODO()
+        initial_state:
+          length: 6
+          offset: 403
+        initialized_from_dependency: false
+        encrypted_possible_answer: lGYl25FEahUObMfhNiqWlTZOjfHI5Jy4NLDAtUPCzos=
+        selected: false
+        status: Unchecked
+    learner_created: false
+  - name: src/MyDate.kt
+    visible: true
+    learner_created: false
+  - name: test/tests.kt
+    visible: false
+    learner_created: false
+feedback_link: https://docs.google.com/forms/d/e/1FAIpQLSeYool5qTz-p77fzn_9UKQVjO3u3Al6WjzEyW5cbjspRwtQig/viewform?usp=pp_url&entry.2103429047=Properties+/+Delegates+how+it+works
+status: Unchecked
+record: -1

@@ -1,0 +1,37 @@
+type: edu
+files:
+  - name: src/Task.kt
+    visible: true
+    placeholders:
+      - offset: 115
+        length: 6
+        placeholder_text: TODO()
+        initial_state:
+          length: 6
+          offset: 115
+        initialized_from_dependency: false
+        encrypted_possible_answer: +rdClDEwRh9bBN7rog+OHHOfUhSrnhrPk5wOJMBiVbMveOjpVAHHZDJlz84oh6je9iblUxtNK2UwwfqB2xjwZefroD6JqItM2qIUQM8BX5gb7l5nxY5fEy+HExHfpZBsbxv1FBRfmxNMjzJzFJxPAXw/ZwdFlsjaEMFgbX/qQi4kuTpU1i2YjMYSMEOh63Qy
+        selected: false
+        status: Unchecked
+      - offset: 177
+        length: 6
+        placeholder_text: TODO()
+        initial_state:
+          length: 6
+          offset: 177
+        initialized_from_dependency: false
+        encrypted_possible_answer: ZocLMxe+VftzD4HmgfaVO+rlo3f7oTnP+hMx23Y+gSMWWobHH1tUYzCx9p3Xse+D
+        selected: false
+        status: Unchecked
+    learner_created: false
+  - name: src/Shop.kt
+    visible: true
+    learner_created: false
+  - name: test/tests.kt
+    visible: false
+    learner_created: false
+  - name: test/TestShop.kt
+    visible: false
+    learner_created: false
+status: Unchecked
+record: -1

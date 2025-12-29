@@ -1,0 +1,48 @@
+type: edu
+files:
+  - name: src/Task.kt
+    visible: true
+    placeholders:
+      - offset: 116
+        length: 6
+        placeholder_text: TODO()
+        initial_state:
+          length: 6
+          offset: 116
+        initialized_from_dependency: false
+        encrypted_possible_answer: bHbWHlbXnNTk7UiRFBJcBx27lg4R5GtuqVPHvPvi6gFlwSjEuBCWMVdPLTRL4kUp
+        selected: false
+        status: Unchecked
+      - offset: 231
+        length: 6
+        placeholder_text: TODO()
+        initial_state:
+          length: 6
+          offset: 231
+        initialized_from_dependency: false
+        encrypted_possible_answer: bHbWHlbXnNTk7UiRFBJcByGklhlj8USJqlS5maPcq3q3gRffHRSF/cCpVYyUTH98
+        selected: false
+        status: Unchecked
+      - offset: 353
+        length: 6
+        placeholder_text: TODO()
+        initial_state:
+          length: 6
+          offset: 353
+        initialized_from_dependency: false
+        encrypted_possible_answer: bHbWHlbXnNTk7UiRFBJcB5Vo/MzVnbazCaSar7kh+p5YRpaUPgyuwek3ua02djHY
+        selected: false
+        status: Unchecked
+    learner_created: false
+  - name: test/Tests.kt
+    visible: false
+    learner_created: false
+  - name: src/Shop.kt
+    visible: true
+    learner_created: false
+  - name: test/TestShop.kt
+    visible: false
+    learner_created: false
+feedback_link: https://docs.google.com/forms/d/e/1FAIpQLSeYool5qTz-p77fzn_9UKQVjO3u3Al6WjzEyW5cbjspRwtQig/viewform?usp=pp_url&entry.2103429047=Collections+/+Associate
+status: Unchecked
+record: -1

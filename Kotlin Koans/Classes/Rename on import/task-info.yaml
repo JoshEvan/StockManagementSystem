@@ -1,0 +1,47 @@
+type: edu
+files:
+  - name: src/Task.kt
+    visible: true
+    placeholders:
+      - offset: 0
+        length: 75
+        placeholder_text: |-
+          // import kotlin.random.Random
+          // import java.util.Random
+        initial_state:
+          length: 57
+          offset: 0
+        initialized_from_dependency: false
+        encrypted_possible_answer: XLfQHDrZk3yumfHI/vGO6hWCwiqb9JCDiqkolkAnuavxB6XXKpj1kG3dr3r5b1LdzP7I5/7T/7BL2e/D1jyPH6+RH26+eTwTTwdlnzwbwUQ=
+        selected: true
+        status: Solved
+      - offset: 162
+        length: 21
+        placeholder_text: // KRandom.nextInt(2) +
+        initial_state:
+          length: 23
+          offset: 144
+        initialized_from_dependency: false
+        encrypted_possible_answer: dCtsHja6zwh9LXGeXLBkvINEB++thF7UfQugTApenIM=
+        selected: false
+        status: Solved
+      - offset: 226
+        length: 23
+        placeholder_text: // JRandom().nextInt(2) +
+        initial_state:
+          length: 25
+          offset: 210
+        initialized_from_dependency: false
+        encrypted_possible_answer: h7trXOOaCQBPofPldDIq1y7vv9AMVPAOEwyyPx+CN5k=
+        selected: false
+        status: Solved
+    learner_created: false
+  - name: test/Tests.kt
+    visible: false
+    learner_created: false
+feedback_link: https://docs.google.com/forms/d/e/1FAIpQLSeYool5qTz-p77fzn_9UKQVjO3u3Al6WjzEyW5cbjspRwtQig/viewform?usp=pp_url&entry.2103429047=Classes+/+Rename+on+Import
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Sun, 10 Aug 2025 12:43:25 UTC"
+record: -1

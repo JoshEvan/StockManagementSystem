@@ -20,9 +20,9 @@ module.exports = {
     stats: {warnings: false},
     output:{
         // untuk kasih tau tempat exported, compiled code nya kemana, ke folder build di root dir
-        path: path.resolve(__dirname,'build'),
+        path: path.resolve(__dirname,'assets'),
         filename:"bundle.js", // nama file di index.html
-        publicPath: '/'
+        publicPath: '/assets/'
     },
     module: {rules}, // {rules} sama kaya {rules:rules}
     // resolve extension file wktu import

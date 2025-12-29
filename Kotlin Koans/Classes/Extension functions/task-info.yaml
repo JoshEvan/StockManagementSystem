@@ -1,0 +1,35 @@
+type: edu
+files:
+  - name: src/Task.kt
+    visible: true
+    placeholders:
+      - offset: 30
+        length: 23
+        placeholder_text: TODO()
+        initial_state:
+          length: 6
+          offset: 30
+        initialized_from_dependency: false
+        encrypted_possible_answer: +dWbxqweB4pF06I+SIpR4c+3CfhME/xImFTdEP8Qya8=
+        selected: true
+        status: Solved
+      - offset: 96
+        length: 39
+        placeholder_text: TODO()
+        initial_state:
+          length: 6
+          offset: 79
+        initialized_from_dependency: false
+        encrypted_possible_answer: fdjFBwAZnHLSezsWCZwZY5pP+YhOmrnoGV/Z527tPi8=
+        selected: true
+        status: Solved
+    learner_created: false
+  - name: test/tests.kt
+    visible: false
+    learner_created: false
+feedback_link: https://docs.google.com/forms/d/e/1FAIpQLSeYool5qTz-p77fzn_9UKQVjO3u3Al6WjzEyW5cbjspRwtQig/viewform?usp=pp_url&entry.2103429047=Classes+/+Extension+Functions
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Sun, 10 Aug 2025 13:24:21 UTC"
+record: -1

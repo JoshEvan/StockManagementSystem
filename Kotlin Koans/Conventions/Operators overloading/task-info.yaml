@@ -1,0 +1,37 @@
+type: edu
+files:
+  - name: src/Task.kt
+    visible: true
+    placeholders:
+      - offset: 192
+        length: 69
+        placeholder_text: "operator fun MyDate.plus(timeInterval: TimeInterval): MyDate\
+      \ = TODO()"
+        initial_state:
+          length: 69
+          offset: 192
+        initialized_from_dependency: false
+        encrypted_possible_answer: ngdFmBHMCyMrbstQPtH28wct+sBJn062yYIIAQdpjKsIlC3SMqMpxxlm80e5mh4wLpDeBi/uR6IANdfg6CdMByznq9tSqSpCUWATyMFw7HZ5iI9sSFtCsT4eZKp7l1jtMCOyx5Wt/C+AIh6zGU6yjCxjpDyYYtZb2fOuil0Q7ydovIDaTL3+4VoM5X3gnvTs+3H2Sf4oU3K0MQBjtupXbp5Y9R1c3A4YTU6l26wJwSlFTZ0d9j9YN2KTekavu5JMljA+mCa7/ErS98KCKPte0XJy7Hr1lfi7DEYyO8ko6oVlIXDm4hrAh2Wn00Q126ixr4zF8E+zmYqTzgCUjWMulMMVFrWWKDldQ6rfnuTQKau8L2sttv0bGw5UpL0q9QYEvDr+GbiY6KY1id//UA4Ygv1H0tL60phBxEzrVNGU1NiPDtcyNELjbK/28mHz6533nmOpetdEsdP6ka2r9kbZMM3j4+9QMu2KNuS2QQMk/ElTPRt7W22/XBlfjF5AclEgs2HoDciCa7LpGoCNJuIkBi1vYQuVVpxIDnTntdKLWU4=
+        selected: false
+        status: Unchecked
+      - offset: 371
+        length: 64
+        placeholder_text: TODO("Uncomment") //return today + YEAR * 2 + WEEK * 3 + DAY
+          * 5
+        initial_state:
+          length: 64
+          offset: 371
+        initialized_from_dependency: false
+        encrypted_possible_answer: GeDd7HZeNCh1aj1dixrxTynrIIE3zXaS6s1dYGMBTkG2AQ5LdWF8wACHBYdqzIx4
+        selected: false
+        status: Unchecked
+    learner_created: false
+  - name: src/DateUtil.kt
+    visible: true
+    learner_created: false
+  - name: test/tests.kt
+    visible: false
+    learner_created: false
+feedback_link: https://docs.google.com/forms/d/e/1FAIpQLSeYool5qTz-p77fzn_9UKQVjO3u3Al6WjzEyW5cbjspRwtQig/viewform?usp=pp_url&entry.2103429047=Conventions+/+Operators+Overloading
+status: Unchecked
+record: -1

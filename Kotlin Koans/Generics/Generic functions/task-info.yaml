@@ -1,0 +1,22 @@
+type: edu
+files:
+  - name: src/Task.kt
+    visible: true
+    placeholders:
+      - offset: 20
+        length: 26
+        placeholder_text: fun partitionTo() = TODO()
+        initial_state:
+          length: 26
+          offset: 20
+        initialized_from_dependency: false
+        encrypted_possible_answer: dPEjO7frA9PH5vM7bKljFUDoJaTqdEeLBRh67DRMh/pGaXfscksbXvJcpUe2NEh1MwbvJHSbOKZ9ZRFOGUOFt9sIRF5qc1/Xr7ovj0LmTRsL88Y5K23cdcuUjX+cRQ/i6OJcZmUbuqpYDry+UJs1fSkrpwScYY58lrTBbJGaXipAC0I0K2ThgyK2yUcWMi3rkxElCOcQBOJDjJ2reG5LpRXkSGD+JLyZ8qGZOD4258jUdyEE430xlznkZWuPJvSrG5VNdtaVQjqgQ2qqj90kd6qRse3jiCPsQbaScKEKNfIWrq3JgcdGPLLJ2QS0xKcUF4RLewbmDfF5xlfnbA/bFq0uUbSvReosTTHqIJy5zCF65uiVsVHdG8+TlCkz2r8JRY8YugIyy3JRvbQwaQypNZC62pvtCQfpFVpQlPtjRGM=
+        selected: false
+        status: Unchecked
+    learner_created: false
+  - name: test/tests.kt
+    visible: false
+    learner_created: false
+feedback_link: https://docs.google.com/forms/d/e/1FAIpQLSeYool5qTz-p77fzn_9UKQVjO3u3Al6WjzEyW5cbjspRwtQig/viewform?usp=pp_url&entry.2103429047=Generics+/+Generic+functions
+status: Unchecked
+record: -1

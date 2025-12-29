@@ -1,0 +1,32 @@
+type: edu
+files:
+  - name: src/Task.kt
+    visible: true
+    placeholders:
+      - offset: 66
+        length: 6
+        placeholder_text: TODO()
+        initial_state:
+          length: 6
+          offset: 66
+        initialized_from_dependency: false
+        encrypted_possible_answer: lHMCpiaCR4jq30yMpMuesw==
+        selected: false
+        status: Unchecked
+      - offset: 112
+        length: 6
+        placeholder_text: TODO()
+        initial_state:
+          length: 6
+          offset: 112
+        initialized_from_dependency: false
+        encrypted_possible_answer: VKCML8/qxOFVTAVGeCdUyQ==
+        selected: false
+        status: Unchecked
+    learner_created: false
+  - name: test/tests.kt
+    visible: false
+    learner_created: false
+feedback_link: https://docs.google.com/forms/d/e/1FAIpQLSeYool5qTz-p77fzn_9UKQVjO3u3Al6WjzEyW5cbjspRwtQig/viewform?usp=pp_url&entry.2103429047=Builders+/+Function+Literals+with+Receiver
+status: Unchecked
+record: -1

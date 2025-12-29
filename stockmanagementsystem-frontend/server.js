@@ -16,6 +16,16 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'index.html'));
 });
 
+
+// const buildPath = path.join(__dirname, 'build'); // Or 'dist'
+
+// app.use(express.static(buildPath)); // Serve static files first
+
+// // Fallback for SPA routing (must come AFTER static file serving)
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(buildPath, 'index.html'));
+// });
+
 app.listen(port,'0.0.0.0', () => {
   console.log(`Server is running on port ${port}. ${api_url} ${_env}`)
 });

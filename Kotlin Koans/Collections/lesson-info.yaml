@@ -1,0 +1,15 @@
+content:
+  - Introduction
+  - Sort
+  - Filter map
+  - All Any and other predicates
+  - Associate
+  - GroupBy
+  - Partition
+  - FlatMap
+  - Max min
+  - Sum
+  - Fold and reduce
+  - Compound tasks
+  - Sequences
+  - Getting used to new style

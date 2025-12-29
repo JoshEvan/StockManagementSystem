@@ -23,6 +23,8 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - db
+    environment:
+      - JDBC_DATABASE_URL=jdbc:postgresql://db:5432/joseph?user=postgres&password=mysecretpassword
     ports:
       - "8080:8080"
 
