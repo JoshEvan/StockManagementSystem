@@ -72,22 +72,6 @@ export function ToggleMenu() {
     <div className={classes.root}>
       
       <div>
-        <Button
-          ref={anchorRef}
-          aria-controls={open ? 'menu-list-grow' : undefined}
-          aria-haspopup="true"
-          onClick={handleToggle}
-        >
-            <span style={{color:"white",padding:"1%"}}>
-                <AccountCircleSharpIcon style={{color:"white",padding:"1%"}}/>
-                {/* {console.log(jwt_decode(localStorage.getItem("JWT")))} */}
-                
-                {localStorage.getItem("JWT") !== null && jwt_decode(localStorage.getItem("JWT")).sub}
-                {localStorage.getItem("JWT") === null && "please sign in"}
-                 
-            </span>
-
-        </Button>
         <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal style={{width:'fit-content'}}>
           {({ TransitionProps, placement }) => (
             <Grow

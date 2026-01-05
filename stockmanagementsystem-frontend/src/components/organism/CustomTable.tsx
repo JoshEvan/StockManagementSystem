@@ -7,9 +7,13 @@ import Button from '@material-ui/core/Button';
 import { Table } from 'reactstrap';
 import { IItem } from '../../data/interfaces';
 import { ResponsiveDialog } from './dialog';
+import { DataGrid } from '@mui/x-data-grid';
+import { camelize } from '../../util/string';
+import { GridColumnVisibilityModel } from '@mui/x-data-grid/models/gridColumnVisibilityModel';
 
 type Props = {
   header:string[],
+  colShow:Map<string,boolean>,
   body:any,
   isShown?:boolean,
   notShowAddButton?:boolean,
@@ -73,36 +77,103 @@ export class CustomTable extends React.Component<Props,IState> {
               )
             }
           </div>
-          {!this.props.notShowAddButton && <IconButton color="primary" 
-          style={{float:'right'}}
-          onClick={
-            () => {this.openAddDialog();}
-          }>
-            <AddBoxIcon/>
-          </IconButton>}
-          <Table hover responsive bordered>
-              <thead>
-                <tr>
-                  {this.props.header.map(
-                    (h) => {
-                      return(<th>{h}</th>);
-                    }
-                  )}
-                </tr>
-              </thead>
-              <tbody>
-                  {this.props.body.map(
-                    (h: any) => {
-                      console.log("INTABLE:"+h);
-                      return(
-                        <React.Fragment>
-                          {h}
-                        </React.Fragment>
-                      );
-                    }
-                  )}
-              </tbody>
-            </Table>
+          <div>
+            {!this.props.notShowAddButton && 
+            // <IconButton color="primary" 
+            //   // style={{ float: 'right' }}
+            //   onClick={
+            //     () => { this.openAddDialog(); }
+            //   }>
+            //   <AddBoxIcon />
+              <Button variant="outlined" color={"primary"} onClick={
+                () => { this.openAddDialog(); }
+              }>
+                {"Add new"}
+              </Button>
+            // </IconButton>
+          }
+          </div>
+          {(() => {
+            // Note: add `import { DataGrid } from '@mui/x-data-grid';` at top of the file
+            const columns = (this.props.header || []).map((h, i) => ({
+              field: `col${i}`,
+              headerName: h,
+              flex: 1,
+              sortable: false,
+              // keep whatever is in the cell (string, number or React node)
+              renderCell: (params: any) => params.value,
+            }));
+
+            const rows = (this.props.body || []).map((row: any, idx: number) => {
+              // React node row (was likely a <tr> or fragment previously)
+              if (React.isValidElement(row)) {
+                return { id: idx, col0: row };
+              }
+
+              // array of cell values
+              if (Array.isArray(row)) {
+                const obj: any = { id: idx };
+                row.forEach((cell, i) => (obj[`col${i}`] = cell));
+                return obj;
+              }
+
+              // object row: try to map header names to object properties, fallback to copying keys
+              if (row && typeof row === 'object') {
+                const obj: any = { id: row.id ?? idx };
+                let keys = Object.keys(row);
+                this.props.header.forEach((h: string, i: number) => {
+                  // prefer exact header key, then lowercase, then fallback empty
+                  obj[`col${i}`] = row[h] ?? row[camelize(h.toLowerCase())] ?? row[`col${i}`] ?? '';
+                });
+                // var index = 0;
+                // row.forEach((value: any, _:any) => {
+                //   if (obj[`col${index}`] === undefined) {
+                //     obj[`col${index}`] = value;
+                //   }
+                //   index++;
+                // });
+                // copy other props if any (optional)
+                console.log(obj);
+                return obj;
+              }
+
+              // primitive value row
+              return { id: idx, col0: row };
+            });
+
+
+            
+            var colVisibilityModel: GridColumnVisibilityModel = {};
+            if (this.props.colShow !== undefined) {
+              this.props.header.forEach((colName: string) => {
+                console.log(colName, "COLNAME");
+                const colIndex = this.props.header.indexOf(colName);
+                if (colIndex >= 0) {
+                  colVisibilityModel[`col${colIndex}`] = this.props.colShow.get(colName) ?? false;
+                }
+              });
+            }
+            console.log(columns, "COLUMNS", this.props.colShow, colVisibilityModel, this.props.header);
+            
+            return (
+              <div style={{ width: '100%' }}>
+                <div style={{ height: 400, width: '100%' }}>
+                  <DataGrid
+                    autoHeight
+                    rows={rows}
+                    columns={columns}
+                    getRowHeight={() => 'auto'}
+                    initialState={{
+                      columns: {
+                        columnVisibilityModel: colVisibilityModel,
+                      },
+                    }}
+                    showToolbar
+                  />
+                </div>
+              </div>
+            );
+          })()}
           </React.Fragment>
     );
   }

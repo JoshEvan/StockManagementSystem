@@ -2,6 +2,7 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
@@ -28,7 +29,7 @@ const plainLinkStyle: CSS.Properties = {
   color:'#000'
 }
 
-export const mainListItems = (
+export const mainListItemsDRAWER = (
   <div>
     {
       <div>
@@ -88,6 +89,18 @@ export const mainListItems = (
       <ListItemText primary="Reports" />
     </ListItem> */}
   </div>
+);
+
+
+export const mainListItems = (
+  <React.Fragment>
+    {/* <BottomNavigationAction component={Link} to="/" label="Dashboard" icon={<DashboardIcon />} /> */}
+    <BottomNavigationAction component={Link} to="/transactions" label="Transactions" icon={<LocalAtmIcon />} />
+    <BottomNavigationAction component={Link} to="/items" label="Items" icon={<ShoppingCartIcon />} />
+    <BottomNavigationAction component={Link} to="/productions" label="Productions" icon={<LayersIcon />} />
+    <BottomNavigationAction component={Link} to="/customers" label="Customers" icon={<PeopleIcon />} />
+    <BottomNavigationAction component={Link} to="/payments" label="Payment types" icon={<ReceiptIcon />} />
+  </React.Fragment>
 );
 
 export const secondaryListItems = (

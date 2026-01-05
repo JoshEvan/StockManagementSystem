@@ -2,6 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
 import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
@@ -129,8 +130,9 @@ export default function Dashboard({titlePage, content}){
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
+      <AppBar position="absolute"className={clsx(classes.appBar)}>
+      {/* <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}> */}
+        {/* <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
             color="inherit"
@@ -139,21 +141,43 @@ export default function Dashboard({titlePage, content}){
             className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
           >
             <MenuIcon />
-          </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Joseph 
-          </Typography>
+          </IconButton> */}
+            <div
+            style={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer' }}
+            onClick={() => (window.location.href = '/')}
+            role="button"
+            tabIndex={0}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') window.location.href = '/';
+            }}
+            >
+            <img
+              id="loading-img"
+              style={{ width: '40px', height: 'auto', display: 'inline-block' }}
+              src="https://raw.githubusercontent.com/JoshEvan/StockManagementSystem/master/stockmanagementsystem-frontend/src/assets/imgs/josephlogo.png"
+            />
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              className={classes.title}
+              style={{ display: 'inline-block', marginLeft: 8 }}
+            >
+              Joseph
+            </Typography>
+            </div>
 
-         <ToggleMenu/>
+         {/* <ToggleMenu/> */}
           
 
           {/* <Typography variant="overline" gutterBottom>
             Stock Management System
           </Typography> */}
           
-        </Toolbar>
+        {/* </Toolbar> */}
       </AppBar>
-      <Drawer
+      {/* <Drawer
         variant="permanent"
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
@@ -169,7 +193,19 @@ export default function Dashboard({titlePage, content}){
         <List>{mainListItems}</List>
         <Divider />
         <List>{secondaryListItems}</List>
-      </Drawer>
+      </Drawer> */}
+
+      <Box style={{ position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 1200 }}>
+        <Paper elevation={6}>
+          <BottomNavigation showLabels={true} style={{ display: 'flex', overflowX: 'auto' }}>
+            <div style={{ display: 'flex', flexWrap: 'nowrap', width: '100%' }}>
+              {React.Children.map(mainListItems, (child) => (
+                <div style={{ flexShrink: 5 }}>{child}</div>
+              ))}
+            </div>
+          </BottomNavigation>
+        </Paper>
+      </Box>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         

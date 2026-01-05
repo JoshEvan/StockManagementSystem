@@ -253,9 +253,48 @@ export class ProductionPage extends React.Component<Props,any> {
 						isShown={this.state.addDialog.isShown}
 						header={colName}
 						body={
-							this.state.rawContent.map(
+							this.state.rawContent?.map(
 							(c:IProduction, idx:number) => {
 								// console.log("TOTABLE:"+c.itemCode)
+								c['num'] = idx+1;
+								c['edit'] = <AlertDialog
+													color="primary"
+													param={c.id}
+													parentAllowance = {this.state.editDialog.isShown}
+													buttonTitle="edit"
+													parentCallbackOpen={()=>this.setState({editDialog:{isShown:true}})}
+													dialogTitle="Update"
+													usingAction={false}
+													dialogContent={
+														<ProductionForm
+															isEdit = {true}
+															submitData = {this.editData}
+															item={
+																{
+																	id:c.id,
+																	itemCode:c.itemCode,
+																	producer:c.producer,
+																	productionDate:c.productionDate,
+																	quantity:c.quantity
+																}
+															}
+														/>
+													}
+												/>;
+								c['delete'] = <AlertDialog
+												color="secondary"
+												usingAction={true}
+												parentAllowance = {true}
+												param={c.id}
+												buttonTitle="delete"
+												dialogTitle={"This following "+ TITLE+" will be deleted"}
+												dialogYes="Yes"
+												dialogNo="Cancel"
+												dialogContent="Are you sure ?"
+												parentCallback={
+													this.deleteConfirm
+												}
+											/>;
 								return(
 									<React.Fragment>
 									<tr>

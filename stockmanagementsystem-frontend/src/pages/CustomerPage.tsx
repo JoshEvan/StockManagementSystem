@@ -36,7 +36,7 @@ interface ICustomerPage{
 }
 
 const colName: string[] = ["NUM","ID", "NAME", 
-"DESCRIPTION", "CONTACT", "TOTAL AMOUNT SPEND", "ACTION"]
+"DESCRIPTION", "CONTACT", "SPENT AMOUNT", "ACTION"]
 
 const initCustomer={
 	id:'',
@@ -249,9 +249,49 @@ export class CustomerPage extends React.Component<Props,any> {
 						isShown={this.state.addDialog.isShown}
 						header={colName}
 						body={
-							this.state.rawContent.map(
+							this.state.rawContent?.map(
 							(c:ICustomer, idx:number) => {
 								// console.log("TOTABLE:"+c.itemCode)
+								c['num'] = idx+1;
+								c['edit'] = <AlertDialog
+													color="primary"
+													param={c.id}
+													parentAllowance = {this.state.editDialog.isShown}
+													buttonTitle="edit"
+													parentCallbackOpen={()=>this.setState({editDialog:{isShown:true}})}
+													dialogTitle="Update"
+													usingAction={false}
+													dialogContent={
+														<CustomerForm
+															isEdit = {true}
+															submitData = {this.editItem}
+															item={
+																{
+																	id:c.id,
+																	name:c.name,
+																	contact:c.contact,
+																	description:c.description,
+																}
+															}
+														/>
+													}
+												/>
+								c['delete'] = 
+											<AlertDialog
+												color="secondary"
+												usingAction={true}
+												parentAllowance = {true}
+												param={c.id}
+												buttonTitle="delete"
+												dialogTitle="This following customer will be deleted"
+												dialogYes="Yes"
+												dialogNo="Cancel"
+												dialogContent="Are you sure ?"
+												parentCallback={
+													this.deleteConfirm
+												}
+											/>
+								return c;
 								return(
 									<React.Fragment>
 									<tr>

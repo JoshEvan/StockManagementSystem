@@ -4,11 +4,15 @@ const path = require('path')
 
 const rules = [
     {
+      test: /\.css$/i,
+      use: ['style-loader', 'css-loader'],
+    },
+    {
         // smua file yg end dengan tsx
         // kecuali dari file node_module
         // pake babel loader untuk load
-        test: /\.tsx?/,
-        exclude: /node_module/,
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
         loader: 'babel-loader'
     }
 ]

@@ -1,4 +1,5 @@
 interface IItem{
+ num:number,
  itemCode:string,
  name:string,
  description:string,
@@ -8,7 +9,9 @@ interface IItem{
  totalSold:number,
  incomeAmountDec:any,
  incomeAmount:string,
- priceDec:any
+ priceDec:any,
+ actionEdit:any,
+ actionDelete:any,
 }
 
 export { IItem };

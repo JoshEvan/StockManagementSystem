@@ -1,7 +1,10 @@
 export interface ICustomer{
+    num: number
     id: string,
     name:string,
     description:string,
     contact:string,
-    totalAmountSpend:number
+    spentAmount:number,
+    edit:any,
+    delete:any,
 }

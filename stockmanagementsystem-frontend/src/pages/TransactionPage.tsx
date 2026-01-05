@@ -36,10 +36,16 @@ interface ITransactionPage{
 	}
 }
 
-const colName: string[] = ["NUM","TRANS ID", "CUST ID", 
-"PAY TYPE", "PAY STATUS", "DETAILS", "TOTAL","NOTE","LAST UPDATE","ACTION"]
+const colName: string[] = ["NUM","TRANSACTION ID", "CUSTOMER ID", 
+"PAYMENT TYPE", "PAYMENT STATUS", "DETAIL", "TOTAL","NOTE","TIMESTAMP","EDIT","DELETE"]
+const colShow: Map<string,boolean> = new Map<string,boolean>([
+	['TRANSACTION ID', true],
+	['CUSTOMER ID', true],
+	['TOTAL', true],
+	['TIMESTAMP', true],
+]);
 const detailColName: string[] = [
-	"NUM","ITEM CODE","PRICE","QTY","SUBTOTAL","NOTE"
+	"NUM", "ITEM CODE", "PRICE", "QUANTITY", "SUB TOTAL", "NOTE"
 ]
 
 const TITLE:string = "Transactions"
@@ -315,11 +321,11 @@ export class TransactionPage extends React.Component<Props,any> {
 						}
 					</div>
 					
-					<div style={{float:'left',width:'auto',padding:'1% 1% 1% 0%'}}>
+					{/* <div style={{float:'left',width:'auto',padding:'1% 1% 1% 0%'}}>
 						<Button variant="outlined" color={"primary"} onClick={this.downloadPdf}>
 							{"download pdf"}
 						</Button>
-					</div>
+					</div> */}
 					{/* {console.log("ATTABLE:"+this.state.rawContent[0].itemCode)} */}
 					<CustomTable 
 						addDialog={
@@ -327,54 +333,79 @@ export class TransactionPage extends React.Component<Props,any> {
 						}
 						isShown={this.state.addDialog.isShown}
 						header={colName}
+						colShow={colShow}
 						body={
-							this.state.rawContent.map(
+							this.state.rawContent?.map(
 							(c:ITransaction, idx:number) => {
 								// console.log("TOTABLE:"+c.itemCode)
-								return(
-									<React.Fragment>
-									<tr>
-										<td>{idx+1}</td>
-										<td>{c.id}</td>
-										<td>{c.customerId}</td>
-										<td>{c.paymentId}</td>
-										<td>{c.paymentStatus}</td>
-										<td>
-										<SimpleExpansionPanel 
-											title={"show details ("+c.transactionDetails.length+")"}
-											content={
-												<div>
-													<CustomTable
-														notShowAddButton={true}
-														header={detailColName}
-														body={
-															c.transactionDetails.map(
-																(d:ITransactionDetail, idx:number) => {
-																	// console.log("TOTABLE:"+c.itemCode)
-																	return(
-																		<React.Fragment>
-																			<tr>
-																				<td>{idx+1}</td>
-																				<td>{d.itemCode}</td>
-																				<td>{d.price}</td>
-																				<td>{d.quantity}</td>
-																				<td>{d.subTotal}</td>
-																				<td>{d.note}</td>
-																			</tr>
-																		</React.Fragment>
-																)
-															})
-															}
-													/>
-												</div>
-											}/>
-										</td>
-										<td>{c.total}</td>
-										<td>{c.note}</td>
-										<td>{c.timestamp}</td>
-										<td>{
-											<React.Fragment>
-												<AlertDialog
+								c['num'] = idx+1;
+								// c['detail'] = <SimpleExpansionPanel 
+								// title={"show details ("+c.transactionDetails?.length+")"}
+								// content={
+								// 	// <div>
+								// 		<CustomTable
+								// 			notShowAddButton={true}
+								// 			header={detailColName}
+								// 			body={
+								// 				c.transactionDetails?.map(
+								// 					(d:ITransactionDetail, idx:number) => {
+								// 						// console.log("TOTABLE:"+c.itemCode)
+								// 						return(
+								// 							<React.Fragment>
+								// 								<tr>
+								// 									<td>{idx+1}</td>
+								// 									<td>{d.itemCode}</td>
+								// 									<td>{d.price}</td>
+								// 									<td>{d.quantity}</td>
+								// 									<td>{d.subTotal}</td>
+								// 									<td>{d.note}</td>
+								// 								</tr>
+								// 							</React.Fragment>
+								// 					)
+								// 				})
+								// 				}
+								// 		/>
+								// 	// </div>
+								// }/>;
+
+								c['detail']  =  <React.Fragment>
+								<AlertDialog
+										color="primary"
+										parentAllowance = {this.state.editDialog.isShown}
+										buttonTitle={"show details ("+c.transactionDetails?.length+")"}
+										parentCallbackOpen={()=>this.setState({editDialog:{isShown:true}})}
+										dialogTitle={`Transaction Details for ${c.id}`}
+										usingAction={false}
+										dialogContent={
+											<CustomTable
+												notShowAddButton={true}
+												header={detailColName}
+												body={
+													c.transactionDetails?.map(
+														(d:ITransactionDetail, idx:number) => {
+															// console.log("TOTABLE:"+c.itemCode)
+															d['num'] = idx+1;
+															return d;
+														// 	return(
+														// 		<React.Fragment>
+														// 			<tr>
+														// 				<td>{idx+1}</td>
+														// 				<td>{d.itemCode}</td>
+														// 				<td>{d.price}</td>
+														// 				<td>{d.quantity}</td>
+														// 				<td>{d.subTotal}</td>
+														// 				<td>{d.note}</td>
+														// 			</tr>
+														// 		</React.Fragment>
+														// )
+													})
+													}
+											/>
+										}
+									/>
+								</React.Fragment>;
+								c['edit'] = <React.Fragment>
+											<AlertDialog
 													color="primary"
 													param={c.id}
 													parentAllowance = {this.state.editDialog.isShown}
@@ -407,6 +438,8 @@ export class TransactionPage extends React.Component<Props,any> {
 														/>
 													}
 												/>
+											</React.Fragment>
+								c['delete'] = <React.Fragment>
 											<AlertDialog
 												color="secondary"
 												usingAction={true}
@@ -422,10 +455,104 @@ export class TransactionPage extends React.Component<Props,any> {
 												}
 											/>
 											</React.Fragment>
-										}</td>
-									</tr>
-									</React.Fragment>
-								);
+								
+
+								return c;
+								// return(
+								// 	<React.Fragment>
+								// 	<tr>
+								// 		<td>{idx+1}</td>
+								// 		<td>{c.id}</td>
+								// 		<td>{c.customerId}</td>
+								// 		<td>{c.paymentId}</td>
+								// 		<td>{c.paymentStatus}</td>
+								// 		<td>
+								// 		<SimpleExpansionPanel 
+								// 			title={"show details ("+c.transactionDetails.length+")"}
+								// 			content={
+								// 				<div>
+								// 					<CustomTable
+								// 						notShowAddButton={true}
+								// 						header={detailColName}
+								// 						body={
+								// 							c.transactionDetails.map(
+								// 								(d:ITransactionDetail, idx:number) => {
+								// 									// console.log("TOTABLE:"+c.itemCode)
+								// 									return(
+								// 										<React.Fragment>
+								// 											<tr>
+								// 												<td>{idx+1}</td>
+								// 												<td>{d.itemCode}</td>
+								// 												<td>{d.price}</td>
+								// 												<td>{d.quantity}</td>
+								// 												<td>{d.subTotal}</td>
+								// 												<td>{d.note}</td>
+								// 											</tr>
+								// 										</React.Fragment>
+								// 								)
+								// 							})
+								// 							}
+								// 					/>
+								// 				</div>
+								// 			}/>
+								// 		</td>
+								// 		<td>{c.total}</td>
+								// 		<td>{c.note}</td>
+								// 		<td>{c.timestamp}</td>
+								// 		<td>{
+								// 			<React.Fragment>
+								// 				<AlertDialog
+								// 					color="primary"
+								// 					param={c.id}
+								// 					parentAllowance = {this.state.editDialog.isShown}
+								// 					buttonTitle="edit"
+								// 					parentCallbackOpen={()=>this.setState({editDialog:{isShown:true}})}
+								// 					dialogTitle="Update item"
+								// 					usingAction={false}
+								// 					dialogContent={
+								// 						<TransactionForm
+								// 							submitData = {this.editData}
+								// 							item={
+								// 								{
+								// 									id:c.id,
+								// 									customerId:c.customerId,
+								// 									paymentId:c.paymentId,
+								// 									paymentStatus:c.paymentStatus,
+								// 									transactionDetails:c.transactionDetails.map(
+								// 										(d:ITransactionDetail) => {
+								// 											return {
+								// 												itemCode:d.itemCode,
+								// 												note:d.note,
+								// 												quantity:d.quantity
+								// 											}
+								// 										}
+								// 									),
+								// 									transactionDate:c.transactionDate,
+								// 									note:c.note
+								// 								}
+								// 							}
+								// 						/>
+								// 					}
+								// 				/>
+								// 			<AlertDialog
+								// 				color="secondary"
+								// 				usingAction={true}
+								// 				parentAllowance = {true}
+								// 				param={c.id}
+								// 				buttonTitle="delete"
+								// 				dialogTitle="This following item will be deleted"
+								// 				dialogYes="Yes"
+								// 				dialogNo="Cancel"
+								// 				dialogContent="Are you sure ?"
+								// 				parentCallback={
+								// 					this.deleteConfirm
+								// 				}
+								// 			/>
+								// 			</React.Fragment>
+								// 		}</td>
+								// 	</tr>
+								// 	</React.Fragment>
+								// );
 							}
 						)}
 					/>

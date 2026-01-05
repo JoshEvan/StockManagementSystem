@@ -41,7 +41,13 @@ interface IItemPage{
 }
 
 const colName: string[] = ["NUM","ITEM CODE", "NAME", 
-"DESCRIPTION", "PRICE", "STOCK", "CAPACITY","TOTAL SOLD", "GENERATED INCOME","ACTION"]
+"DESCRIPTION", "PRICE", "STOCK", "CAPACITY","TOTAL SOLD", "GENERATED INCOME","ACTION EDIT", "ACTION DELETE"];
+const colShow: Map<string,boolean> = new Map<string,boolean>([
+	['ITEM CODE', true],
+	['NAME', true],
+	['STOCK', true],
+]);
+
 
 const initItem={
 	itemCode:'',
@@ -336,9 +342,9 @@ export class ItemPage extends React.Component<Props,any> {
 					</div>
 					
 					<div style={{float:'left',width:'auto',padding:'1% 1% 1% 0%'}}>
-						<Button variant="outlined" color={"primary"} onClick={this.downloadPdf}>
+						{/* <Button variant="outlined" color={"primary"} onClick={this.downloadPdf}>
 							{"download pdf"}
-						</Button>
+						</Button> */}
 					</div>
 					{/* {console.log("ATTABLE:"+this.state.rawContent[0].itemCode)} */}
 					<CustomTable 
@@ -347,10 +353,58 @@ export class ItemPage extends React.Component<Props,any> {
 						}
 						isShown={this.state.addDialog.isShown}
 						header={colName}
+						colShow={colShow}
 						body={
-							this.state.rawContent.map(
+							this.state.rawContent?.map(
 							(c:IItem, idx:number) => {
 								// console.log("TOTABLE:"+c.itemCode)
+								c['num'] = idx+1;
+								c['actionEdit'] = 
+								<React.Fragment>
+												<AlertDialog
+													color="primary"
+													param={c.itemCode}
+													parentAllowance = {this.state.editDialog.isShown}
+													buttonTitle="edit"
+													parentCallbackOpen={()=>this.setState({editDialog:{isShown:true}})}
+													dialogTitle="Update item"
+													usingAction={false}
+													dialogContent={
+														<ItemForm
+															submitData = {this.editItem}
+															item={
+																{
+																	itemCode:c.itemCode,
+																	name:c.name,
+																	price:c.priceDec,
+																	stock:c.stock,
+																	capacity:c.capacity,
+																	description:c.description,
+																}
+															}
+														/>
+													}
+												/>
+												</React.Fragment>;
+								c['actionDelete'] = 
+								<React.Fragment>
+												<AlertDialog
+													color="secondary"
+													usingAction={true}
+													parentAllowance = {true}
+													param={c.itemCode}
+													buttonTitle="delete"
+													dialogTitle="This following item will be deleted"
+													dialogYes="Yes"
+													dialogNo="Cancel"
+													dialogContent="Are you sure ?"
+													parentCallback={
+														this.deleteConfirm
+													}
+												/>
+											</React.Fragment>;
+								console.log(c);
+								return c;
 								return(
 									<React.Fragment>
 									<tr>

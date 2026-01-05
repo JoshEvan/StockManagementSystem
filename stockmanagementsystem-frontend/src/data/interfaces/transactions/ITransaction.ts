@@ -1,4 +1,5 @@
 export interface ITransaction{
+	num: number,
 	id : string,
 	customerId: string,
 	paymentId: string,
@@ -9,9 +10,13 @@ export interface ITransaction{
 	note:string,
 	total:string,
 	totalDec: number
+	detail: any,
+	edit:any,
+	delete:any,
 }
 
 export interface ITransactionDetail{
+	num: number,
 	transactionHeaderId: string,
 	itemCode: string,
 	price: string,
