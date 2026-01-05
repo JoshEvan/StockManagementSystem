@@ -7,34 +7,34 @@ import { IItem } from "../interfaces/items/IItem";
 const usingBaseUrl = getBaseUrl()
 
 const serviceIndexItem = (dataPayload:IIndexItemRequest): Observable<IIndexItemResponse> => {
-    return Axios.post(
-        usingBaseUrl+JOSEPH_URL.ITEM.INDEX,
-        dataPayload
-    )
+    // return Axios.post(
+    //     usingBaseUrl+JOSEPH_URL.ITEM.INDEX,
+    //     dataPayload
+    // )
 
-    // let mockResponse:IIndexItemResponse = {
-    //     data: {items: [
-    //         {
-    //             num  : 1,
-    //             itemCode: 'ITM001',
-    //             name: 'Item Satu',
-    //             description: 'Ini adalah item satu',
-    //             price: '10000',
-    //             stock: 50,
-    //             capacity: 100,
-    //             totalSold: 20,
-    //             incomeAmountDec: 200000,
-    //             incomeAmount: '200,000',
-    //             priceDec: undefined,
-    //             actionEdit: "EDIT",
-    //             actionDelete: "DELETE"
-    //         },
-    //     ]},
-    // };
-    // return new Observable<IIndexItemResponse>(subscriber => {
-    //     subscriber.next(mockResponse);
-    //     subscriber.complete();
-    // });
+    let mockResponse:IIndexItemResponse = {
+        data: {items: [
+            {
+                num  : 1,
+                itemCode: 'ITM001',
+                name: 'Item Satu',
+                description: 'Ini adalah item satu',
+                price: '10000',
+                stock: 50,
+                capacity: 100,
+                totalSold: 20,
+                incomeAmountDec: 200000,
+                incomeAmount: '200,000',
+                priceDec: undefined,
+                actionEdit: "EDIT",
+                actionDelete: "DELETE"
+            },
+        ]},
+    };
+    return new Observable<IIndexItemResponse>(subscriber => {
+        subscriber.next(mockResponse);
+        subscriber.complete();
+    });
 }
 
 export const serviceDeleteItem = (dataPayload:string): Observable<any> => {

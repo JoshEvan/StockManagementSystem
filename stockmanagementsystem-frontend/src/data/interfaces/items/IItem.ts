@@ -5,6 +5,7 @@ interface IItem{
  description:string,
  price:string,
  stock:number,
+ stockInfo?: string,
  capacity:number,
  totalSold:number,
  incomeAmountDec:any,

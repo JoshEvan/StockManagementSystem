@@ -59,6 +59,7 @@ export class ItemForm extends React.Component<any,any>{
 						name:this.props.item.name,
 						price:this.props.item.price,
 						stock:this.props.item.stock,
+						stockPcs: this.props.item.stockPcs,
 						capacity:this.props.item.capacity,
 						errors:'',
 						values:''
@@ -68,7 +69,10 @@ export class ItemForm extends React.Component<any,any>{
 						// setSubmitting itu untuk async request ke server dan sembari disable button (ini function)
 						setSubmitting(true)
 						console.log(data);
-
+						
+						if (data.stock == null && data.stockPcs == null) data.stock = 0;
+						if (data.stockPcs == null) data.stockPcs = 0;
+						data.stock = data.stock * 12 + data.stockPcs;
 						this.props.submitData(data);
 						
 						setSubmitting(false);
@@ -123,22 +127,24 @@ export class ItemForm extends React.Component<any,any>{
 								as={TextField}/>
 						</div>
 						
-						<div style={{padding:'2%'}}>
-							<TextFieldWValidation
-								placeholder="item stock"
-								name="stock" 
-								type="number"
-								as={TextField}/>
-						</div>
+						<div style={{padding:'2%', display:'flex', alignItems:'center', gap: '8px'}}>
+							<div style={{flex: 1, width: '50%'}}>
+								<TextFieldWValidation
+									placeholder="item stock (dzs)"
+									name="stock"
+									type="number"
+									as={TextField} />
+							</div>
 
-						
-						<div style={{padding:'2%'}}>
-							<TextFieldWValidation
-								placeholder="item capacity dozen/box"
-								name="capacity" 
-								type="number" 
-								as={TextField}/>
-									
+							<span style={{fontWeight: 700}}>+</span>
+
+							<div style={{flex: 1, width: '50%'}}>
+								<TextFieldWValidation
+									placeholder="item stock (remainder pcs)"
+									name="stockPcs"
+									type="number"
+									as={TextField} />
+							</div>
 						</div>
 
 						<div style={{padding:'2%'}}>

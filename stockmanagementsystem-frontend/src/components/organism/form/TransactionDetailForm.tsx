@@ -36,20 +36,18 @@ export class TransactionDetailForm extends React.Component<any,any>{
 	render(){
 		return (
 			<div>
-				
 				<Formik
 					initialValues={{
                         updatedItemCode:this.props.item.updatedItemCode,
 						itemCode:this.props.item.itemCode,
                         note:this.props.item.note,
-						quantity:this.props.item.quantity
+						quantity:this.props.item.quantity,
+						quantityPcs: this.props.item.quantityPcs
 					}}
 					onSubmit = {(data, { setSubmitting }) => {
 						setSubmitting(true)
-						data["test"] = "test"
-						console.log(data);
 						console.log("SUBMITTING")
-
+						data.quantity = data.quantity * 12 + data.quantityPcs;
 						this.props.submitData(data);
 						
 						setSubmitting(false);
@@ -85,13 +83,24 @@ export class TransactionDetailForm extends React.Component<any,any>{
                             </FormControl>
                         </div>
 
-						<div style={{padding:'2%'}}>
+						<div style={{padding:'2%', display:'flex', alignItems:'center', gap: '8px'}}>
+							<div style={{flex: 1, width: '50%'}}>
 							<TextFieldWValidation
-								placeholder="item quantity"
+								placeholder="item quantity (dzs)"
 								name="quantity"
 								type="number"
 								as={TextField}
 								/>
+							</div>
+							<span style={{fontWeight: 700}}>+</span>
+							<div style={{flex: 1, width: '50%'}}>
+							<TextFieldWValidation
+								placeholder="item quantity (remainder pcs)"
+								name="quantity"
+								type="number"
+								as={TextField}
+								/>
+							</div>
 						</div>
 
                         <div style={{padding:'2%'}}>

@@ -95,11 +95,11 @@ export const mainListItemsDRAWER = (
 export const mainListItems = (
   <React.Fragment>
     {/* <BottomNavigationAction component={Link} to="/" label="Dashboard" icon={<DashboardIcon />} /> */}
-    <BottomNavigationAction component={Link} to="/transactions" label="Transactions" icon={<LocalAtmIcon />} />
-    <BottomNavigationAction component={Link} to="/items" label="Items" icon={<ShoppingCartIcon />} />
-    <BottomNavigationAction component={Link} to="/productions" label="Productions" icon={<LayersIcon />} />
-    <BottomNavigationAction component={Link} to="/customers" label="Customers" icon={<PeopleIcon />} />
-    <BottomNavigationAction component={Link} to="/payments" label="Payment types" icon={<ReceiptIcon />} />
+    <BottomNavigationAction component={Link} to="/transactions" label="Transaction" icon={<LocalAtmIcon />} />
+    <BottomNavigationAction component={Link} to="/items" label="Item" icon={<ShoppingCartIcon />} />
+    <BottomNavigationAction component={Link} to="/productions" label="Production" icon={<LayersIcon />} />
+    <BottomNavigationAction component={Link} to="/customers" label="Customer" icon={<PeopleIcon />} />
+    <BottomNavigationAction component={Link} to="/payments" label="PayType" icon={<ReceiptIcon />} />
   </React.Fragment>
 );
 

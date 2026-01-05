@@ -12,6 +12,7 @@ import { ItemForm } from '../components/organism/form';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import { SimpleExpansionPanel } from '../components/organism/expansion_panel/SimpleExpansionPanel';
+import { pcsToDzs, pcsToDzsFmt } from '../util/number';
 
 interface Props extends RouteComponentProps{};
 
@@ -41,11 +42,11 @@ interface IItemPage{
 }
 
 const colName: string[] = ["NUM","ITEM CODE", "NAME", 
-"DESCRIPTION", "PRICE", "STOCK", "CAPACITY","TOTAL SOLD", "GENERATED INCOME","ACTION EDIT", "ACTION DELETE"];
+"DESCRIPTION", "PRICE", "STOCK INFO", "CAPACITY","TOTAL SOLD", "GENERATED INCOME","ACTION EDIT", "ACTION DELETE"];
 const colShow: Map<string,boolean> = new Map<string,boolean>([
 	['ITEM CODE', true],
 	['NAME', true],
-	['STOCK', true],
+	['STOCK INFO', true],
 ]);
 
 
@@ -359,6 +360,7 @@ export class ItemPage extends React.Component<Props,any> {
 							(c:IItem, idx:number) => {
 								// console.log("TOTABLE:"+c.itemCode)
 								c['num'] = idx+1;
+								c['stockInfo'] = pcsToDzsFmt(c.stock);
 								c['actionEdit'] = 
 								<React.Fragment>
 												<AlertDialog
@@ -377,7 +379,8 @@ export class ItemPage extends React.Component<Props,any> {
 																	itemCode:c.itemCode,
 																	name:c.name,
 																	price:c.priceDec,
-																	stock:c.stock,
+																	stock: Math.floor(c.stock/12),
+																	stockPcs: (c.stock % 12),
 																	capacity:c.capacity,
 																	description:c.description,
 																}

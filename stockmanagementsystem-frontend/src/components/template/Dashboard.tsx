@@ -197,13 +197,32 @@ export default function Dashboard({titlePage, content}){
 
       <Box style={{ position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 1200 }}>
         <Paper elevation={6}>
-          <BottomNavigation showLabels={true} style={{ display: 'flex', overflowX: 'auto' }}>
-            <div style={{ display: 'flex', flexWrap: 'nowrap', width: '100%' }}>
-              {React.Children.map(mainListItems, (child) => (
-                <div style={{ flexShrink: 5 }}>{child}</div>
-              ))}
-            </div>
-          </BottomNavigation>
+          <>
+            <style>{`
+              /* force bottom navigation labels to always show */
+              .always-show-label .MuiBottomNavigationAction-label,
+              .always-show-label .MuiBottomNavigationAction-root .MuiBottomNavigationAction-label {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+                display: block !important;
+              }
+            `}</style>
+
+            <BottomNavigation
+              className="always-show-label"
+              showLabels={true}
+              style={{ display: 'flex', width: '100%', overflowX: 'auto' }}
+            >
+              <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', width: '100%' }}>
+                {React.Children.map(mainListItems, (child, i) => (
+                  <div key={i} style={{ flex: '0 0 auto', display: 'inline-flex', alignItems: 'center' }}>
+                    {child}
+                  </div>
+                ))}
+              </div>
+            </BottomNavigation>
+          </>
         </Paper>
       </Box>
       <main className={classes.content}>
