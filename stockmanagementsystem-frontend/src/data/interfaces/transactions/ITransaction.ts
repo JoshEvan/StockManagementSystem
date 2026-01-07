@@ -1,6 +1,7 @@
 export interface ITransaction{
 	num: number,
 	id : string,
+	transactionId: string,
 	customerId: string,
 	paymentId: string,
 	transactionDate: Date,
@@ -21,6 +22,7 @@ export interface ITransactionDetail{
 	itemCode: string,
 	price: string,
 	quantity: number,
+	quantityPcs: number,
 	note: string,
 	timestamp: Date,
 	subTotal: string,

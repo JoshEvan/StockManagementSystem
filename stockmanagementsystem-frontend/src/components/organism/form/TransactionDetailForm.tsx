@@ -2,12 +2,29 @@ import React from 'react';
 import { Formik, useField } from 'formik';
 import { TextField, Button, Select,FormControl, InputLabel } from '@material-ui/core';
 import * as yup from 'yup';
+import {  pcsToDzsFmt } from '../../../util/number';
+import { IItem } from '../../../data/interfaces';
 
 
 const validationSchema = yup.object({
-    itemCode: yup.string().required("Item Code must be filled"),
-    quantity: yup.number().positive("Produced Quantity must be more than 0"),
-})
+	itemCode: yup.string().required("Item Code must be filled"),
+	quantity: yup.number()
+		.transform((value: number, originalValue: any) => originalValue === '' || originalValue == null ? 0 : value)
+		.typeError('Quantity must be a number')
+		.min(0, 'Quantity cannot be negative'),
+	quantityPcs: yup.number()
+		.transform((value: number, originalValue: any) => originalValue === '' || originalValue == null ? 0 : value)
+		.typeError('Quantity (pcs) must be a number')
+		.min(0, 'Quantity (pcs) cannot be negative'),
+}).test(
+	'sum-positive',
+	'Sum of quantity and quantityPcs must be greater than 0',
+	function (value) {
+		const q = Number(value?.quantity) || 0;
+		const qp = Number(value?.quantityPcs) || 0;
+		return (q + qp) > 0;
+	}
+);
 
 const TextFieldWValidation:any = ({placeholder,type,...props}) => {
     const [field, meta] = useField<{}>(props); 
@@ -42,11 +59,14 @@ export class TransactionDetailForm extends React.Component<any,any>{
 						itemCode:this.props.item.itemCode,
                         note:this.props.item.note,
 						quantity:this.props.item.quantity,
-						quantityPcs: this.props.item.quantityPcs
+						quantityPcs: this.props.item.quantityPcs,
+						
 					}}
 					onSubmit = {(data, { setSubmitting }) => {
 						setSubmitting(true)
 						console.log("SUBMITTING")
+						if (data.quantity == null) data.quantity = 0
+						if (data.quantityPcs == null) data.quantityPcs = 0
 						data.quantity = data.quantity * 12 + data.quantityPcs;
 						this.props.submitData(data);
 						
@@ -70,13 +90,13 @@ export class TransactionDetailForm extends React.Component<any,any>{
                                 >
                                 <option aria-label="None" value=""/>
                                 {
-                                this.props.itemCodes.map(
-                                    (e:string) => {
-                                        return <option value={e}
+                                this.props.items.map(
+                                    (e:IItem) => {
+                                        return <option value={e.itemCode}
 										selected={
-											(e === this.props.item.itemCode && this.props.isEdit) // ?
+											(e.itemCode === this.props.item.itemCode && this.props.isEdit) // ?
 										}
-										>{e}</option>
+										>{`${e.itemCode} (${pcsToDzsFmt(e.stock)})`}</option>
                                     }
                                 )}
                                 </SelectWValidation>
@@ -91,13 +111,14 @@ export class TransactionDetailForm extends React.Component<any,any>{
 								type="number"
 								as={TextField}
 								/>
-							</div>
+							</div>or
 							<span style={{fontWeight: 700}}>+</span>
 							<div style={{flex: 1, width: '50%'}}>
 							<TextFieldWValidation
 								placeholder="item quantity (remainder pcs)"
-								name="quantity"
+								name="quantityPcs"
 								type="number"
+								value={0}
 								as={TextField}
 								/>
 							</div>

@@ -13,6 +13,7 @@ import { SimpleExpansionPanel } from '../components/organism/expansion_panel/Sim
 import { ITransaction, ITransactionDetail, getInitTransaction } from '../data/interfaces/transactions/ITransaction';
 import { getInitIndexTransactionRequest, IIndexTransactionRequest } from '../data/interfaces/transactions/IIndexTransaction';
 import { getBaseUrl } from '../configs/api';
+import { pcsToDzs, pcsToDzsFmt } from '../util/number';
 
 interface Props extends RouteComponentProps{};
 interface ITransactionPage{
@@ -339,6 +340,7 @@ export class TransactionPage extends React.Component<Props,any> {
 							(c:ITransaction, idx:number) => {
 								// console.log("TOTABLE:"+c.itemCode)
 								c['num'] = idx+1;
+								c['transactionId'] = c.id;
 								// c['detail'] = <SimpleExpansionPanel 
 								// title={"show details ("+c.transactionDetails?.length+")"}
 								// content={
@@ -380,6 +382,11 @@ export class TransactionPage extends React.Component<Props,any> {
 											<CustomTable
 												notShowAddButton={true}
 												header={detailColName}
+												colShow={new Map<string,boolean>([
+													['ITEM CODE', true],
+													['QUANTITY', true],
+													['SUB TOTAL', true],
+												])}
 												body={
 													c.transactionDetails?.map(
 														(d:ITransactionDetail, idx:number) => {
@@ -427,7 +434,7 @@ export class TransactionPage extends React.Component<Props,any> {
 																			return {
 																				itemCode:d.itemCode,
 																				note:d.note,
-																				quantity:d.quantity
+																				quantity: d.quantity
 																			}
 																		}
 																	),

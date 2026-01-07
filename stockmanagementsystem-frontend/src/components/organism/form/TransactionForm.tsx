@@ -7,6 +7,7 @@ import { IItem, ICustomer, ITransactionDetail, initTransactionDetail } from '../
 import { IPayemntType } from '../../../data/interfaces/paymentTypes/IPaymentType';
 import { CustomTable, AlertDialog } from '..';
 import { TransactionDetailForm } from './TransactionDetailForm';
+import { pcsToDzs, pcsToDzsFmt, randomDigit, todayfmt } from '../../../util/number';
 import CSS from 'csstype';
 
 const errorStyles:CSS.Properties = {
@@ -17,7 +18,7 @@ const validationSchema = yup.object({
 	id: yup.string().required("Transaction Id must be filled"),
     customerId: yup.string().required("Customer Id must be filled"),
     paymentId: yup.string().required("Payment Id must be filled"),
-    paymentStatus:yup.string().required("Payment status must be filled"),
+    // paymentStatus:yup.string().required("Payment status must be filled"),
 	transactionDate: yup.string().required("Transaction Date must be filled"),
 	transactionDetailsLength:yup.number().positive("Must have minimal 1 transaction details")
 })
@@ -44,9 +45,16 @@ const SelectWValidation:any = ({...props}) => {
 const detailColName: string[] = [
 	"NUM","ITEM CODE","QTY","NOTE","ACTION"
 ]
+const detailColNameShow: Map<string,boolean> = new Map<string,boolean>([
+	["ITEM CODE", true],
+	["QTY", true],
+	["ACTION", true]
+]);
+
+const det: Map<string,boolean> = detailColNameShow;
 
 interface ITransactionForm{
-	itemCodes:string[],
+	items:IItem[],
 	customerDatas:string[],
 	paymentTypes:string[],
 	transactionDetails:ITransactionDetail[],
@@ -77,7 +85,7 @@ export class TransactionForm extends React.Component<any,any>{
 			super(props)
 			this._isMounted = false
         this.state={
-            itemCodes:[],
+            items:[],
             customerDatas:[],
 			paymentTypes:[],
 			transactionDetails:[],
@@ -91,7 +99,7 @@ export class TransactionForm extends React.Component<any,any>{
 						item= {
 							initTransactionDetail
 						}
-						itemCodes={[]}
+						items={[]}
 					/>
 				),
 				dialogYes:"yes",
@@ -116,7 +124,7 @@ export class TransactionForm extends React.Component<any,any>{
 				this._isMounted = true;			
        if(this._isMounted){
 				this.loadAllItemCodes()
-        this.loadAllCustomers()
+        		this.loadAllCustomers()
 				this.loadAllPayTypes()
 			 }
 				this.setState({
@@ -158,14 +166,11 @@ export class TransactionForm extends React.Component<any,any>{
             sortByAmountSold:0}).subscribe(
 			(res) => {
 				console.log(res.data["items"]);
+				const fetchedItems: IItem[] = Array.isArray(res.data?.items) ? (res.data.items as IItem[]) : [];
 				this.setState({
-					itemCodes: res.data["items"].map(
-                        (e :IItem) => {
-                            return e.itemCode
-                        }
-                    )
-                });
-                console.log(this.state.itemCodes)
+					items: fetchedItems.filter((e: IItem) => e && typeof e.stock === 'number' && e.stock > 0)
+				});
+				console.log(fetchedItems.filter((e: IItem) => e && typeof e.stock === 'number' && e.stock > 0))
 				this.setAddDialog();
 			},
 			(err)=>{
@@ -186,7 +191,6 @@ export class TransactionForm extends React.Component<any,any>{
                         }
                     )
                 });
-                console.log(this.state.itemCodes)
 			},
 			(err)=>{
 				console.log("axios err:"+err);
@@ -206,7 +210,6 @@ export class TransactionForm extends React.Component<any,any>{
                         }
                     )
                 });
-                console.log(this.state.itemCodes)
 			},
 			(err)=>{
 				console.log("axios err:"+err);
@@ -226,7 +229,7 @@ export class TransactionForm extends React.Component<any,any>{
 						item= {
 							initTransactionDetail
 						}
-						itemCodes = {this.state.itemCodes.filter(e => !this.state.selectedTransactionDetailItemCodes[e])}
+						items = {this.state.items.filter(e => !this.state.selectedTransactionDetailItemCodes[e.itemCode])}
 					/>
 				)
 			}
@@ -274,16 +277,21 @@ export class TransactionForm extends React.Component<any,any>{
 				
 				<Formik
 					initialValues={{
-						id:this.props.item.id,
-						itemCode:this.props.item.itemCode,
-                        customerId:this.props.item.customerId,
-                        paymentId:this.props.item.paymentId,
-                        paymentStatus:this.props.item.paymentStatus,
-                        note:this.props.item.note,
-						transactionDate:this.props.item.transactionDate,
+						id: this.props.item.id == undefined || this.props.item.id.length == 0 ? `TX-${todayfmt()}-${randomDigit(4)}` : this.props.item.id,
+						itemCode:this.props.item.itemiCode,
+						customerId:this.props.item.customerId,
+						paymentId: this.props.paymentId == undefined || this.props.paymentId == null ? this.state.paymentTypes.length > 0 ? this.state.paymentTypes[0] : "" : this.props.item.paymentId,
+						paymentStatus:this.props.item.paymentStatus,
+						note:this.props.item.note,
+						transactionDate: this.props.item.transactionDate == undefined || this.props.item.transactionDate == null ? new Date().toISOString().slice(0,10) : this.props.item.transactionDate.toString(),
 						quantity:this.props.item.quantity
 					}}
 					onSubmit = {(data, { setSubmitting }) => {
+						// if transactionDate empty, set to today
+						if(!data.transactionDate){
+							data.transactionDate = new Date().toISOString().slice(0,10);
+						}
+
 						if(this.state.transactionDetails.length <= 0){
 							this.setState({
 								errorTransactionDetails:{
@@ -400,16 +408,19 @@ export class TransactionForm extends React.Component<any,any>{
 								name="transactionDate" 
 								type="date" 
 								as={TextField}
+								value={new Date().toISOString().slice(0,10)}
 								InputLabelProps={{
 										shrink: true,
 								}}/>
 						</div>
 
 						<div style={{padding:'2%'}}>
-							
+							<Typography variant="h6">Transaction Details</Typography>
 							<CustomTable
 								addDialog = {this.state.addDialog}
 								header={detailColName}
+								colShow={detailColNameShow}
+								nonGrid = {true}
 								body={
 									(typeof(this.state.transactionDetails) !== undefined) && this.state.transactionDetails.map(
 										(e:ITransactionDetail, idx:number) => {
@@ -418,7 +429,7 @@ export class TransactionForm extends React.Component<any,any>{
 													<tr>
 														<td>{idx+1}</td>
 														<td>{e.itemCode}</td>
-														<td>{e.quantity}</td>
+														<td>{pcsToDzsFmt(e.quantity)}</td>
 														<td>{e.note}</td>
 														<td>{
 															<React.Fragment>
@@ -437,11 +448,12 @@ export class TransactionForm extends React.Component<any,any>{
 																				{
 																					updatedItemCode:e.itemCode,
 																					itemCode:e.itemCode,
-																					quantity:e.quantity,
+																					quantity:pcsToDzs(e.quantity).dzs,
+																					quantityPcs:pcsToDzs(e.quantity).pcs,
 																					note:e.note,
 																				}
 																			}
-																			itemCodes={this.state.itemCodes.filter(e => !this.state.selectedTransactionDetailItemCodes[e])}
+																			items={this.state.items.filter(e => !this.state.selectedTransactionDetailItemCodes[e.itemCode])}
 																		/>
 																	}
 																/>

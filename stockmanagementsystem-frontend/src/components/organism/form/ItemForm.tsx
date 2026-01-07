@@ -10,9 +10,30 @@ const validationSchema = yup.object({
 	// firstName: yup.string().required("error message (ada default juga kalo dikosongin)").max(10),
 	itemCode: yup.string().required("Item Code must be filled"),
 	name: yup.string().required("Item Name must be filled"),
-	price: yup.string().required("Item Price must be filled"),
-	stock: yup.string().required("Item Stock must be filled"),
-	capacity: yup.string().required("Item Capacity must be filled")
+	price: yup
+		.number()
+		.typeError("Item Price must be a number")
+		.required("Item Price must be filled"),
+	stock: yup
+		.number()
+		.typeError("Item Stock must be a number")
+		.min(0, "Item Stock cannot be negative")
+		.required("Item Stock must be filled")
+		.test(
+			"stock-sum",
+			"Total stock (dzs + pcs) must be greater than 0",
+			function (value: number) {
+				const stock = Number(value || 0);
+				const stockPcs = Number(this.parent?.stockPcs || 0);
+				return stock + stockPcs > 0;
+			}
+		),
+	stockPcs: yup
+		.number()
+		.typeError("Item Stock (pcs) must be a number")
+		.min(0, "Item Stock (pcs) cannot be negative")
+		.required("Item Stock (pcs) must be filled"),
+	// capacity: yup.string().required("Item Capacity must be filled")
 })
 
 const TextFieldWValidation:React.FC<FieldAttributes<{}>> = ({placeholder,type,...props}) => {
@@ -143,6 +164,7 @@ export class ItemForm extends React.Component<any,any>{
 									placeholder="item stock (remainder pcs)"
 									name="stockPcs"
 									type="number"
+									value={0}
 									as={TextField} />
 							</div>
 						</div>

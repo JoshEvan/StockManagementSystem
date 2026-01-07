@@ -7,10 +7,10 @@ import { IItem } from "../interfaces/items/IItem";
 const usingBaseUrl = getBaseUrl()
 
 const serviceIndexItem = (dataPayload:IIndexItemRequest): Observable<IIndexItemResponse> => {
-    // return Axios.post(
-    //     usingBaseUrl+JOSEPH_URL.ITEM.INDEX,
-    //     dataPayload
-    // )
+    return Axios.post(
+        usingBaseUrl+JOSEPH_URL.ITEM.INDEX,
+        dataPayload
+    )
 
     let mockResponse:IIndexItemResponse = {
         data: {items: [

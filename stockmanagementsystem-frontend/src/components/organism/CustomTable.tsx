@@ -14,6 +14,7 @@ import { GridColumnVisibilityModel } from '@mui/x-data-grid/models/gridColumnVis
 type Props = {
   header:string[],
   colShow:Map<string,boolean>,
+  nonGrid: boolean,
   body:any,
   isShown?:boolean,
   notShowAddButton?:boolean,
@@ -78,7 +79,7 @@ export class CustomTable extends React.Component<Props,IState> {
             }
           </div>
           <div>
-            {!this.props.notShowAddButton && 
+            {!this.props.notShowAddButton && !this.props.nonGrid && 
             // <IconButton color="primary" 
             //   // style={{ float: 'right' }}
             //   onClick={
@@ -155,6 +156,61 @@ export class CustomTable extends React.Component<Props,IState> {
             }
             console.log(columns, "COLUMNS", this.props.colShow, colVisibilityModel, this.props.header);
             
+            if (this.props.nonGrid == true) {
+              return (
+                <React.Fragment>
+                  {/* {console.log(this.state.isShown+"STATETABLE")} */}
+                  <div>
+                    {
+                      (this.state.isShown) &&
+                      (
+                        <ResponsiveDialog
+                          open={this.state.isShown}
+                          dialogTitle={this.props.addDialog.title}
+                          dialogContent={this.props.addDialog.content}
+                          usingAction={this.props.addDialog.usingAction}
+                          parentCallbackClose={this.closeAddDialog}
+                          parentCallbackOpen={this.openAddDialog}
+                          dialogNo={this.props.addDialog.dialogNo}
+                          dialogYes={this.props.addDialog.dialogYes}
+                        />
+                      )
+                    }
+                  </div>
+                  {!this.props.notShowAddButton && <IconButton color="primary" 
+                  style={{float:'right'}}
+                  onClick={
+                    () => {this.openAddDialog();}
+                  }>
+                    <AddBoxIcon/>
+                  </IconButton>}
+                  <Table hover responsive bordered>
+                      <thead>
+                        <tr>
+                          {this.props.header.map(
+                            (h) => {
+                              return(<th>{h}</th>);
+                            }
+                          )}
+                        </tr>
+                      </thead>
+                      <tbody>
+                          {this.props.body.map(
+                            (h: any) => {
+                              console.log("INTABLE:"+h);
+                              return(
+                                <React.Fragment>
+                                  {h}
+                                </React.Fragment>
+                              );
+                            }
+                          )}
+                      </tbody>
+                    </Table>
+                  </React.Fragment>
+              )
+            }
+
             return (
               <div style={{ width: '100%' }}>
                 <div style={{ height: 400, width: '100%' }}>
